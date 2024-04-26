@@ -183,16 +183,14 @@
         "target": "es2017",
         "sourceMap": true,
         "inlineSources": true,
-        "outFile": "./out/main.js",
+        "outDir": "./out",
         "allowJs": true,
         "checkJs": true,
-        "removeComments": true,
-        "typeRoots": [
-            "./node_modules/@types",
-            "./node_modules/@pixi",
-        ],
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
-        "lib": ["DOM", "ES2017"]
+        "lib": ["DOM", "ESNext"],
+        "composite": true,
+        "declarationDir": "./out",
+        "emitDeclarationOnly": true
     }
 }
