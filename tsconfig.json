@@ -183,14 +183,13 @@
         "target": "es2017",
         "sourceMap": true,
         "inlineSources": true,
-        "outDir": "./out",
+        "outFile": "./out/KDInterface.js",
         "allowJs": true,
         "checkJs": true,
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "lib": ["DOM", "ESNext"],
         "composite": true,
-        "declarationDir": "./out",
         "emitDeclarationOnly": true
     }
 }
