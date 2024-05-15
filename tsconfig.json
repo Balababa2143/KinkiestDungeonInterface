@@ -183,7 +183,7 @@
         "target": "es2017",
         "sourceMap": true,
         "inlineSources": true,
-        "outFile": "./out/KDInterface.js",
+        "outFile": "./out/main.js",
         "allowJs": true,
         "checkJs": true,
         "moduleResolution": "node",
