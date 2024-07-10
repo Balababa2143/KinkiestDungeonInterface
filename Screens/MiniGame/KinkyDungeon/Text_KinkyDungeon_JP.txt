@@ -558,8 +558,8 @@ Magic Hands
 Enemies can add restraints underneath existing restraints.
 敵は既存の拘束の下に拘束を追加できる
 
-Doll Processing
-人形加工中
+Processing
+加工中
 Start atop a conveyor on your way to be sealed away inside the Facility.
 コンベアの上で人形に加工されている状態からゲームを開始する
 
@@ -2826,9 +2826,9 @@ Unarmed
 素手
 Accuracy:
 命中率：
-Crit Multiplier: 
+Crit Multiplier:
 会心ダメージ率：
-Bind Crit Multiplier: 
+Bind Crit Multiplier:
 拘束会心ダメージ率：
 Find the keys..
 鍵を見つける……
@@ -2889,9 +2889,9 @@ Edged!
 Satisfied. Miscast chance is reduced.
 満足した……。詠唱失敗率が減少する。
 
-Crit: 
+Crit:
 クリティカル：
-Bind: 
+Bind:
 拘束：
 Damage:
 ダメージ：
@@ -5570,7 +5570,7 @@ Cursed
 呪い
 Unlocked
 解錠済み
-Lock Type: 
+Lock Type:
 鍵の種類：
 Simple
 簡単
@@ -5780,9 +5780,9 @@ Goddess Blessing:
 Goddess Curse:
 女神の呪い：
 
-Mana Bonus: 
+Mana Bonus:
 マナボーナス：
-Lack of Mana Penalty: 
+Lack of Mana Penalty:
 マナペナルティ：
 Your excess mana helps you suppress the enchantment!
 自身のマナが拘束具の魔法を弱めた！
@@ -5920,7 +5920,7 @@ Level RestraintLevel (Rarity)
 拘束のレベル： Rarity
 Consumable
 消耗品
-Equipped
+Worn
 着用中
 Weapons
 武器
@@ -7876,7 +7876,7 @@ Its grip encases you tightly, but the material is weaker than most metals.
 しっかりと身体を包み込んでいるが、他の金属よりも脆い。
 
 Black Hole Jacket
-ブラックホールの拘束衣	
+ブラックホールの拘束衣
 Like a black hole, anything that is caught in this jacket has no chance to escape its grasp.
 ブラックホールのように、囚われた犠牲者を決して放さない拘束衣。
 Its grip encases you tightly, but the material is weaker than most metals.
@@ -9412,7 +9412,7 @@ Choose target location (2 tile range)
 移動先を選択(2マス先)
 Blink III
 ブリンク III
-Instantly teleport up to 3 tiles away. Must have vision of the target point. 
+Instantly teleport up to 3 tiles away. Must have vision of the target point.
 視界範囲内の、3マス先まで瞬時に移動する。
 You teleport!
 瞬間移動した！
@@ -11807,7 +11807,7 @@ Bellows
 天体のサプライチェーンについてというタイトルのエッセイより|天が金を求めることはよく知られている。なぜ天界が金を求めるのかはわからないが、女神たちは、我々が大地から掘り起こすこの無用の金属と引き換えに、その力の一部を我々に与えてくれる。女神たちは金をとても大切にしているため、祠はどこにでもあり、その祠には天使がいて、金を捧げる信者を待っている。
 They say that the maiden who safeguards the graveyard is kind to her pets...
 墓地を守る乙女はペットには優しいらしい……
-They thought they could have my legendary blade... but the fools forgot to tie my legs! I was able to Blink out of jail and into the hallway where they kept all my things!
+They thought they could have my legendary blade... but the fools forgot to tie my legs! I was able to Portal out of jail and into the hallway where they kept all my things!
 突然襲われて、縛り上げられて牢屋に入れられた。私の持っている伝説の剣が目当てだったようだ。しかし、愚か者たちは足を縛るのを忘れた。ブリンクの魔法で牢屋から脱出し、なんとか廊下に出ることができた。
 I am writing this from inside prison. Who would have known they cared so much about me using a shrine? Sheesh.
 刑務所の中からこれを書いている。祭壇を利用するのはご法度だったようだ。なんてこった。
@@ -11815,7 +11815,7 @@ I am writing this from inside prison. Who would have known they cared so much ab
 （ゾンビを危険度順に描いたもの。リボンを持ったゾンビ、タリスマンに囲まれたゾンビ、ゾンビの戦士、そして巫女のようなゾンビ）
 (An excerpt from BONDAGE WITCHERY: A STUDENT'S GUIDE)|The first thing to understand is that tying someone up is difficult if they are not in a vulnerable position. If your opponent is vulnerable, then binding will be twice as effective!
 ボンデージ ウィッチェリー: 学生用ガイドからの抜粋|まず最初に、抵抗する相手を縛るのは難しいということを理解してほしい。なんとかして相手を無防備にすれば、縛りの効果は倍増する。
-(An excerpt from BONDAGE WITCHERY: A STUDENT'S GUIDE)|Once your opponent is nicely trussed up, you can break their will by ticking them with a Feather, Ice Cube, or Magic Wand. This will deal extra damage.
+(An excerpt from BONDAGE WITCHERY: A STUDENT'S GUIDE)|Once your opponent is nicely trussed up, you can break their will by tickling them with a Feather, Ice Cube, or Magic Wand. This will deal extra damage.
 ボンデージ ウィッチェリー: 学生用ガイドからの抜粋|相手を縛ったら、羽やアイスキューブ、マジックワンドを使うことで、相手の心を折り、追加ダメージを与えられる。
 (An excerpt from BONDAGE WITCHERY: A STUDENT'S GUIDE)|Bigger and more resilient opponents are much more effective at breaking out of your binds. Try to deal some damage to them to decrease the speed at which they struggle out of your restraints.
 ボンデージ ウィッチェリー: 学生用ガイドからの抜粋|体格がよく、回復力の高い相手ほど、拘束を解くのが早い。。相手にダメージを与えると、拘束を解くスピードを遅くすることができる。
@@ -12353,7 +12353,7 @@ For 3 rep the goddess will grant you slipperiness, boosting your struggling.
 関係性3を捧げることによって、拘束から抜け出しやすくなる。
 For 3 rep the goddess will grant you a key.
 関係性3を捧げることによって、鍵を授かる。
-For 3 rep the goddess will grant you 
+For 3 rep the goddess will grant you
 関係性3を捧げることによって、
 For 3 rep the goddess
 神に関係性を捧げ、助けてもらう。
@@ -12363,7 +12363,7 @@ For 3 rep the goddess
 神に関係性を捧げ、助けてもらう。
 For 3 rep the goddess
 神に関係性を捧げ、助けてもらう。
-For 3 rep the goddess 
+For 3 rep the goddess
 神に関係性を捧げ、助けてもらう。
 The goddess will fully restore your mana in exchange for AMOUNT rep
 AMOUNT の関係性と引き換えに、神にマナを補充してもらった。
@@ -12680,7 +12680,7 @@ Can disarm (chance: DISARMCHANCE%)
 武装解除可能 (確率: DISARMCHANCE%)
 Resistances:
 耐性:
-Binding: 
+Binding:
 拘束：
 Ambivalent
 関係
@@ -12982,7 +12982,7 @@ Extreme
 エクストリーム
 A supposedly reasonable difficulty curve.
 普通の難易度。サクサクプレイ用
-Play the game the way it was intended. Cruel and restrictive. 
+Play the game the way it was intended. Cruel and restrictive.
 本来意図された難易度。積極的に捕まりたい人用
 Play at your own peril. Unlocked by double-clicking the Hard Mode button.
 自己責任。ハードモードをダブルクリックで解除。
@@ -18850,7 +18850,7 @@ What? (PERCENT chance to avoid)
 (SPEAKER は軽く咳払いをする)|ああ、私達は新人を募集しているんだ。|正義のために戦う意志があるなら、いつでも大歓迎だ！
 (The SPEAKER gives you a firm handshake)|Welcome to the sisterhood, adventurer!
 (SPEAKER と固い握手を交わした)|ようこそドラゴンハートへ！
-(The SPEAKER tilts her head and shrugs)|Ah well. 
+(The SPEAKER tilts her head and shrugs)|Ah well.
 (SPEAKER は首をかしげて肩をすくめる)|ああ、そうか。
 (The SPEAKER nods)|Fair enough.
 (SPEAKER は素直に頷いた)|残念だ。
@@ -18894,7 +18894,7 @@ What are you going to do about it? (PERCENT chance to avoid)
 (SPEAKER は咳払いをする)|アンタは今私達の縄張りに侵入しているわけだけど。|条件さえ飲んでくれれば私達も見逃してやろうと思う。|私達に危害を加えないと約束してほしいんだ。
 (The SPEAKER gives you a firm handshake)|Welcome to the sisterhood, adventurer!
 (SPEAKER と固い握手をかわした)|これからよろしく頼むよ！
-(The SPEAKER tilts her head and shrugs)|Ah well. 
+(The SPEAKER tilts her head and shrugs)|Ah well.
 (SPEAKER は首をかしげて肩をすくめる)|ああ、そうかい。
 (The SPEAKER nods)|Fair enough.
 (SPEAKER は素直に頷いた)|そうかい。
@@ -20613,7 +20613,7 @@ Upcast Level LEVEL
 強化レベル LEVEL
 Prerequisite
 前提：
-Unlocks: 
+Unlocks:
 解放済み：
 You need to learn REQUIREDSPELL before you can learn this one.
 このスキルを学ぶには REQUIREDSPELL を先に習得する必要がある。
@@ -20652,7 +20652,7 @@ Initiating prisoner lockdown protocol
 収監プロトコル開始
 Your RestraintName suddenly snap together as the EnemyName activates them
 EnemyName が RestraintName をアクティブにしたようだ。
-Turn Count: 
+Turn Count:
 ターン数：
 The Shopkeeper leashes you!
 店主にリードを掴まれた。
@@ -21046,7 +21046,7 @@ Copy
 コピー
 Paste
 ペースト
-Preloading Character Assets: 
+Preloading Character Assets:
 キャラクターアセットをロード中：
 
 
@@ -21840,7 +21840,7 @@ Deals glue damage. Adds 25 slime binding.
 接着剤属性。25のスライム属性拘束値を与える。
 You pick up slime-covered sword.
 スライムに覆われた剣を拾った
-Preloading Character Assets: 
+Preloading Character Assets:
 キャラクターアセット：
 Frost Blade
 フロストブレード
@@ -22792,22 +22792,22 @@ Rubber Stick
 ラバースティック
 A rubber cylinder without any lewd intentions whatsoever.
 ゴムの棒。卑猥が一切ない。
-Deals grope damage. 
+Deals grope damage.
 愛撫属性。
 You pick up a flexible rubber stick.
 ぐにゃぐにゃしたゴムの棒を拾った。
-Blade of Fla'peh
-フラペの剣
+Blade of Ejahl
+エジャルの剣
 A piece of prized ancient equipment. Magical energy causes it to vibrate intensely. What could it have been used for?
 貴重な古代の道具。魔法のエネルギーで激しく振動している。何に使われたのだろう？
 Deals grope damage. Can spend 40 charge to add charm damage per hit for 10 turns.
 愛撫属性。エネルギーを40消費して発動する。10ターンの間、攻撃命中時に魅了属性の追加ダメージを与える。
-You retrieve the Blade of Fla'peh.
-フラペの剣を拾った。
- The Blade of Fla'peh deals bonus charm damage!!!
-フラペの剣で魅了属性の追加ダメージを与えた！
+You retrieve the Blade of Ejahl.
+エジャルの剣を拾った。
+ The Blade of Ejahl deals bonus charm damage!!!
+エジャルの剣で魅了属性の追加ダメージを与えた！
 The Blade of Fla-peh buzzes with great power!
-フラペの剣が猛烈に振動している！
+エジャルの剣が猛烈に振動している！
 40 charge to deal 30 charm damage per hit for 10 turns.
 エネルギーを40消費して発動する。10ターンの間、攻撃命中時に30魅了属性の追加ダメージを与える。
 Enchanted Rope
@@ -22920,46 +22920,46 @@ Sensitivity: AMNT AP from attacks
 欲情：攻撃時対象のDP AMNT 上昇
 AMNT Stat
  AMNT 上昇
- 
+
 AMNT Evasion
 回避力 AMNT
 AMNT% Accuracy
-命中率 AMNT% 
+命中率 AMNT%
 AMNT Magic Armor
 マジックアーマー AMNT
 AMNT Physical Armor
-物理アーマー AMNT% 
+物理アーマー AMNT%
 AMNT Bondage Resist
 拘束抵抗力 AMNT
 AMNT TYPE Resist
 TYPE 属性への抵抗力 AMNT
 AMNT% TYPE Damage
-TYPE 属性の威力 AMNT% 
+TYPE 属性の威力 AMNT%
 AMNT% weapon phys. dmg
-物理ダメージ AMNT% 
+物理ダメージ AMNT%
 AMNT% weapon magic dmg
-武器の魔法ダメージ AMNT% 
+武器の魔法ダメージ AMNT%
 Infuse weapon AMNT% TYPE
-武器の TYPE 属性ダメージ AMNT% 
+武器の TYPE 属性ダメージ AMNT%
 AMNT TYPE on attack
 攻撃時 AMNT TYPE 追加ダメージ
 AMNT% Mana Costs
-マナコスト AMNT% 
+マナコスト AMNT%
 AMNT% TYPE Mana Costs
-TYPE 属性のマナコスト AMNT% 
+TYPE 属性のマナコスト AMNT%
 AMNT% regen from mana pool
-マナプールから得られるマナ AMNT% 
+マナプールから得られるマナ AMNT%
 AMNT mana pool on capture
 敵を捕まえたとき AMNT マナプールを回復する
 AMNT% Visibility Reduction
-視認性低下 AMNT% 
+視認性低下 AMNT%
 AMNT Distraction Decay
 DP AMNT 低下
 AMNT Distraction Per Turn
 ターン毎にDP AMNT 上昇
 AMNT AP from attacks
 攻撃時にDP AMNT 上昇
- 
+
 Drop On Floor
 床に置く
 Remove
@@ -23651,7 +23651,7 @@ The assistant applies a lock! (DamageTaken)
 研究員に拘束具をロックされた！ (DamageTaken)
 The assistant splashes a solvent in your face, blinding you! (DamageTaken)
 研究員に奇妙な液体をかけられ、目潰しされた！ (DamageTaken)
- 
+
 ...Glue Technician?
 接着剤の技術士……？
 You rescue the glue technician.
@@ -23887,9 +23887,9 @@ RestraintName に亀裂が入り始めた！
 Your RestraintName shatters and falls off!
 RestraintName は粉々に砕け落ちた！
 
-Load Hotbar 
+Load Hotbar
 ホットバーをロード
-Save Hotbar 
+Save Hotbar
 ホットバーをセーブ
 Clear Hotbar
 ホットバーをクリア
@@ -24335,8 +24335,8 @@ Then the archmagus, Sariel Vinlaga, discovered the secret of immortality.|Sharin
 ある日、偉大なる魔術師サリエル・ヴィンラーガは、不死の秘法を発見した。|彼女は世界中に研究を共有し、平和な時代への基礎を築いた。|魔法と科学の融合した、偉大なる文明が幕を開けた。
 But in the end, Sariel's experiments left her weakened and unable to save herself from death.|Without a leader, the Old Civilization collapsed into tyranny as warlords enslaved thousands.|Refugees fled across the sea in search of a new life, and in time the old empire was forgotten.
 しかし、偉大なるサリエルは探求の果てに衰弱し、死亡してしまう。|指導者を失った旧文明は愚者による専制が始まり、軍は無辜の市民を次々と奴隷にしていった。|難を逃れようと民は海を渡り、民を失った旧き帝国は次第に朽ち、忘れられていった。
-Three hundred years later,a group of adventurers found a lost island full of ancient technology.|Countless visitors now flock to the ruins in search of wealth and wisdom...|...Unaware of the devious secrets sealed within long ago.
-300年後、冒険家たちは古代の技術が眠る島を発見した。|今では、富と知恵を求めて無数の冒険者が遺跡を訪れている……|……はるか昔に封印された、邪悪な秘密も知らずに。
+Hundreds of years later, a group of adventurers found a lost island full of ancient technology.|Countless visitors now flock to the ruins in search of wealth and wisdom...|...Unaware of the devious secrets sealed within long ago.
+1000年後、冒険家たちは古代の技術が眠る島を発見した。|今では、富と知恵を求めて無数の冒険者が遺跡を訪れている……|……はるか昔に封印された、邪悪な秘密も知らずに。
 
 An item has increased your spell damage!
 アイテムが魔法の威力を強化している！
@@ -25269,7 +25269,7 @@ The Collectors
 Dollmaker Inc.
 ドールメイカー株式会社
 
-Receive the following restraints: 
+Receive the following restraints:
 次の拘束をされる：
 You will be bound with some form of restraint.
 何らかの拘束具で縛られることになる。
@@ -25286,7 +25286,7 @@ The gag geist teases you playfully!! (DamageTaken)
 The gag geist gags the girl with a ghastly grimace! (+RestraintAdded)
 ギャグガイストがぞっとするような笑みで猿轡を噛ませてきた！ (+RestraintAdded)
 
-Poltergeist 
+Poltergeist
 ポルターガイスト
 The poltergeist goes silent.
 ポルターガイスト現象は収まった。
@@ -25434,7 +25434,7 @@ You have formed a mental barrier...
 
 Desire Burst
 デザイアバースト
-Reduce your Desire by up to 30% of max DP, and convert the amount into a powerful explosion dealing (30 + 25% max DP) charm damage to nearby enemies (200% crit multiplier). If you don't have at least 50% Desire, the damage is reduced based on the amount. (Desire is the heart-shaped meter below your DP bar, and is gained slowly by being distracted)
+Reduce your Desire by up to 30% of max DP, and convert the amount into a powerful explosion dealing (30 + 25% max DP) charm damage to nearby enemies (200% crit multiplier). If you don't have at least 50% Desire, the damage is reduced based on the amount.||(Desire is the heart-shaped meter below your DP bar, and is gained slowly by being distracted)
 欲望値を最大DPの30%まで減少させ、近くの敵に30+最大のDP25%分の魅了ダメージを与える強力な爆風を起こす。欲望値が50%以下の場合、その分のダメージが減少する。(欲望値はDPバーの下にあるハート型のメーターで、一定の行動で蓄積していく)
 You channel your distraction into a powerful explosion!
 自身の欲望を強力な爆発に変換した！
@@ -26013,7 +26013,7 @@ Prisoner #NUMR/TTL
 
 Select a character to examine
 詳細を見るキャラクターを選択
-Former Faction: 
+Former Faction:
 勢力：
 
 Minigun
@@ -26247,8 +26247,8 @@ You crouch and move slowly.
 ゆっくりと這いつくばる。
 
 
-Owned by: 
-所有者： 
+Owned by:
+所有者：
 
 Warden's Belt
 看守長のベルト
@@ -27028,15 +27028,15 @@ Other paths will become inaccessible.
 他の道には進めなくなる。
 Floor NMB
 フロア NMB
-Tileset: 
+Tileset:
 タイルセット：
-Map Modifier: 
+Map Modifier:
 できごと：
-Layout: 
+Layout:
 レイアウト：
-Controlling Faction: 
+Controlling Faction:
 出現する主な勢力：
-Main Objective: 
+Main Objective:
 メイン目標：
 Points of Interest:
 特徴：
@@ -27088,7 +27088,7 @@ Prison
 Sorting Room
 選別所
 
-Click a hotbar position to assign the item to that slot.|You can click the swap button on the right|to switch between your three hotbars.||You can also save and load presets for your hotbar.|These are shared between runs.
+Click a hotbar slot to assign the current item to it.|You can click the swap button on the right|to switch between your three hotbars.||You can also save and load presets for your hotbar.|These are shared between runs.
 画面下のホットバーをクリックしてアイテムを登録可能|ホットバーをセーブ、ロードで|登録した内容を保存及び呼び出しが可能||別のセーブデータ間でも登録した内容を呼び出すことができる
 
 You step on the item and tug to pull it taut...
@@ -27154,15 +27154,15 @@ You find a sinister hood made of soft plush.
 
 Ceremonial Leotard
 式典のレオタード
-Commissioned by the powerful ancient ruling caste, the Fla'peh. Comes with an integrated lock.
-古の支配者フラペの特注品。一体型ロック付き。
+Commissioned by the powerful ancient ruling caste, the Ejahl. Comes with an integrated lock.
+古の支配者エジャルの特注品。一体型ロック付き。
 Its soul crystals dampen willpower changes, reducing all willpower changes by 25%.
 ソウルクリスタルが着用者の意志を不変のものとする。気力の変化値を-25%する。
 
 Ceremonial Leotard
 式典のレオタード
-Commissioned by the powerful ancient ruling caste, the Fla'peh. Comes with an integrated lock.
-古の支配者フラペの特注品。一体型ロック付き。
+Commissioned by the powerful ancient ruling caste, the Ejahl. Comes with an integrated lock.
+古の支配者エジャルの特注品。一体型ロック付き。
 Its soul crystals dampen willpower changes, reducing all willpower changes by 25%.
 ソウルクリスタルが着用者の意志を不変のものとする。気力の変化値を-25%する。
 You find a ceremonial leotard.
@@ -27316,7 +27316,7 @@ Elbow Chain
 肘枷の鎖
 A very short chain connecting your elbow cuffs together. It is quite awkward to remove by yourself.
 肘枷同士を繋ぐ鎖。自分で外すのは困難。
-RestraintElbowLinkDesc2,It's made of steel and secured with a lock. Unlocking the lock will cause it to fall lose.
+RestraintElbowLinkDesc2,It's made of steel and secured with a lock. Unlocking the lock will cause it to fall loose.
 鋼鉄製で、施錠されている。解錠するとこの拘束具は勝手に外れる。
 Wrist Chain
 手枷の鎖
@@ -27775,9 +27775,9 @@ Bows, guns, and other projectile weapons do 10% more damage and consume 10% less
 After casting a DMG spell:
 DMG の呪文を唱えた後：
 Gain AMNT% DMG Damage for DRTN turns
-DRTN ターンの間 DMG の与ダメージが AMNT% 増加する 
+DRTN ターンの間 DMG の与ダメージが AMNT% 増加する
 Gain AMNT DMG Resist for DRTN turns
-DRTN ターンの間 DMG に対して AMNT% の耐性を得る 
+DRTN ターンの間 DMG に対して AMNT% の耐性を得る
 Your elemental damage is increased!
 精霊魔法の与ダメージが増加する
 Your elemental resistance is increased!

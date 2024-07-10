@@ -53,18 +53,17 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		{
 			Layer: "Head",
 			rotation: -30,
-			rotation_x_anchor: 1190/MODELWIDTH,
-			rotation_y_anchor: 690/MODELHEIGHT,
-			offset_x: 1190/MODELWIDTH,
-			offset_y: 690/MODELHEIGHT,
-		},
-		{
+			rotation_x_anchor: 1190,
+			rotation_y_anchor: 690,
+			offset_x: 1190,
+			offset_y: 690,
+		},{
 			Layer: "BG",
 			rotation: -90,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: .5,
-			offset_y: .4,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.68*MODELWIDTH,
+			offset_y: 0.6*MODELHEIGHT,
 		}
 		]
 	},
@@ -79,10 +78,10 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		{
 			Layer: "BG",
 			rotation: 125,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: 0.641,
-			offset_y: 0.273,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.641*MODELWIDTH,
+			offset_y: 0.273*MODELHEIGHT,
 		}
 		]
 	},
@@ -100,18 +99,18 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		{
 			Layer: "Head",
 			rotation: -30,
-			rotation_x_anchor: 1190/MODELWIDTH,
-			rotation_y_anchor: 690/MODELHEIGHT,
-			offset_x: 1190/MODELWIDTH,
-			offset_y: 690/MODELHEIGHT,
+			rotation_x_anchor: 1190,
+			rotation_y_anchor: 690,
+			offset_x: 1190,
+			offset_y: 690,
 		},
 		{
 			Layer: "BG",
 			rotation: -90,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: .5,
-			offset_y: .4,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.641*MODELWIDTH,
+			offset_y: 0.6*MODELHEIGHT,
 		}
 		]
 	},
@@ -128,18 +127,17 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		{
 			Layer: "Head",
 			rotation: -30,
-			rotation_x_anchor: 1190/MODELWIDTH,
-			rotation_y_anchor: 690/MODELHEIGHT,
-			offset_x: 1190/MODELWIDTH,
-			offset_y: 690/MODELHEIGHT,
-		},
-		{
+			rotation_x_anchor: 1190,
+			rotation_y_anchor: 690,
+			offset_x: 1190,
+			offset_y: 690,
+		},{
 			Layer: "BG",
 			rotation: -90,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: .5,
-			offset_y: .5,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.82*MODELWIDTH,
+			offset_y: 0.6*MODELHEIGHT,
 		}
 		]
 	},
@@ -156,10 +154,10 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		mods: [{
 			Layer: "Head",
 			rotation: 30,
-			rotation_x_anchor: 1190/MODELWIDTH,
-			rotation_y_anchor: 690/MODELHEIGHT,
-			offset_x: 1190/MODELWIDTH,
-			offset_y: 690/MODELHEIGHT,
+			rotation_x_anchor: 1190,
+			rotation_y_anchor: 690,
+			offset_x: 1190,
+			offset_y: 690,
 		},{
 			Layer: "BG",
 			rotation: 90,
@@ -167,10 +165,10 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 			//rotation_y_anchor: .5,
 			//offset_x: 0.641,
 			//offset_y: 0.273,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: 0.641,
-			offset_y: 0.273,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.641*MODELWIDTH,
+			offset_y: 0.273*MODELHEIGHT,
 		}
 		],
 	},
@@ -185,7 +183,7 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 			{
 				Layer: "BG",
 				offset_x: 0,
-				offset_y: -.15,
+				offset_y: -.3*MODELHEIGHT,
 			},
 		]
 	},
@@ -197,8 +195,8 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		mods: [
 			{
 				Layer: "BG",
-				offset_x: 0,
-				offset_y: -.3,
+				offset_x: 0*MODELWIDTH,
+				offset_y: -.15*MODELHEIGHT,
 			},
 		]
 	},
@@ -213,17 +211,17 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		pri_offsety: 1,
 		mods: [{
 			Layer: "BG",
-			offset_x: 0,
-			offset_y: -.15,
+			offset_x: 0*MODELWIDTH,
+			offset_y: -.15*MODELHEIGHT,
 		},
 
 		{
 			Layer: "Tail",
 			rotation: -75,
-			rotation_x_anchor: 1300/MODELWIDTH,
-			rotation_y_anchor: 1600/MODELHEIGHT,
-			offset_x: 1300/MODELWIDTH,
-			offset_y: 1600/MODELHEIGHT,
+			rotation_x_anchor: 1300,
+			rotation_y_anchor: 1600,
+			offset_x: 1300,
+			offset_y: 1600,
 		},
 	],
 	},
@@ -235,30 +233,30 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		mods: [{
 			Layer: "ShoeLeft",
 			rotation: -5.84,
-			rotation_x_anchor: 915/MODELWIDTH,
-			rotation_y_anchor: 2160/MODELHEIGHT,
-			offset_x: 915/MODELWIDTH,
-			offset_y: 2160/MODELHEIGHT,
+			rotation_x_anchor: 915,
+			rotation_y_anchor: 2160,
+			offset_x: 915,
+			offset_y: 2160,
 		},{
 			Layer: "StockingLeftKneel",
 			rotation: -5.84,
-			rotation_x_anchor: 915/MODELWIDTH,
-			rotation_y_anchor: 2160/MODELHEIGHT,
-			offset_x: 915/MODELWIDTH,
-			offset_y: 2160/MODELHEIGHT,
+			rotation_x_anchor: 915,
+			rotation_y_anchor: 2160,
+			offset_x: 915,
+			offset_y: 2160,
 		},{
 			Layer: "BG",
-			offset_x: 0,
-			offset_y: -.15,
+			offset_x: 0*MODELWIDTH,
+			offset_y: -.15*MODELHEIGHT,
 		},
 
 		{
 			Layer: "Tail",
 			rotation: -75,
-			rotation_x_anchor: 1300/MODELWIDTH,
-			rotation_y_anchor: 1600/MODELHEIGHT,
-			offset_x: 1300/MODELWIDTH,
-			offset_y: 1600/MODELHEIGHT,
+			rotation_x_anchor: 1300,
+			rotation_y_anchor: 1600,
+			offset_x: 1300,
+			offset_y: 1600,
 		},],
 	},
 	Front: {
@@ -320,12 +318,16 @@ function ModelGetPoseMods(Poses: {[_: string]: boolean}): {[_: string]: PoseMod[
 	return mods;
 }
 
-
 function CheckPoseOrTags(C: Character, tag: string) {
 	if (C == KinkyDungeonPlayer) {
 		if (KinkyDungeonPlayerTags.get(tag)) return true;
+	} else if (NPCTags.get(C)) {
+		if (NPCTags.get(C).get(tag)) return true;
 	}
 	if (KDCurrentModels.get(C)?.Poses[tag]) {
+		return true;
+	}
+	if (KDCurrentModels.get(C)?.TempPoses && KDCurrentModels.get(C)?.TempPoses[tag]) {
 		return true;
 	}
 	return false;
@@ -578,6 +580,11 @@ function KDRefreshPoseOptions(Character: Character) {
 		KDCurrentModels.get(Character).TempPoses.NippleToysOption = true;
 		KDCurrentModels.get(Character).Poses.NippleToysOption = true;
 	}
+	if (KDToggles.DynamicArmor && KinkyDungeonState == "Game") {
+		KDCurrentModels.get(Character).TempPoses.DynamicArmor = true;
+		KDCurrentModels.get(Character).Poses.DynamicArmor = true;
+	}
+
 	if (KDToggles.ChastityBraOption) {
 		KDCurrentModels.get(Character).TempPoses.ChastityBraOption = true;
 		KDCurrentModels.get(Character).Poses.ChastityBraOption = true;
@@ -605,6 +612,9 @@ function KDRefreshPoseOptionsMC(MC: ModelContainer) {
 	}
 	if (KDToggles.NippleToysOption) {
 		MC.Poses.NippleToysOption = true;
+	}
+	if (KDToggles.DynamicArmor && KinkyDungeonState == "Game") {
+		MC.Poses.DynamicArmor = true;
 	}
 	if (KDToggles.ChastityBraOption) {
 		MC.Poses.ChastityBraOption = true;

@@ -42,6 +42,8 @@ AddModel({
 	])
 });
 
+AddModel(GetModelRestraintVersion("Swimsuit", true));
+
 
 AddModel({
 	Name: "StrappyBra",
@@ -81,6 +83,7 @@ AddModel({
 	Layers: ToLayerMap([
 		{ Name: "StrappyLower", Layer: "Panties", Pri: 40,
 			Invariant: true,
+			MorphPoses: {Closed: "Closed"},
 			//swaplayerpose: {Kneel: "PantiesLower", KneelClosed: "PantiesLower"},
 		},
 	])
@@ -119,6 +122,8 @@ AddModel({
 	Name: "BunnySockLeft",
 	Folder: "Bunny",
 	Parent: "BunnySocks",
+	Categories: ["Socks"],
+	TopLevel: false,
 	Layers: ToLayerMap([
 		{ Name: "SockLeft", Layer: "StockingLeft", Pri: -1,
 			Poses: ToMap([...LEGPOSES]),
@@ -142,6 +147,8 @@ AddModel({
 	Name: "BunnySockRight",
 	Folder: "Bunny",
 	Parent: "BunnySocks",
+	Categories: ["Socks"],
+	TopLevel: false,
 	Layers: ToLayerMap([
 		{ Name: "SockRight", Layer: "StockingRight", Pri: -1,
 			Poses: ToMap([...LEGPOSES]),
