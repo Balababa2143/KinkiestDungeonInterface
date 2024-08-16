@@ -108,7 +108,7 @@ let KinkyDungeonLearnableSpells = [
 	// Class specific
 	[
 		[
-			"Bondage", "ZeroResistance", "DesperateStruggle",
+			"Bondage", "ZeroResistance", "DesperateStruggle", "LeashSkill",
 			"BattleRhythm", "ManaRegen", "Peasant", "RogueTargets", "DistractionCast",
 			"Offhand", "RogueOffhand", "WizardOffhand", "UnconventionalWarfare", "GuerillaFighting",
 
@@ -123,7 +123,7 @@ let KinkyDungeonLearnableSpells = [
 			"ChaoticOverflow", "DistractionBurst", "DistractionShield",
 		],
 		[
-			"Gunslinger", "BattleTrance",
+			"Gunslinger", "BattleTrance", "CombatManeuver",
 			"ProblemSolving",
 			"ManaRegenFast","ManaRegenFast2","ManaRegenPlus","ManaRegenPlus2",
 			"Sowing",
@@ -287,6 +287,12 @@ let KinkyDungeonSpellList = { // List of spells you can unlock in the 3 books. W
 			events: [
 				{type: "DesperateStruggle", trigger: "toggleSpell", power: 0.5, dist: 7, time: 3, cost: 2},
 			]},
+
+
+		{name: "LeashSkill", color: "#e64539", noMiscast: true, spellPointCost: 1, school: "Any",
+			staminacost: 1,
+			sfx: "Miss", manacost: 0, components: ["Arms"], level:1, type:"special", special: "LeashSpell",
+			onhit:"", power: 0, delay: 0, range: 1.5, damage: "chain", speed: 2},
 
 		{name: "SPUp1", school: "Any", hide: true, manacost: 0, components: [], level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
 		{name: "WPUp1", school: "Any", hide: true, manacost: 0, components: [], level:1, passive: true, type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert"},
@@ -546,6 +552,14 @@ let KinkyDungeonSpellList = { // List of spells you can unlock in the 3 books. W
 			events: [
 				{type: "BattleTrance", trigger: "afterPlayerAttack",},
 				{type: "BattleTrance", trigger: "tick",},
+			]},
+
+		{name: "CombatManeuver", tags: ["fight", "will", "stamina"], prerequisite: "BattleTrance",
+			classSpecific: "Fighter",
+			hideWithout: "BattleRhythm", school: "Special", manacost: 0, components: [], level:1,
+			type:"", onhit:"", time: 0, delay: 0, range: 0, lifetime: 0, power: 0, damage: "inert",
+			passive: true,
+			events: [
 			]},
 
 		{name: "Gunslinger", tags: ["fight", "will", "ranged", "offense"], prerequisite: "BattleRhythm", classSpecific: "Fighter", hideWithout: "BattleRhythm", school: "Special", manacost: 0, components: [], level:1,
@@ -2497,6 +2511,16 @@ let KinkyDungeonSpellListEnemies = [
 			duration: 400,
 		}
 	},
+	{name: "UniversalSolvent", landsfx: "Acid",
+		tags: ["acid", "alchemy", "offense", "utility"], noise: 0, sfx: "PotionDrink", school: "Elements", manacost: 0,
+		noMiscast: true, noAggro: true,
+		components: [], special: "UniversalSolvent",
+		level:1, type:"special", onhit:"aoe", delay: 1, power: 9, range: 2.5, size: 3, aoe: 0.5, lifetime: 1, damage: "acid",
+		effectTileDurationMod: 2, effectTile: {
+			name: "Acid",
+			duration: 4,
+		}
+	},
 
 	{enemySpell: true, name: "Feathers", color: "#ffffff", sfx: "Tickle", manacost: 4, components: ["Verbal"], level:1, type:"inert", onhit:"aoe", time: 5, delay: 2, power: 5, range: 6, size: 3, aoe: 1.5, lifetime: 1, damage: "tickle", playerEffect: {name: "Damage"}},
 	{enemySpell: true, name: "NurseBola", color: "#ff2200", sfx: "Miss", manacost: 5, components: ["Arms"], level:1, type:"bolt", projectileTargeting:true, onhit:"",  power: 3, delay: 0, range: 50, damage: "chain", speed: 2, playerEffect: {name: "NurseBola"}}, // Throws a chain which stuns the target for 1 turn
@@ -3542,6 +3566,7 @@ let KDSpecialBondage = {
 		powerStruggleBoost: 0.6,
 		healthStruggleBoost: 1.2,
 		enemyBondageMult: 0.8,
+		latex: true,
 	},
 	"Rope": {
 		priority: -3,
@@ -3574,6 +3599,7 @@ let KDSpecialBondage = {
 		powerStruggleBoost: 2.0,
 		healthStruggleBoost: 0.75,
 		enemyBondageMult: 1.75,
+		latex: true,
 	},
 	"Tape": {
 		priority: -5,
@@ -3598,6 +3624,14 @@ let KDSpecialBondage = {
 		powerStruggleBoost: 3.0,
 		healthStruggleBoost: 0.7,
 		enemyBondageMult: 0.5,
+	},
+	"Furniture": {
+		priority: -100,
+		color: "#aaaaaa",
+		struggleRate: 1.2,
+		powerStruggleBoost: 2.0,
+		healthStruggleBoost: 2.0,
+		enemyBondageMult: 1.0,
 	},
 };
 

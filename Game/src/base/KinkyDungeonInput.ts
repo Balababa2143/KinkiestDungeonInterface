@@ -261,9 +261,16 @@ function KDProcessInput(type, data): string {
 			KDDelayedActionPrune(["Action", "Sexy"]);
 			KinkyDungeonDoPlayWithSelf();
 			break;
-		case "sleep":
-			KDGameData.SleepTurns = KinkyDungeonSleepTurnsMax;
+		case "sleep": {
+			let data = {
+				cancelSleep: false,
+			}
+			KinkyDungeonSendEvent("sleep", data);
+			if (!data.cancelSleep)
+				KDGameData.SleepTurns = KinkyDungeonSleepTurnsMax;
 			break;
+		}
+
 		case "noise": {
 			KDDelayedActionPrune(["Action", "Dialogue"]);
 			let gagTotal = KinkyDungeonGagTotal(true);
@@ -1184,12 +1191,75 @@ function KDProcessInput(type, data): string {
 				KDChangeRecyclerResources(KDMapToRecycleOutputs(data.selectedItem.recyclecost), -1);
 				KinkyDungeonItemEvent({
 					name: data.selectedItem.item,
-					amount: 1,
+					amount: data.selectedItem.count || 1,
 				});
 			}
 			break;
 		case "recycle":
 			break;
+		case "tightenNPCRestraint":
+			KDNPCRefreshBondage(data.npc);
+			break;
+		case "releaseNPC":
+			if (data?.selection) {
+				for (let v of Object.keys(data.selection)) {
+					if (KDCanRelease(parseInt(v))) {
+						let type = KinkyDungeonGetEnemyByName(KDGameData.Collection[v + ""].type);
+						let rep = -0.05*KDGetEnemyTypeRep(type, KDGameData.Collection[v + ""].Faction);
+						KinkyDungeonChangeFactionRep(KDGameData.Collection[v + ""].Faction, rep);
+						DisposeEntity(parseInt(v), false, false,
+							KDIsNPCPersistent(parseInt(v))
+							&& KDGetGlobalEntity(parseInt(v))
+							&& (KDGetPersistentNPC(parseInt(v))?.collect && KDIsInPlayerBase(parseInt(v))));
+						let e = KinkyDungeonFindID(parseInt(v));
+						if (e)
+							KDRemoveEntity(e, false, false, true);
+						delete KDCollectionReleaseSelection[v];
+					}
+				}
+			}
+			KDSortCollection();
+			break;
+		case "ransomNPC":
+			if (data?.selection) {
+				for (let v of Object.keys(data.selection)) {
+					if (KDCanRansom(parseInt(v))) {
+						let type = KinkyDungeonGetEnemyByName(KDGameData.Collection[v + ""].type);
+						let rep = -2*KDGetEnemyTypeRep(type, KDGameData.Collection[v + ""].Faction);
+						KinkyDungeonChangeFactionRep(KDGameData.Collection[v + ""].Faction, rep);
+						KinkyDungeonAddGold(KDRansomValue(parseInt(v)));
+						DisposeEntity(parseInt(v), false);
+						let e = KinkyDungeonFindID(parseInt(v));
+						if (e)
+							KDRemoveEntity(e, false, false, true);
+						delete KDCollectionReleaseSelection[v];
+						// TODO make it affect friends/enemies of the faction
+						// TODO add everything into one
+					}
+				}
+			}
+			KDSortCollection();
+			break;
+		case "freeNPCRestraint": {
+			if (KDGameData.NPCRestraints) {
+
+				let restraints = KDGameData.NPCRestraints[data.npc + ''];
+				if (restraints) {
+					for (let inv of Object.entries(restraints)) {
+						KDInputSetNPCRestraint({
+							slot: inv[0],
+							id: -1,
+							restraint: "",
+							restraintid: -1,
+							lock: "",
+							npc: data.npc
+						});
+					}
+				}
+			}
+			KinkyDungeonCheckClothesLoss = true;
+			break;
+		}
 		case "addNPCRestraint":
 			/**
 				slot: slot.id,
@@ -1198,52 +1268,25 @@ function KDProcessInput(type, data): string {
 				lock: "White",
 				npc: number
 			 */
-			{
-				let row = KDGetEncaseGroupRow(data.slot);
-				let slot = KDGetEncaseGroupSlot(data.slot);
-				let item = null;
-				if (data.restraint) {
+			KDInputSetNPCRestraint(data);
 
-					let restraint = KDRestraint({name: data.restraint});
-					if (KDRowItemIsValid(restraint, slot, row)) {
-						KinkyDungeonCheckClothesLoss = true;
-						item = KDSetNPCRestraint(data.npc, slot.id, {
-							lock: data.lock,
-							name: data.restraint,
-						});
-						if (!data.noInventory && KinkyDungeonInventoryGetSafe(data.restraint)) {
-							KinkyDungeonInventoryGetSafe(data.restraint).quantity =
-							(KinkyDungeonInventoryGetSafe(data.restraint).quantity || 1) - 1;
-							if (KinkyDungeonInventoryGetSafe(data.restraint).quantity <= 0) {
-								KinkyDungeonInventoryRemoveSafe(KinkyDungeonInventoryGetSafe(data.restraint));
-								KDSortInventory(KDPlayer());
-							}
-						}
-					}
-				} else {
+			let enemy = KDGetGlobalEntity(data.npc);
 
-					KinkyDungeonCheckClothesLoss = true;
-					item = KDSetNPCRestraint(data.npc, slot.id, undefined);
+			KinkyDungeonSendTextMessage(10,
+				TextGet("KDTieUpEnemy" + (!data.restraint ? "Negative" : ""))
+					.replace("RSTR", KDGetItemNameString(data.restraint))//TextGet("Restraint" + KDRestraint(item)?.name))
+					.replace("ENNME", TextGet("Name" + enemy?.Enemy.name))
+					.replace("AMNT", "" + Math.round(100 * enemy?.boundLevel / enemy?.Enemy.maxhp)),
+				"#ffffff", 1);
 
-				}
-				if (item && !data.noInventory) {
-					let restraint = KDRestraint(item);
-					if (restraint?.inventory) {
-						if (!KinkyDungeonInventoryGetSafe(item.name)) {
-							KinkyDungeonInventoryAdd({
-								name: item.name,
-								//curse: curse,
-								id: item.id,
-								type: LooseRestraint,
-								//events:events,
-								quantity: 1,
-								showInQuickInv: KinkyDungeonRestraintVariants[item.name] != undefined,});
-
-							KDSortInventory(KDPlayer());
-						} else KinkyDungeonInventoryGetSafe(item.name).quantity += 1;
-					}
-				}
+			if (data.time) {
+				KinkyDungeonAdvanceTime(1, true);
 			}
+			if (data.npc > 0) {
+				KDSetCollFlag(data.npc, "restrained", 1);
+				KDSetCollFlag(data.npc, "restrained_recently", 24);
+			}
+			KinkyDungeonCheckClothesLoss = true;
 		break;
 	}
 	if (data.GameData) {

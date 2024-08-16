@@ -37,6 +37,11 @@ let KDDialogueTriggers = {
 		["dressmaker"], undefined, undefined, ["zombie", "skeleton", "robot"],
 		undefined, undefined),
 
+	"OfferSenseDep": KDDialogueTriggerOffer("OfferSenseDep", ["Leather", "Illusion"], ["sensedep"],
+		["parole", "", "chase", "jail"],  ["Dom", "Brat"],
+		["dressmaker", "ninja", "leatherRestraints", "leatherRestraintsHeavy"], undefined, undefined, ["zombie", "skeleton", "robot"],
+		undefined, undefined),
+
 	"OfferArmor": KDDialogueTriggerOffer("OfferArmor", ["Metal", "Illusion"], ["shackleGag"],
 		["parole", "", "chase", "jail"],  ["Sub", "Brat"],
 		["shackleGag", "metal", "shackleRestraints", "chain"], undefined, undefined, ["zombie", "skeleton", "robot"],
@@ -131,12 +136,12 @@ let KDDialogueTriggers = {
 		["apprentice", "witch"], ["iceRestraints", "ice", "water"], undefined, ["zombie", "skeleton", "robot"],
 		undefined, undefined),
 
-	"OfferLatex": KDDialogueTriggerOffer("OfferLatex", ["Latex", "Conjure"], ["latexRestraints", "latexRestraintsHeavy"],
+	"OfferLatex": KDDialogueTriggerOffer("OfferLatex", ["Latex", "Conjure"], ["latexRestraints", "latexpetsuit", "latexRestraintsHeavy"],
 		["parole", "", "chase", "jail"],  ["Sub", "Brat"],
 		["latexRestraints", "latexRestraintsHeavy", "alchemist"], undefined, undefined, ["zombie", "skeleton", "robot"],
 		undefined, undefined),
 
-	"OfferLatex2": KDDialogueTriggerOffer("OfferLatex", ["Latex", "Conjure"], ["latexRestraints", "latexRestraintsHeavy"],
+	"OfferLatex2": KDDialogueTriggerOffer("OfferLatex", ["Latex", "Conjure"], ["latexRestraints", "latexpetsuit", "latexRestraintsHeavy"],
 		["parole", "", "chase", "jail"],  ["Dom", ""],
 		["latexRestraints", "latexRestraintsHeavy", "alchemist"], undefined, undefined, ["zombie", "skeleton", "robot"],
 		undefined, undefined),

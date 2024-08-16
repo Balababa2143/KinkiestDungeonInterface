@@ -178,7 +178,8 @@ function KinkyDungeonCanPlay(enemy) {
 	return (KDGameData.PrisonerState == 'parole' || KDGameData.PrisonerState == 'jail' || (!KDHostile(enemy)
 		&& !(KDAllied(enemy) && !KDEnemyHasFlag(enemy, "allyPlay"))))
 		&& (enemy.ambushtrigger || !KDAIType[KDGetAI(enemy)] || !KDAIType[KDGetAI(enemy)].ambush)
-		&& !enemy.Enemy.Behavior?.noPlay;
+		&& !enemy.Enemy.Behavior?.noPlay
+		&& enemy.hp > 0.52;
 }
 
 function KinkyDungeonCheckRelease() {
@@ -330,9 +331,10 @@ function KinkyDungeonStartChase(enemy, Type, faction, force) {
 			KDGameData.PrisonerState = "chase";
 	} else if (KDLocalChaseTypes.includes(Type) && (enemy || faction)) {
 		for (let e of KDMapData.Entities) {
-			if ((KDHostile(e)
+			if ((KDHostile(e, undefined)
 				|| (KDSevereTypes.includes(Type)
-					&& KDFactionAllied(faction ? faction : KDGetFaction(enemy), e)
+					&& KDFactionAllied(faction ? faction : KDGetFaction(enemy), e, undefined,
+						-KDOpinionRepMod(e, KDPlayer())) // We lower the strength of faction alliances based on opinion
 					&& KDGetHonor(KDGetFaction(e), faction ? faction : KDGetFaction(enemy)) < 0.1))
 				&& (!enemy || !enemy.Enemy.tags.peaceful)
 				&& KinkyDungeonCheckLOS(e, KinkyDungeonPlayerEntity, 7, 8, false, false)) {
@@ -1460,7 +1462,8 @@ function KinkyDungeonDefeat(PutInJail, leashEnemy) {
 			let tile = KinkyDungeonTilesGet(X + "," + Y);
 			if (tile && ((tile.Jail && tile.ReLock) || tile.OGLock) && (KinkyDungeonMapGet(X, Y) == 'd' || KinkyDungeonMapGet(X, Y) == 'D')) {
 				KinkyDungeonMapSet(X, Y, 'D');
-				if (tile && !tile.Lock) {
+				if (tile && !tile.Lock
+					&& (!tile.Jail || (KDGameData.PrisonerState == 'jail' || KDistChebyshev(KDPlayer().x - X), KDPlayer().y - Y) > 2.5)) {
 					tile.Lock = tile.OGLock || "Red";
 					tile.Type = "Door";
 					KDUpdateDoorNavMap();
@@ -1579,7 +1582,9 @@ function KDKickEnemies(nearestJail, ignoreAware, Level, noCull) {
 							}
 						}
 
-					if (!KDEnemyHasFlag(e, "imprisoned") && e.boundLevel && !KDHelpless(e)) e.boundLevel = 0;
+					if (!KDEnemyHasFlag(e, "imprisoned") && e.boundLevel && !KDHelpless(e)) {
+						KDSetToExpectedBondage(e, -1);
+					}
 				}
 			if (e.hostile < 9000) e.hostile = 0;
 			if (e.playWithPlayer > 0) {
@@ -1588,13 +1593,16 @@ function KDKickEnemies(nearestJail, ignoreAware, Level, noCull) {
 			}
 			KDExpireFlags(e);
 			KDResetIntent(e, {});
-			if (e.boundLevel) {
+			if (e.boundLevel && !KDIsImprisoned(e)) {
 				if (canCull && KDHelpless(e)) {
 					KDRemoveEntity(e, false, true, true);
 				} else {
 					enemies.push(e);
 				}
-				e.boundLevel = 0;
+				if (KDGetFaction(e) != "Player"
+					&& KDFactionRelation(KDGetFaction(e), KDMapData.MapFaction) > 0.5) {
+					KDRunNPCEscapeTick(e.id, 12 + Math.floor(24 * KDRandom()));
+				}
 			} else {
 				enemies.push(e);
 			}
@@ -1668,7 +1676,7 @@ function KDKickEnemy(e, minDist = 10) {
 			}
 
 
-			if (e.boundLevel) e.boundLevel = 0;
+			if (e.boundLevel) KDSetToExpectedBondage(e, -1);
 		}
 		if (e.hostile < 9000) e.hostile = 0;
 		KDExpireFlags(e);

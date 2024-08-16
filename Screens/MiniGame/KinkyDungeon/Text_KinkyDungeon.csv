@@ -31,7 +31,7 @@ RestartNeededRU,"Restart required!"
 
 KDVersion,"Version"
 KinkyDungeon,"Kinky Dungeon"
-KDVersionStr,"5.3.23"
+KDVersionStr,"5.3.35 RC4"
 KDLogo2,"By Ada18980"
 Intro,"You are an adventurer descending into an ancient underground city of magic."
 Intro2,"Beneath its depths lies the Mistress' Staff, an artifact of untold power."
@@ -45,12 +45,17 @@ KDToggleTabUI,UI
 KDToggleTabControls,Controls
 KDToggleTabKeybindings,Keybindings
 
+
+KDToggleBackgrounds,Show Background Art
+KDToggleShowNPCSprites,Show free characters on map
+KDToggleShowJailedNPCSprites,Detailed jailed NPCs (experimental)
 KDToggleStruggleBars,Show Struggle Bars
 KDToggleAllowSusMods,Allow Suspicious Mods
 KDToggleAutoLoadMods,Auto Load Mods (offline only)
 KDToggleSpellBook,Classic Inventory Background
 KDToggleSkipIntro,Skip Intro
 KDToggleNoForceGreet,No Forced Greetings
+KDToggleShowZoom,Show Zoom Buttons
 KDToggleShowRestraintOnHover,Show Restraint Info on Escape Hover
 KDToggleForceWarnings,Always Show Warnings
 KDToggleEnableMinimap,Always Show Minimap
@@ -98,8 +103,6 @@ KDToggleNearestNeighbor,Pixelated GFX (needs restart)
 KDToggleAutoCrouchOnTrip,Auto-Crouch when Tripped
 KDToggleRetroAnim,Retro Animations
 KDToggleFlipStatusBars,Flip Status Bars
-KDToggleZoomIn,Zoom In
-KDToggleZoomOut,Zoom Out
 KDToggleHelper,Reduce Accidental Wall Clicks
 KDToggleNipples,Enable Nipples
 KDToggleNippleToysOption,Show Nipple Toys Over Bras
@@ -340,6 +343,9 @@ KinkyDungeonStatDescSavourTheTaste,"Drinking a potion takes 2 turns"
 KinkyDungeonStatMagicHands,"Magic Hands"
 KinkyDungeonStatDescMagicHands,"Enemies can add restraints underneath existing restraints."
 
+KinkyDungeonStatStartLatexIntegration,"Fully Integrated"
+KinkyDungeonStatDescStartLatexIntegration,"Start with your body sealed in an adhesive layer of latex."
+
 KinkyDungeonStatStartCyberDollStorage,"Doll Processing"
 KinkyDungeonStatDescStartCyberDollStorage,"Start atop a conveyor on your way to be sealed away inside the Facility."
 KinkyDungeonStatStartCyberDoll,"Cyber Doll"
@@ -537,6 +543,10 @@ KinkyDungeonStatUnmasked,"Unmasked"
 KinkyDungeonStatDescUnmasked,"Hoods and full-face covering masks do not appear, but blindfolds are more powerful. Does not include kigurumi masks."
 KinkyDungeonStatNoKigu,"No Kigurumi Masks"
 KinkyDungeonStatDescNoKigu,"Removes face-mimicking masks from the game."
+KinkyDungeonStatNoHood,"No Hoods"
+KinkyDungeonStatDescNoHood,"Removes hoods from the game."
+KinkyDungeonStatNoSenseDep,"No Sense Deprivation"
+KinkyDungeonStatDescNoSenseDep,"Removes sensory deprivation hood/mask from the game."
 KinkyDungeonStatBlackout,"Blackout"
 KinkyDungeonStatDescBlackout,"Blindfolds are stronger. While blindfolded you can only see enemies next to you."
 KinkyDungeonStatNoBlindfolds,"No Blindfolds"
@@ -1008,6 +1018,8 @@ KinkyDungeonKeySkip,Cancel/Back
 KinkyDungeonKeyEnter,Enter
 KinkyDungeonKeyAInspect,Inspect
 KinkyDungeonKeyMap,Expand Minimap
+KinkyDungeonKeyZoomOut,Zoom Out
+KinkyDungeonKeyZoomIn,Zoom In
 KinkyDungeonKeyWaitInterrupt,Wait till Interrupted
 KinkyDungeonKeyMakeNoise,Make Noise
 KinkyDungeonKeyCrouch,Crouch
@@ -1078,6 +1090,7 @@ DungeonNameGoldVault,Ancient Vault
 DungeonNamevault,Ancient Halls
 DungeonNameSlaveMarket,Slave Market
 DungeonNameElevatorRoom,Elevator Hall
+DungeonNameElevatorEgyptian,Dark Passageway
 DungeonNameCaldera,Caldera Beach
 DungeonNameTempleAir,Temple of Air
 DungeonNameTempleFire,Temple of Fire
@@ -1295,10 +1308,10 @@ KinkyDungeonInventoryItemBolaDesc2,"Deals 90 points of binding, 40 chain damage,
 KinkyDungeonInventoryItem3BolaDesc,"A pair of weights attached to a rope. Can be thrown."
 KinkyDungeonInventoryItem3BolaDesc2,"Deals 90 points of binding, 40 chain damage, and rooting a target for 4 turns."
 KinkyDungeonInventoryItemBomb,Bomb
-KinkyDungeonInventoryItemBombDesc,"After a 5 turn fuse, deals 100 blast damage in a 3x3 area."
-KinkyDungeonInventoryItemBombDesc2,"Not a toy!"
-KinkyDungeonInventoryItem3BombDesc,"After a 5 turn fuse, deals 100 blast damage in a 3x3 area."
-KinkyDungeonInventoryItem3BombDesc2,"Not a toy!"
+KinkyDungeonInventoryItemBombDesc2,"After a 5 turn fuse, deals 100 blast damage in a 3x3 area."
+KinkyDungeonInventoryItemBombDesc,"Not a toy!"
+KinkyDungeonInventoryItem3BombDesc2,"After a 5 turn fuse, deals 100 blast damage in a 3x3 area."
+KinkyDungeonInventoryItem3BombDesc,"Not a toy!"
 KinkyDungeonInventoryItemBombUse,You light the fuse!
 KinkyDungeonInventoryItemKnife,Knife
 KinkyDungeonInventoryItemLockpick,Lockpick
@@ -1574,7 +1587,7 @@ KinkyDungeonInventoryItemTheEncaserDesc,"You can enter slime form for 25 turns, 
 KinkyDungeonInventoryItemTheEncaserDesc2,"Deals glue damage. Roots targets for 2 turns on a hit. Offhand: Roots targets on hit."
 KinkyDungeonInventoryItemFourSeasons,Four Seasons
 KinkyDungeonInventoryItemFourSeasonsDesc,"Activate to reduce the cost of your next fire, water/ice, air/lightning, and earth spell by 50, once per element."
-KinkyDungeonInventoryItemFourSeasonsDesc2,"Deals shadow damage. +25% fire, ice, acid, crush, electric, blast damage. Offhand: Applies passive bonus."
+KinkyDungeonInventoryItemFourSeasonsDesc2,"Deals shadow damage. +25% fire, ice, soap, crush, electric, blast damage. Offhand: Applies passive bonus."
 KinkyDungeonInventoryItemArbiter,The Arbiter
 KinkyDungeonInventoryItemArbiterDesc,"I have altered the rules. Pray I do not alter them further."
 KinkyDungeonInventoryItemArbiterDesc2,"Deals chain damage with 125% binding efficiency, +40 shadow damage to summons. +25% glue and chain damage. Weapon Ability: Disarm"
@@ -3039,7 +3052,9 @@ KinkyDungeonStruggleCantPickRubberLock,"The lock is made of solid rubber. You ca
 KinkyDungeonStruggleUnlockNoRubberKey,"You need something sharp to cut the lock."
 KinkyDungeonStruggleCantPickPurpleLock,"The lock doesn't even have a keyhole to pick!"
 KinkyDungeonStruggleCantPickDiscLock,"You need a special tool to pick this kind of lock."
-KinkyDungeonStruggleCantPickCyberLock,"The lock doesn't have a keyhole to pick."
+KinkyDungeonStruggleCantPickCyberLock,"The lock is technological and does not use a key."
+KinkyDungeonStruggleCantPickCyber2Lock,"The lock is technological and does not use a key."
+KinkyDungeonStruggleCantPickCyber3Lock,"The lock is technological and does not use a key."
 KinkyDungeonStruggleCantPickHiSecLock,"The lock is brimming with security features and is nigh impossible to pick!"
 
 KinkyDungeonStruggleUnlockJammed,"The key sticks in the lock and jams, mangling the key!"
@@ -3832,7 +3847,6 @@ RestraintDuctTapeCollar,Living Charm Collar
 RestraintDuctTapeCollarDesc,"This collar is designed to make sure its wearer does not escape their charms."
 RestraintDuctTapeCollarDesc2,"It will occasionally cause charms to appear out of nowhere and bind the wearer.  Effect increases in speed based on the number of charms you have on you."
 
-
 RestraintPanelGag,Leather Panel Gag
 RestraintPanelGagDesc,"A gag that seals your lips tightly and stuffs your mouth with a ball."
 RestraintPanelGagDesc2,"Keep your mouth to yourself!"
@@ -3866,6 +3880,10 @@ RestraintMagicPetsuit,Magic Petsuit
 RestraintMagicPetsuitDesc,"A set of straps and buckles enchanted with a powerful spell to render you helpless."
 RestraintMagicPetsuitDesc2,"It's warded against cutting by nonmagic blades."
 
+RestraintLatexPetsuit,Latex Petsuit
+RestraintLatexPetsuitDesc,"A skintight suit that encases you in a tight rubber embrace."
+RestraintLatexPetsuitDesc2,"The thick latex is resistant to even the most determined struggles."
+
 RestraintMysticDuctTapeHead,Blessed Wrappings (Head)
 RestraintMysticDuctTapeHeadDesc,"A band of magic embalming ribbon wrapped tight around your face."
 RestraintMysticDuctTapeHeadDesc2,"It clings, almost of its own accord, but seems vulnerable to both cutting and stretching."
@@ -3894,6 +3912,62 @@ RestraintMysticDuctTapeCollar,Living Blessed Wrappings Collar
 RestraintMysticDuctTapeCollarDesc,"This collar is designed to make sure its wearer does not escape their wrappings."
 RestraintMysticDuctTapeCollarDesc2,"It will occasionally cause blessed wrappings to appear out of nowhere and bind the wearer.  Effect increases in speed based on the number of blessed wrappings you have on you."
 
+RestraintVinylTapeHands,Tape (Hands)
+RestraintVinylTapeHandsDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeHandsDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeArms,Tape (Arms)
+RestraintVinylTapeArmsDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeArmsDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeLegs,Tape (Legs)
+RestraintVinylTapeLegsDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeLegsDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeFeet,Tape (Feet)
+RestraintVinylTapeFeetDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeFeetDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeHead,Tape (Head)
+RestraintVinylTapeHeadDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeHeadDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeMouth,Tape Gag
+RestraintVinylTapeMouthDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeMouthDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeMouthFull,Tape Mouth Wrap
+RestraintVinylTapeMouthFullDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeMouthFullDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeBoots,Tape Wrapping (Toes)
+RestraintVinylTapeBootsDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeBootsDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeHeadMummy,Tape Wrapping (Head)
+RestraintVinylTapeHeadMummyDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeHeadMummyDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeArmsMummy,Tape Wrapping (Arms)
+RestraintVinylTapeArmsMummyDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeArmsMummyDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeFeetMummy,Tape Wrapping (Feet)
+RestraintVinylTapeFeetMummyDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeFeetMummyDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeLegsMummy,Tape Wrapping (Legs)
+RestraintVinylTapeLegsMummyDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeLegsMummyDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+RestraintVinylTapeCollar,Living Tape Collar
+RestraintVinylTapeCollarDesc,"This collar is designed to make sure its wearer does not escape their tape."
+RestraintVinylTapeCollarDesc2,"It will occasionally cause tape to appear out of nowhere and bind the wearer. Effect increases in speed based on the amount of tape you have on you."
+
+
+RestraintAutoTapeRaw,Autotape
+RestraintAutoTapeRawDesc,"Comes in convenient cartridges for machine loading."
+RestraintAutoTapeRawDesc2,"A specialized tape used for capturing purposes during the time of the Old Civilization. Despite its appearance, it contains a gas-permeable membrane that allows ventilation, while its hydrophobic properties resist solvents that would otherwise disrupt the adhesive bond. The adhesive layer is special in that it activates only in contact with other auto-tape, making it safer to use and remove."
+
+RestraintVinylTapeRaw,Rubberized Tape
+RestraintVinylTapeRawDesc,"Sleek and shiny tape for the bondage enthusiast."
+RestraintVinylTapeRawDesc2,"A stretchy, waterproof tape that sticks only to itself. As such, it can be safely applied and removed from people without causing discomfort. Its stretchiness allows it to be rolled on extra tight, and it won't break if struggled against."
+
+RestraintCharmRaw,Magic Charms
+RestraintCharmRawDesc,"Magical charms from the ancient graveyard."
+RestraintCharmRawDesc2,"Its magic is not enough to protect it from damage, but it is surprisingly effective at restraining both intruders and cursed entities."
+
+RestraintMysticDuctTapeRaw,Blessed Wrapping
+RestraintMysticDuctTapeRawDesc,"A layer of magic embalming ribbon."
+RestraintMysticDuctTapeRawDesc2,"It clings of its own accord to intruders and naughty catgirls."
 
 RestraintAutoTapeHands,Autotape (Hands)
 RestraintAutoTapeHandsDesc,"Sticky tape made from a metallic material. Used to great effect in police situations."
@@ -3916,6 +3990,9 @@ RestraintAutoTapeBootsDesc2,"It's very sticky and tough but you could probably g
 RestraintAutoTapeMouth,Autotape (Mouth)
 RestraintAutoTapeMouthDesc,"Sticky tape made from a metallic material. Used to great effect in police situations."
 RestraintAutoTapeMouthDesc2,"It's very sticky and tough but you could probably get a knife through it."
+RestraintAutoTapeMouthFull,Autotape (Mouth Wrap)
+RestraintAutoTapeMouthFullDesc,"Sticky tape made from a metallic material. Used to great effect in police situations."
+RestraintAutoTapeMouthFullDesc2,"It's very sticky and tough but you could probably get a knife through it."
 RestraintAutoTapeCollar,Living Auto Tape Collar
 RestraintAutoTapeCollarDesc,"This collar is designed to make sure its wearer does not escape their tape."
 RestraintAutoTapeCollarDesc2,"It will occasionally cause tape to appear out of nowhere and bind the wearer.  Effect increases in speed based on the amount of tape you have on you."
@@ -4572,6 +4649,14 @@ LootChestKiguMask,"You a padded metal blindfold, glowing magnificently, along wi
 RestraintKiguMaskDesc2,"A well-fitted mask, covering your entire head neatly and locking in place."
 RestraintKiguMaskDesc,"It has eyeholes for you to somewhat see out of, but blocks access to the face."
 
+RestraintLeatherHood,Sensory Hood
+RestraintLeatherHoodDesc2,"A well-fitted hood that covers your head and muffles sounds."
+RestraintLeatherHoodDesc,"No eyeholes. Integrated blindfold and gag. Total darkness."
+
+RestraintLeatherMask,Sensory Mask
+RestraintLeatherMaskDesc2,"A well-fitted mask that covers your face and muffles sounds."
+RestraintLeatherMaskDesc,"No eyeholes. Integrated blindfold and gag. Total darkness."
+
 RestraintShadowLatexHeels,Shadow Heels
 RestraintShadowLatexHeelsDesc,"A set of impractical heels that clasp around your ankles. They make it hard to walk."
 RestraintShadowLatexHeelsDesc2,"The material is stronger than leather, and flexes to make struggling difficult."
@@ -4596,6 +4681,9 @@ RestraintShadowLatexStrongBoxbinderDesc2,"Its grip encases you tightly, but the 
 RestraintShadowLatexLegbinder,Shadow Legbinder
 RestraintShadowLatexLegbinderDesc,"A tight legbinder made of an otherworldly material. It is shiny and reflective, and you can see stars twinkling as you observe your predicament."
 RestraintShadowLatexLegbinderDesc2,"Its grip encases you tightly, but the material is weaker than most metals."
+RestraintShadowLatexPetsuit,Shadow Latex Petsuit
+RestraintShadowLatexPetsuitDesc,"A tight petsuit made of an otherworldly material. It is shiny and reflective, and you can see stars twinkling as you observe your predicament."
+RestraintShadowLatexPetsuitDesc2,"Its grip encases you tightly, but the material is weaker than most metals."
 RestraintObsidianYoke,Obsidian Yoke
 RestraintObsidianYokeDesc,"A yoke made from shining obsidian, stars glittering in the darkness. It pins your arms uselessly at your sides."
 RestraintObsidianYokeDesc2,"It's made of a dark, glistening volcanic metal."
@@ -4826,6 +4914,10 @@ RestraintNylonCableHarness,Nylon Cables (Harness)
 RestraintNylonCableHarnessDesc,"Cables made from nylon polymer. Very strong and self-tightening, but vulnerable to sharp edges."
 RestraintNylonCableHarnessDesc2,"They are wrapped methodically around your body!"
 
+RestraintRibbonRaw,Magic Ribbons
+RestraintRibbonRawDesc,"Magically sealed ribbons to teach intruders a lesson."
+RestraintRibbonRawDesc2,"The magic is powerful enough to ward off most blades, creating a true predicament for one who is trapped by these."
+
 RestraintRibbonArms,Magic Ribbons (Arms)
 RestraintRibbonArmsDesc,"Those ribbons will hold you tight~"
 RestraintRibbonArmsDesc2,"I've put a magic seal in that bow-knot to keep it secure!"
@@ -4900,6 +4992,22 @@ RestraintSlimeCollar,Living Slime Collar
 RestraintSlimeCollarDesc,"This collar is designed to make sure its wearer does not escape their slime."
 RestraintSlimeCollarDesc2,"It will occasionally cause slime to appear out of nowhere and bind the wearer.  Effect increases in speed based on the amount of slime you have on you."
 
+
+RestraintHardSlimeRaw,Rubber
+RestraintHardSlimeRawDesc,"Made from hardened slime."
+RestraintHardSlimeRawDesc2,"The classic smooth, shiny material for full encasement."
+
+RestraintSlimeRaw,Slime
+RestraintSlimeRawDesc,"A semi-organic substance of alchemical origin."
+RestraintSlimeRawDesc2,"It has a mind of its own, and tends to spread if not properly contained."
+
+RestraintHardProtoSlimeRaw,Proto Rubber
+RestraintHardProtoSlimeRawDesc,"Made from hardened proto rubber."
+RestraintHardProtoSlimeRawDesc2,"A hardened form of the essence of latex."
+
+RestraintProtoSlimeRaw,Proto Slime
+RestraintProtoSlimeRawDesc,"Alchemical rubber in its simplest form. Amorphous."
+RestraintProtoSlimeRawDesc2,"Often forms strange growths, seeking damsels to encase."
 
 RestraintHardSlimeBoots,Rubber (Feet)
 RestraintHardSlimeBootsDesc,"Sticky rubber that has fused itself into a skintight layer."
@@ -4980,7 +5088,9 @@ RestraintHardProtoSlimeCollar,Living Proto-Rubber Collar
 RestraintHardProtoSlimeCollarDesc,"This collar is designed to make sure its wearer does not escape the rubber."
 RestraintHardProtoSlimeCollarDesc2,"It will occasionally cause proto-rubber to appear out of nowhere and bind the wearer.  Effect increases in speed based on the amount of proto-rubber you have on you."
 
-
+RestraintDuctTapeRaw,Sticky Tape
+RestraintDuctTapeRawDesc,"Extra-strength utility tape, for your secure packaging needs."
+RestraintDuctTapeRawDesc2,"It's quite sticky, the adhesive requires some force to get off."
 
 RestraintDuctTapeHands,Tape Mittens
 RestraintDuctTapeHandsDesc,"Sticky tape that holds your hands into a fist!"
@@ -5541,6 +5651,13 @@ KinkyDungeonSpellDescriptionLimitSurge,"Spend 50 WP to fully restore Stamina, al
 
 KinkyDungeonSpellBattleTrance,"Battle Trance"
 KinkyDungeonSpellDescriptionBattleTrance,"While at 40 Battle Rhythm, you attack twice per turn."
+
+KinkyDungeonSpellCombatManeuver,"Combat Maneuver"
+KinkyDungeonSpellDescriptionCombatManeuver,"When Battle Trance is active, you gain a free move if the target is defeated before the second attack hits."
+
+
+
+
 
 KinkyDungeonSpellRogueTraps,Devious Ingenuity
 KinkyDungeonSpellDescriptionRogueTraps,"Trap-type spells and consumables no longer require you to channel them, but still have a delay before arming."
@@ -6326,7 +6443,7 @@ KinkyDungeonSpellTargetPetsuit,Choose a helpless target
 KinkyDungeonSpellDisplayStand,Conjure Display Stand
 KinkyDungeonSpellDescriptionDisplayStand,"Target only Helpless enemies. Creates a fixture that increases passive mana recovery from mana pool, restores 50 Charge, and makes nearby enemies take 50% more charm/psychic damage."
 KinkyDungeonSpellCastDisplayStand,"You conjure a fixture to hold your helpless target in place!"
-KinkyDungeonSpellCastSelfDisplayStand,"You watch in horror as your own creation surrounds you, locking you in place with a hefty click!"
+KinkyDungeonSpellCastSelfDisplayStand,"You watch in horror as your own creation encircles you, locking you in place with a hefty click!"
 KinkyDungeonSpellTargetDisplayStand,Choose a helpless target
 
 
@@ -6792,7 +6909,7 @@ KinkyDungeonSpellCastFromBook,Cast Spell (XXX turn delay)
 KinkyDungeonEndVibeCease,You feel the vibrations leaving your body...
 KinkyDungeonStartVibe,You feel your toys start to buzz...
 KinkyDungeonStartVibeContinue,You your toys continue to buzz...
-KinkyDungeonStartVibeRemote,The EnemyName remotely causes your toys to to buzz!!!
+KinkyDungeonStartVibeRemote,The EnemyName remotely causes your toys to buzz!!!
 KinkyDungeonPlugged,You feel the plugs inside you while walking.
 KinkyDungeonVibing0,Your toys pulse and tingle occasionally.
 KinkyDungeonVibing1,Your toys tease you and buzz gently...
@@ -9334,7 +9451,7 @@ KinkyDungeonRemindJailPlayHelplessElf1,"You won't get me like this!"
 KinkyDungeonRemindJailPlayHelplessElf2,"I can't get free!"
 KinkyDungeonRemindJailPlayBratElf0,"An outsider!"
 KinkyDungeonRemindJailPlayBratElf1,"Hide!"
-KinkyDungeonRemindJailPlayBratElf2,"Do not pursue me!"
+KinkyDungeonRemindJailPlayBratElf2,"I have done nothing worthy of punishment!"
 KinkyDungeonRemindJailPlaySubElf0,"I have come to study human customs. Teach me about Domination."
 KinkyDungeonRemindJailPlaySubElf1,"The outsiders have such... strange and interesting practices."
 KinkyDungeonRemindJailPlaySubElf2,"You seem to have many skills. Teach me about... rope."
@@ -10306,6 +10423,7 @@ KinkyDungeonSpecialStaffFlame,Ignite torches and nearby objects
 KinkyDungeonSpecialStaffIncineration,Ignite torches and nearby objects
 
 KDCategoryToggles,Preferences
+KDCategoryToggles2,Preferences 2
 KDCategoryMulticlass,Multiclass
 KDCategoryMajor,Game-Changing
 KDCategoryRestriction,Restriction
@@ -10475,6 +10593,35 @@ dOfferKiguForce_Yes,"Fine, you've convinced me."
 dOfferKiguForce_YesGag,"(Giggle and nod)"
 dOfferKiguForce_No,"I don't have time for this. (PERCENT chance to avoid)"
 dOfferKiguForce_NoGag,"(Shake your head and moan) (PERCENT chance to avoid)"
+
+
+
+
+rOfferSenseDep,"(The SPEAKER smiles as she hides her hands behind her back)|Have you heard of 'sensory deprivation'?"
+rOfferSenseDepYes,"(The SPEAKER presents a RESTRAINT)|Well, I have just the thing for you!|It's nice and comfy, and it has earmuffs built in!"
+rOfferSenseDepYes_Yes,"(The SPEAKER starts pulling the hood over your head)|Let's get you laced in!"
+rOfferSenseDepYes_No,"(The SPEAKER giggles)|Alrighty.|You don't know what you're missing out on~"
+rOfferSenseDepNo,"(The SPEAKER doesn't seem to hear you)"
+rOfferSenseDepForce,"(The SPEAKER looks at you with a devious grin)|Oh, but it's so much fun!|You can run around bumping into things!|It's the ultimate adventure!"
+rOfferSenseDepForceYes,"(The SPEAKER chuckles)|Truth be told, I wasn't asking~|Now why don't you kneel for me..."
+rOfferSenseDepForce_No,"(The SPEAKER pouts)|I thought it would be fun..."
+rOfferSenseDepForce_Yes,"(The SPEAKER starts pulling the hood over your head)|Let's get you laced in!"
+rOfferSenseDepForce_Failure,"(The SPEAKER surprises you with a crop to the thigh)|(You involuntarily kneel in front of her)|That's better~|Now why don't you say good night~"
+
+dOfferSenseDep_Yes,"Of course! I love it!"
+dOfferSenseDep_YesGag,"(Nod eagerly)"
+dOfferSenseDep_No,"I prefer 'situational awareness'."
+dOfferSenseDep_NoGag,"(Shake your head in alarm)"
+
+dOfferSenseDepYes_Yes,"Doll me up!"
+dOfferSenseDepYes_YesGag,"(Nod again)"
+dOfferSenseDepYes_No,"Actually, that sounds stifling..."
+dOfferSenseDepYes_NoGag,"(Shake your head)"
+
+dOfferSenseDepForce_Yes,"That doesn't sound that bad actually..."
+dOfferSenseDepForce_YesGag,"(Giggle and nod)"
+dOfferSenseDepForce_No,"I don't have time for this. (PERCENT chance to avoid)"
+dOfferSenseDepForce_NoGag,"(Shake your head and groan) (PERCENT chance to avoid)"
 
 
 
@@ -12025,6 +12172,9 @@ rGenericAllyJoinParty_Leave,"(You decide not to.)"
 dGenericAllyShop,"(Sell items)"
 dGenericAllyShopBuy,"(Buy items)"
 
+dGenericAllyLeash,"(Pick up her leash)"
+dGenericAllyReleaseLeash,"(Release her leash)"
+
 NameDollmakerBoss1,"Dollmaker"
 KillDollmakerBoss1,"The Dollmaker throws a device to the ground, teleporting her instantly!"
 AttackDollmakerBoss1Bind,"The Dollmaker's necklace flashes as you find yourself suddenly restrained! (+RestraintAdded)"
@@ -12501,6 +12651,36 @@ dPrisonerJail_Pick,"Try to pick her restraints (JAMPERCENT jam chance)"
 dPrisonerJail_Word,Use a command word
 dPrisonerJailJammedRecent_Apologize,Apologize profusely!
 
+
+
+
+rPrisonerJailOwn,"(The SPEAKER sits restrained by your own hand.|Only someone with keys can let her out.)"
+rPrisonerJailOwnNoKeys,"(You don't have any keys that work on the lock)"
+rPrisonerJailOwnUnlockHandsBound,"(You can't help her, bound as tightly as you are...)"
+rPrisonerJailOwnUnlockSlow,"(You unlock her, fumbling around for a while with your bound hands)"
+rPrisonerJailOwnUnlock,"(You unlock the SPEAKER)|Thank you!|Let's get out of here!"
+rPrisonerJailOwnUnlockGagged,"(You unlock the SPEAKER)|Mmmmph!|(She wants to keep her gag...)"
+rPrisonerJailOwnNoPick,"(You don't have any lockpicks)"
+rPrisonerJailOwnPickJam,"(You try to pick the lock...)|(Click! A safety shield locks securely into place!)|(Looks like the SPEAKER will be staying here for a while...)"
+rPrisonerJailOwnPickHandsBound,"(You can't pick the lock with your hands bound)"
+rPrisonerJailOwnPick,"(After a while, you free the SPEAKER)|Thank you!|Let's get moving!"
+rPrisonerJailOwnPickGagged,"(After a while, you free the SPEAKER)|Mmmmph!|(She shakes her head when you go for her gag...)"
+rPrisonerJailOwnWordNoMana,"(You don't have enough mana for a command word)"
+rPrisonerJailOwnWordNoSpeak,"(Try as you might, your mouth is sealed tight)"
+rPrisonerJailOwnWord,"(You utter a command word to free the SPEAKER)|Many thanks!|Let's go!"
+rPrisonerJailOwnWordGagged,"(You utter a command word to free the SPEAKER)|Mmmmph!|(She locks her gag back on...)"
+rPrisonerJailOwnJammed,"(The SPEAKER is locked in high-security manacles.|The safety shield has been triggered, making it impossible to help her.)"
+
+dPrisonerJailOwn_Unlock,Use a key to unlock her
+dPrisonerJailOwn_Pick,"Try to pick her restraints"
+dPrisonerJailOwn_Reclaim,"Return her to your collection"
+dPrisonerJailOwn_Word,Use a command word
+dPrisonerJailOwn_Flip,Flip her around
+dPrisonerJailOwnJammedRecent_Apologize,Apologize profusely!
+rPrisonerJailOwnFlip,You spin her right round!
+
+
+
 KinkyDungeonDiscovered,An enemy found you while you were busy!
 
 rPrisonerRescue,"(A SPEAKER wakes you up by banging on the bars)|Wake up! Let's get out of here!|(She managed to pick the lock on your cell door)"
@@ -12529,8 +12709,16 @@ rDollDropoffUse,"(The pole rises and immobilizes you!)"
 dDollDropoff_Use,(Stand over it and place your feet in the footrests)
 rFurniture,"(This is a piece of bondage furniture)"
 rFurnitureUse,"(You lock yourself in the furniture!)"
-dFurniture_Prisoner,(Display one of your prisoners)
+rFurnitureEnemyFail,"(The SPEAKER slips out of your grip|before you can lock her in place!)"
+dFurniture_NPC,(Display one of your prisoners)
 dFurniture_Use,(Lock yourself inside)
+
+dFurniture_Enemy,(Try to lock NME into the furniture) (PRCNT% Chance)
+rFurnitureEnemy,"(You close the furniture around your unfortunate victim!)"
+KDFurnEnemyDisabled,"Stun or disable her first."
+dFurniture_EnemyHelpless,(Secure NME into the furniture)
+rFurnitureEnemyHelpless,"(You lock her into the furniture so that she stays in place)"
+
 
 rTableFood,"FOODMSG|(It invites you to partake in its culinary delights)"
 rTableFoodEat,"(You eat the food and feel your willpower rising)"
@@ -19908,6 +20096,10 @@ KinkyDungeonInventoryItemBrowniesDesc2,"Restores 30% willpower. Takes a few turn
 KinkyDungeonBuffHaunted,A playful ghost now accompanies you on your journey.
 KDHaunting,"The ghost haunting you decides to have a little fun! (+RestraintAdded)"
 
+RestraintRopeSnakeRaw,Hemp Rope
+RestraintRopeSnakeRawDesc,"The most common type of bondage rope."
+RestraintRopeSnakeRawDesc2,"Soft and comfy. Great for casual wear!"
+
 RestraintRopeSnakeArmsBoxtie,Boxtie
 RestraintRopeSnakeArmsBoxtieDesc,"A box tie keeping your arms secured behind your back."
 RestraintRopeSnakeArmsBoxtieDesc2,"The ropes squeeze you gently."
@@ -20024,6 +20216,8 @@ KDFilterFiltersArmor,Armor
 KDFilterFiltersSpecial,Special
 KDFilterFiltersEnchanted,Enchanted
 KDFilterFiltersMundane,Mundane
+KDFilterFiltersDisassemble,Can Disassemble
+KDFilterFiltersRaw,Raw Material
 KDFilterFiltersRope,Rope
 KDFilterFiltersMetal,Metal
 KDFilterFiltersLatex,Latex
@@ -20072,6 +20266,10 @@ KDFilterFiltersPanties,Panties
 KDFilterFiltersLegs,Lower
 KDFilterFiltersAnkles,Ankles
 KDFilterFiltersBoots,Boots
+
+RestraintStrongMagicRopeRaw,Spellbound Rope
+RestraintStrongMagicRopeRawDesc,"An enchanted rope with a powerful sealing spell. It cannot be cut by mundane means."
+RestraintStrongMagicRopeRawDesc2,"It almost has a kinky mind of its own."
 
 RestraintStrongMagicRopeArmsBoxtie,Spellbound Boxtie
 RestraintStrongMagicRopeArmsBoxtieDesc,"A box tie keeping your arms secured behind your back."
@@ -20129,6 +20327,11 @@ RestraintStrongMagicRopeCollarDesc,"This collar is designed to make sure its wea
 RestraintStrongMagicRopeCollarDesc2,"It will occasionally cause spellbound ropes to appear out of nowhere and bind the wearer.  Effect increases in speed based on the number of ropes you have on you."
 
 
+
+RestraintWeakMagicRopeRaw,Magic Rope
+RestraintWeakMagicRopeRawDesc,"A novice-level enchanted rope, relatively trivial to untie but resistant to mundane tools."
+RestraintWeakMagicRopeRawDesc2,"Faintly glows with traces of devious thoughts."
+
 RestraintWeakMagicRopeArmsBoxtie,Magic Boxtie
 RestraintWeakMagicRopeArmsBoxtieDesc,"A box tie keeping your arms secured behind your back."
 RestraintWeakMagicRopeArmsBoxtieDesc2,"They glow with a trace of magic."
@@ -20185,6 +20388,10 @@ RestraintWeakMagicRopeCollarDesc,"This collar is designed to make sure its weare
 RestraintWeakMagicRopeCollarDesc2,"It will occasionally cause magic ropes to appear out of nowhere and bind the wearer.  Effect increases in speed based on the number of ropes you have on you."
 
 
+RestraintCelestialRopeRaw,Celestial Rope
+RestraintCelestialRopeRawDesc,"Rope that has been exposed to solar energies."
+RestraintCelestialRopeRawDesc2,"Squeezes the wearer if she tries to escape, so that she knows her place."
+
 RestraintCelestialRopeArmsBoxtie,Holy Boxtie
 RestraintCelestialRopeArmsBoxtieDesc,"A box tie keeping your arms secured behind your back."
 RestraintCelestialRopeArmsBoxtieDesc2,"A set of ropes that emit a calm, soothing aura. They magically stretch to fit your body."
@@ -20240,6 +20447,11 @@ RestraintCelestialRopeCollar,Living Holy Rope Collar
 RestraintCelestialRopeCollarDesc,"This collar is designed to make sure its wearer does not escape their ropes."
 RestraintCelestialRopeCollarDesc2,"It will occasionally cause holy ropes to appear out of nowhere and bind the wearer.  Effect increases in speed based on the number of ropes you have on you."
 
+
+
+RestraintMithrilRopeRaw,Mithril Rope
+RestraintMithrilRopeRawDesc,"Rope made from silver thread, exposed to lunar energies."
+RestraintMithrilRopeRawDesc2,"Lightweight yet unyielding. Truly a high class rope."
 
 
 RestraintMithrilRopeArmsBoxtie,Mithril Boxtie
@@ -20319,6 +20531,11 @@ NameLatexCubeMetal,Mini Metal Cube
 KillLatexCubeMetal,"The liquid metal cube shatters into glittering dust."
 AttackLatexCubeMetal,"The liquid metal cube sticks to you and hardens! (DamageTaken)"
 AttackLatexCubeMetalBind,"The liquid metal cube expands across your body and hardens, taking the form of restraints! (+RestraintAdded)"
+
+
+RestraintLiquidMetalRaw,Liquid Metal
+RestraintLiquidMetalRawDesc,"Primordial latex infused with mineral form."
+RestraintLiquidMetalRawDesc2,"Heavy and weighs the wearer down."
 
 RestraintLiquidMetalBoots,Liquid Metal (Feet)
 RestraintLiquidMetalBootsDesc,"A metallic substance that is both flexible and hard. It weighs you down, reducing evasion, and conducts electricity."
@@ -20456,8 +20673,8 @@ KDVariableModifier_BaseDamageBuffMelee,"AMNT% weapon phys. dmg"
 KDVariableModifier_BaseDamageBuffMagic,"AMNT% weapon magic dmg"
 KDVariableModifier_ElementalEcho,"Infuse weapon AMNT% TYPE"
 KDVariableModifier_ElementalDmg,"AMNT TYPE on attack"
-KDVariableModifier_ManaCost,"AMNT% Mana Costs"
-KDVariableModifier_ManaCostSpecific,"AMNT% TYPE Mana Costs"
+KDVariableModifier_ManaCost,"+AMNT Mana Efficiency"
+KDVariableModifier_ManaCostSpecific,"+AMNT TYPE Mana Efficiency"
 KDVariableModifier_ManaRegen,"AMNT% regen from mana pool"
 KDVariableModifier_ManaRegenOnKill,"AMNT mana pool on capture"
 KDVariableModifier_Sneak,"AMNT% Visibility Reduction"
@@ -20798,6 +21015,7 @@ KinkyDungeonStatDescHighProfile,"Several enemies on each map will be high value,
 
 
 KDTieUpEnemy,"You apply the RSTR to the ENNME! (AMNT% bound)"
+KDTieUpEnemyNegative,"You untie the ENNME! (AMNT% bound)"
 KDTieUp,+AMNT Bondage!
 KDIsBound,"TargetEnemy receives AMNT binding!"
 KDDisabledBonus,"TargetEnemy is disabled and receives an increased AMNT binding!"
@@ -21151,6 +21369,7 @@ KDWaterBubble,A bubble of magic water starts forming around you!
 KDWaterBubbleEngulf,"The gap in the bubble closes, and you are fully sealed within the bubble!"
 KinkyDungeonBuffWaterBubble,"Magical water reduces your accuracy and slows you significantly!"
 KinkyDungeonBuffBattleTrance,You attack twice!
+KinkyDungeonBuffCombatManeuver,You gain a free move from Combat Maneuvers!
 
 KDDoorAccessDenied0,"Access denied."
 KDDoorAccessDenied1,"Facility is under lockdown."
@@ -21313,6 +21532,7 @@ KDBulletTransparency,Make Bullets Transparent
 KDXRay,X-Ray Vision
 KDQuickInv,Show Quick Inventory
 KDToggleSkipTutorial,Skip Tutorial
+KDToggleModCompat,Mod Compatibility Mode
 
 rTutorial,"Welcome to Kinky Dungeon! It looks like this is your first time,|Would you like a brief walkthrough of the interface?"
 dTutorial_LeaveAndDisable,(Leave and Disable Tutorial)
@@ -22176,7 +22396,8 @@ KDPrisonerStat_Opinion,Opinion
 KDPrisonerStat_Training,Training
 KDPrisonerStat_Willpower,Willpower
 
-KDPrisonerNum,Prisoner #NUMR/TTL
+KDPrisonerNum_,Prisoner #NUMR/TTL
+KDPrisonerNum_Guest,Guest #NUMR/TTL
 
 
 KDCollectionSelect,Select a character to examine
@@ -22234,7 +22455,7 @@ KDServants,Servants
 KDPrisoners,Prisoners
 
 KDPromoteNPC,Promote to Servant
-KDDemoteNPC,Demote to Prisoner
+KDDemoteNPC,Demote
 
 KDTeaseAttackResist_LeashGrab,The ENMY tries to grab you!
 
@@ -22731,6 +22952,8 @@ KDSideRoom_Lair_Witch,"Magical Study"
 KDSideRoom_Lair_Hall,"Maintenance Hall"
 KDSideRoom_GoldChest,"Ancient Chest"
 KDSideRoom_ElevatorRoom,"Elevator Hall"
+KDSideRoom_ElevatorEgyptian,"Dark Passageway"
+KDSideRoom_ElevatorEgyptian2,"Dark Passageway"
 KDSideRoom_Caldera,"Caldera Passage"
 KDSideRoom_GoldVault,"Ancient Vault"
 KDSideRoom_AuctionHall,"Auction Hall"
@@ -22756,7 +22979,7 @@ KDRoomType_Chamber,"Chamber"
 KDRoomType_Warden,"Prison"
 KDRoomType_Dollmaker,"Sorting Room"
 
-KDHotbarTutorial,"Click a hotbar slot to assign the current item to it.|You can click the swap button on the right|to switch between your three hotbars.||You can also save and load presets for your hotbar.|These are shared between runs."
+KDHotbarTutorial,"Click a hotbar slot to assign the current item to it.|You can click the swap button on the right|to switch between your five hotbars.||You can also save and load presets for your hotbar.|These are shared between runs."
 
 KDUseFootAffinity,You step on the item and tug to pull it taut...
 KDUseTugAffinity,"You tug furiously against the leash, pulling it taut!"
@@ -22913,6 +23136,7 @@ KinkyDungeonSummonMultiIceWall,A wall of ice rises from the ground!
 KDPoisonBreath,The dragon's breath poisons you!
 KDPoisonSlash,The dragon girl strikes you with poisonous razor leaves!
 KDDragonFlowerSpores,The flower releases soporific spores!
+KinkyDungeonSpellCastDragonFlowerSpores,The flower releases soporific spores!
 KinkyDungeonSpellPoisonBreath,Poison Breath
 
 KDVineSuspend,Vines reach from the ceiling and lift you into the air!
@@ -23267,6 +23491,10 @@ KinkyDungeonSpellLeashSpell,Leash
 KinkyDungeonSpellDescLeashSpell,"Target an NPC to attach a leash. Enemies and unwilling allies must be tied up to 50% first. Target self to release all leashes, or target a leashed NPC to unleash them."
 KinkyDungeonSpellTargetLeashSpell,"Target an NPC to leash, or self to unleash all."
 
+KinkyDungeonSpellLeashSkill,Brat Handler
+KinkyDungeonSpellDescriptionLeashSkill,"Target an NPC with an equipped leash restraint (via Truss'em'up) to attach a leash. Target self to release all leashes, or target a leashed NPC to unleash them."
+KinkyDungeonSpellTargetLeashSkill,"Target an NPC to leash, or self to unleash all."
+
 KinkyDungeonInventoryItemLeashItem,Clip-On Leash
 KinkyDungeonInventoryItemLeashItemDesc,"A beloved favorite of pets and trainers alike."
 KinkyDungeonInventoryItemLeashItemUse,"You ready the leash..."
@@ -23281,20 +23509,20 @@ KDLeashSpellRemoveAll,You let go of all leashes.
 
 
 KinkyDungeonInventoryItemC4,Plastic Explosive
-KinkyDungeonInventoryItemC4Desc,"Has a 60 turn timer, but can be detonated by other explosives. Deals 210 blast damage in a huge radius and leaves behind a huge field of rubble. Enemies hit have their armor reduced by 50 BEFORE taking damage."
-KinkyDungeonInventoryItemC4Desc2,"It's totally harmless! Probably."
-KinkyDungeonInventoryItem2C4Desc,"Has a 60 turn timer, but can be detonated by other explosives. Deals 210 blast damage in a huge radius and leaves behind a huge field of rubble. Enemies hit have their armor reduced by 50 BEFORE taking damage."
-KinkyDungeonInventoryItem2C4Desc2,"It's totally harmless! Probably."
+KinkyDungeonInventoryItemC4Desc2,"Has a 60 turn timer, but can be detonated by other explosives. Deals 210 blast damage in a huge radius and leaves behind a huge field of rubble. Enemies hit have their armor reduced by 50 BEFORE taking damage."
+KinkyDungeonInventoryItemC4Desc,"It's totally harmless! Probably."
+KinkyDungeonInventoryItem2C4Desc2,"Has a 60 turn timer, but can be detonated by other explosives. Deals 210 blast damage in a huge radius and leaves behind a huge field of rubble. Enemies hit have their armor reduced by 50 BEFORE taking damage."
+KinkyDungeonInventoryItem2C4Desc,"It's totally harmless! Probably."
 KinkyDungeonInventoryItemC4Use,You set the clock ticking...
 
 KinkyDungeonInventoryItemDynamite,Dynamite
-KinkyDungeonInventoryItemDynamiteDesc,"10 turn fuse with a 25% chance each turn to detonate prematurely. Deals 140 blast damage in a large radius. Enemies hit have their armor reduced by 20 BEFORE taking damage."
-KinkyDungeonInventoryItemDynamiteDesc2,"Arguably more dangerous to the user than the target."
-KinkyDungeonInventoryItem2DynamiteDesc,"10 turn fuse with a 25% chance each turn to detonate. Deals 140 blast damage in a large radius. Enemies hit have their armor reduced by 20 BEFORE taking damage."
-KinkyDungeonInventoryItem2DynamiteDesc2,"Arguably more dangerous to the user than the target."
+KinkyDungeonInventoryItemDynamiteDesc2,"10 turn fuse with a 25% chance each turn to detonate prematurely. Deals 140 blast damage in a large radius. Enemies hit have their armor reduced by 20 BEFORE taking damage."
+KinkyDungeonInventoryItemDynamiteDesc,"Arguably more dangerous to the user than the target."
+KinkyDungeonInventoryItem2DynamiteDesc2,"10 turn fuse with a 25% chance each turn to detonate. Deals 140 blast damage in a large radius. Enemies hit have their armor reduced by 20 BEFORE taking damage."
+KinkyDungeonInventoryItem2DynamiteDesc,"Arguably more dangerous to the user than the target."
 KinkyDungeonInventoryItemDynamiteUse,You light the fuse and pray it doesn't blow up in your face.
 
-KDTooManyLeash,You are holding too many leashes!
+KDTooManyLeashes,You are holding too many leashes!
 
 KDAddCorruption,You feel a corrupting influence... (+AMNT Corruption)
 KDRemoveCorruption,You feel a restoring influence! (-AMNT Corruption)
@@ -23344,7 +23572,7 @@ KDFacilityInfo_Prisoners,"AMNT/MAXX Prisoners Assigned"
 KDFacilityInfo_Servants,"AMNT/MAXX Servants Assigned"
 
 KDFacility_Management,Management
-KDFacilityDesc_Management,"Assign servants as managers to boost the production of other facilities.|Managers gain increased opinion and training over time."
+KDFacilityDesc_Management,"Assign servants as managers to boost the production of other facilities.|Appointing new management results in a loss of efficiency until the next cycle."
 KDFacility_TrainingDojo,Bondage Dojo
 KDFacilityDesc_TrainingDojo,"Assign servants to perfect the art of walking in heels,wearing tight corsets,|communicating while gagged, and overall flexibility."
 KDFacility_RescueTeam,Rescue Operations
@@ -23354,7 +23582,7 @@ KDFacilityDesc_AlchemyLab,"Assign servants to produce potions from base ingredie
 KDFacility_Recycler,Recycler
 KDFacilityDesc_Recycler,"Convert low tier restraints into raw materials and output higher quality restraints.|Adding more servants increase the conversion speed."
 KDFacility_CuddleLounge,Cuddle Lounge
-KDFacilityDesc_CuddleLounge,"Assign prisoners to the lounge in order to improve your servants' opinion of you."
+KDFacilityDesc_CuddleLounge,"Assign prisoners to the lounge in order to improve servant and prisoner opinion."
 
 KDRecycleButton,Recycle Restraints
 
@@ -23365,6 +23593,11 @@ KDInventoryActionRecycleExcess,Recycle all but one
 KDRecycle,You recycle a ITM
 KDRecycleBulk,You recycle #x ITM
 KDRecycleExcess,You recycle #x ITM
+
+KDDisassembleExcess,You disassemble #x ITM into $x PRD
+KDDisassemble,You disassemble #x ITM into $x PRD
+KDInventoryActionDisassemble,Disassemble all but one
+KDInventoryActionDisassembleOne,Disassemble one
 
 KDDialogue_StepAside,"You're blocking me."
 KDDialogue_StepAsideBrat,"You're in my way!"
@@ -23431,6 +23664,7 @@ KDRestrainNPCBack,Back to Collection
 KDRestrainNPC,Edit Restraints
 
 KDDrawSelectedTab_Restrain,Editing Restraints
+KDDrawSelectedTab_Imprison,Imprison in Furniture
 
 KDBindNPCSlot_ModuleUtility,Module (Utility)
 KDBindNPCSlot_CollarTag,Leash
@@ -23477,5 +23711,137 @@ KDBindNPCSlot_ToeTies,Toe Tie
 KDBindNPCSlot_Heels,Heels
 KDBindNPCSlot_BootsEncase,Encasement
 
-KDCurrentItem,"Current Item: "
-KDCurrentItem2,"Apply Item: "
+KDCurrentItem,"Equipped: "
+KDCurrentItem2,"Click to Add "
+KDCurrentItem3,"Apply "
+KDCurrentItemRaw,"Raw Material: "
+
+KDFreePrisoner,Free Prisoner
+
+KDPerkUnlockedToast,"Perk Unlocked: "
+
+KinkyDungeonInventoryItemUniversalSolvent,Latex Solvent
+KinkyDungeonInventoryItemUniversalSolventUse,You ready the bottle of Latex Solvent.
+KinkyDungeonInventoryItemUniversalSolventDesc,"A potent acid, capable of dissolving slime and latex."
+KinkyDungeonInventoryItemUniversalSolventDesc2,"Deal 90 acid damage to target. Adds a 10% debuff to the cut and struggle resistance of latex restraints currently worn."
+
+KDVariableModifier_UniversalSolvent,Weakened by Latex Solvent (10%)
+KDUniversalSolventSucceedSelf,You spill the solvent on yourself and loosen your latex bonds!
+KDUniversalSolventSucceedEnemy,You splash the ENMY with latex solvent!
+
+KinkyDungeonSpellUniversalSolvent,Latex Solvent
+
+KDUniversalSolventFail,You can't use solvents on targets other than yourself while bound.
+
+KDRandom,Random
+
+KDSetRestraintPalette,Choose Palette
+KDSetRestraintGeneric,Use Raw Material
+KDSetRestraintPaletteSelect,Restraint Palette
+KDSetRestraintPaletteReturn,Choose Restraint
+
+KDSetDefaultNPCPalette,"Def. Palette: "
+KDSetNPCPaletteAll,"Set All Palette"
+
+KDCollectionTabStatusOption_,Prisoners
+KDCollectionTabStatusOption_Guest,Guests
+
+KDCollectionAssign,"Assign to "
+KDCollectionRemove,"Remove from "
+KDImprison,Imprison
+
+KDNPCOpinion,"Opinion: "
+KDLastNPCLocation,"Last Seen on Floor FLR, LOC"
+KDLastNPCLocationSame,"Present in current level"
+KDLastNPCLocationCaptured,"Captured by FCTN"
+KDLastNPCLocationCapturedNone,"Captured by enemies"
+
+KDCantFree,Use 'Truss'em'Up' to edit restraints on this NPC
+KDNeedsTighten,"The NPC needs tightening, but is unavailable right now"
+KDTightenRestraint,Tighten loose restraints
+
+
+KDNPCEscaped,NPC has escaped!
+KDNPCEscapeGrace,NPC is likely to escape.
+KDNPCStruggle,NPC has managed to loosen her bonds.
+
+KDCollectionFilter,"Any"
+KDCollectionFilterOpinion,"NPC Opinion: "
+KDCollectionFilterEscape,"NPC Escape Status: "
+KDCollectionFilterBinding,"NPC Binding: "
+KDCollectionFilterAvailability,"NPC Availability: "
+KDCollectionFilterFavorites,"Favorited: "
+KDCollectionFilterRank,"Rank: "
+KDCollectionFilterRank0,"Minor"
+KDCollectionFilterRank1,"Normal"
+KDCollectionFilterRank2,"Elite"
+KDCollectionFilterRank3,"Miniboss"
+KDCollectionFilterRank4,"Boss"
+KDCollectionFilterRank5,"Legendary"
+
+
+KDCollectionFilterBound,"Bound"
+KDCollectionFilterFree,"Free"
+KDCollectionFilterSafe,"Secure"
+KDCollectionFilterEscapeRisk,"At Risk"
+KDCollectionFilterEscaped,"Escaped"
+KDCollectionFilterImprisoned,"Imprisoned"
+KDCollectionFilterPositive,"Positive"
+KDCollectionFilterNegative,"Negative"
+KDCollectionFilterFavorite,"Favorite"
+KDCollectionFilterNonFavorite,"Non-Favorite"
+
+KDCollectionFilterAvailable,"Present"
+KDCollectionFilterUnavailable,"Unavailable"
+
+KDCollectionTab_AutoBind,Auto Bind Interface
+KDDrawSelectedTab_AutoBind,AutoBind
+
+KDAutoBindCopy,Copy Restraints
+KDAutoBindPaste,Paste Restraints from NME
+KDAutoBindPasteNone,No restraints left in inventory
+KDAutoBindPasteAll,Paste to All!
+KDAutoBindPasteAllOver,OVERWRITE All!
+
+KDPromoteNotEnough,Need Positive Opinion to Promote
+
+KDCuddleLounge1,Servant Enjoyment: AMNT
+KDCuddleLounge2,Prisoner Enjoyment: AMNT
+KDCuddleLoungeInfo,Submissive prisoners and dominant servants add different amounts of opinion per cycle
+
+
+KDCollectionTab_Release,Release Prisoners
+KDDrawSelectedTab_Release,Release
+
+KDReleaseMark,Mark
+KDReleaseUnmark,Unmark
+KDReleaseMarkAll,Mark ALL
+KDReleaseUnMarkAll,Cancel Selection
+KDReleaseRelease,Release Marked Prisoners!
+KDReleaseRansom,Ransom Marked Prisoners for GP!
+KDRansomValue,Ransom Value: GP
+KDCurrentGold,Current Gold: GP
+KDNA,n/a
+
+KDTrainingLevelHeels,[EXP: AMNT/LMT] Heel training improves your balance to keep you from falling.
+
+KinkyDungeonBuffQuickness,Phase Dance active. Your next move is instant.
+KinkyDungeonBuffCombatManeuverQuick,Combat Maneuver active. Your next move is instant.
+
+KDOccupied,"The furniture space is occupied"
+KDCombatManeuver,"Combat Maneuver: Your next move is instant."
+
+
+KDManagement1,Appointing managers increases the efficiency of other facilities.
+KDManagement2,Total Efficiency Boost: AMNT%
+Idle,idle
+
+rMummyElevator,"(As you approach the statue, you hear a crumbling sound)|(The stone crumbles along the statue's slender frame)|(...revealing inside a beautiful, and extremely angry catgirl)|Who dares disturb my slumber?|I shall see to it that you receive your punishment!"
+
+NameMummyElevator,Mysterious Statue
+
+KDSelectABindingSlot,Select a Binding Slot
+
+KDCost,"Cost: "
+
+ZoomSet,Zoom set to PCNT%

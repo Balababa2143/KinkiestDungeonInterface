@@ -28,7 +28,84 @@ TODO:
 - Let go of leash thru menu
 - Aggro level
 
-TODO remove hogtie whenm released
+TODO remove hogtie when released
+
+5.3.35 RC4
+- Misc graphical fixes
+
+5.3.35 RC3
+- Further filled out recycler tree
+
+5.3.35 RC2
+- Added vinyl tape and added tape/ribbon/mummy wrap to the Recycler
+
+5.3.35 RC1
+- Various misc bugfixes
+
+5.3.35
+- You can now disassemble rope items into raw rope
+- You can now apply raw items to NPCs via truss em up
+
+5.3.34
+- Added sensory hood and sensory mask to leather prison and rare bondage offer
+- Added zoom in/out key
+
+5.3.33
+- Increased rep gain from rescuing prisoners
+- Added tall smooth heels by SMoonlightM
+- Added leather hood/mask by SMoonlightM
+
+5.3.32
+- Added management facility. management servants will wander around and help you fight off escapees.
+- Added quick facilities buttons
+
+5.3.31
+- You can use furniture to gain an advantage over enemies
+- Added mod compatibility setting
+
+5.3.30
+- Added Combat Maneuvers (battle trance upgrade)
+- Fixed issue where promoting and demoting NPCs in facility roles would break their role and make it impossible to change
+- Fixed crash on hovering over non humanoids
+- Fixed non humanoids having names (e.g a barricade named Maddie)
+- Fixed helpless enemies blocking elevator from unlocking
+- Fixed a crash when loading prisoners from memory
+- Fixed fuuka not dropping her restraints on defeat
+- Fixed bug where armor hides restraints underneath even if drawarmor is off
+
+5.3.29
+- Added training level indicator in buffs menu
+- Added NPC images in dialogue, tooltip, and (toggleable in GFX settings) on the field
+
+5.3.28
+- MODDERS: KinkyDungeonHiddenFactions is now a Map() instead of a list
+- Added 'Release NPCs' feature
+
+5.3.27
+- Added auto binding feature
+- truss em up now uses bondage UI from collection
+- Enemies can now escape!
+- Cuddle lounge is now present for improving opinion
+- truss em up is more effective now
+- Enemy helpless threshold lowered for basic enemies (such as maidforce recruits)
+
+
+5.3.26
+- Can now add NPCs to display stand
+- Can now view party members in collection
+- prototype persistent NPCs. lmk if there are weirdness with party members
+- NPCs have facial expressions and their poses can be set individually (no persistence)
+
+
+5.3.25
+- New perk: Fully Integrated (unlock by reaching 100% latex integration. Start with 100% latex integration)
+- New consumable: Universal Solvent (Each use reduces latex integration by -25% and debuffs current latex restraint struggle/cut resistance by 10)
+- Can generate random name on name screen
+- Can set restraint palette
+- Truss em Up now adds the restraint to the enemy's inventory so you can get it back on capture
+
+5.3.24
+- Added ability to restrain NPCs
 
 5.3.23
 - Recycler is now online in the summit!

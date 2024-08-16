@@ -12,7 +12,10 @@ function KinkyDungeonAggressive(enemy, player) {
 		if (enemy && enemy.hostile > 0) return true;
 		if (!KDGameData.PrisonerState || KDGameData.PrisonerState == "chase") return KDHostile(enemy);
 		if (enemy && KDFactionRelation(KDGetFaction(enemy), "Jail") < -0.4) return KDHostile(enemy);
-		if (enemy && KDFactionRelation(KDGetFaction(enemy), "Jail") < -0.1 && KDGameData.PrisonerState != 'jail' && (KDGameData.PrisonerState != 'parole' || !KinkyDungeonPlayerInCell(true, true))) return KDHostile(enemy);
+		if (enemy && KDFactionRelation(KDGetFaction(enemy), "Jail") < -0.1
+			&& KDGameData.PrisonerState != 'jail'
+			&& (KDGameData.PrisonerState != 'parole' || !KinkyDungeonPlayerInCell(true, true)))
+			return KDHostile(enemy);
 		return false;
 	}
 	// Non player mode
@@ -25,7 +28,8 @@ function KinkyDungeonAggressive(enemy, player) {
  * @returns {boolean}
  */
 function KDAllied(enemy) {
-	return !(enemy.rage > 0) && !(enemy.hostile > 0) && KDFactionAllied("Player", enemy);
+	return !(enemy.rage > 0) && !(enemy.hostile > 0) && KDFactionAllied("Player", enemy, undefined,
+		KDOpinionRepMod(enemy, KDPlayer()));
 }
 
 /**
@@ -39,10 +43,37 @@ function KDHostile(enemy, enemy2) {
 	return (enemy.rage > 0) ||
 		(
 			!(!enemy2 && enemy.ceasefire > 0)
+			&& !(enemy2 && enemy2.ceasefire > 0)
 			&& (
 				(!enemy2
-					&& (KDFactionHostile("Player", enemy) || enemy.hostile > 0)
-					|| (enemy2 && ((KDGetFaction(enemy2) == "Player" && enemy.hostile > 0) || KDFactionHostile(KDGetFaction(enemy), enemy2))))));
+					&& (KDFactionHostile("Player", enemy, KDOpinionRepMod(enemy, enemy2 || KDPlayer()))
+					|| enemy.hostile > 0)
+					|| (enemy2 && ((KDGetFaction(enemy2) == "Player" && enemy.hostile > 0)
+					|| KDFactionHostile(KDGetFaction(enemy), enemy2, KDOpinionRepMod(enemy, enemy2 || KDPlayer())))))));
+}
+
+/**
+ *
+ * @param {entity} enemy
+ * @param {player} enemy
+ * @returns {number} The modifier to reputation based on the NPC's opinion
+ */
+function KDOpinionRepMod(enemy, player) {
+	if (!player?.player) return 0;
+	let op = KDGetModifiedOpinionID(enemy.id, true, true, true, 0);
+	if (op) {
+		return 0.1 * Math.max(-3, Math.min(20, op/KDOpinionThreshold));
+	}
+	return 0;
+}
+
+/**
+ *
+ * @param {KDCollectionEntry} value
+ * @returns {boolean}
+ */
+function KDIsServant(value) {
+	return value && value.status == "Servant";
 }
 
 /**
@@ -53,9 +84,10 @@ function KDHostile(enemy, enemy2) {
 function KDGetFaction(enemy) {
 	if (!enemy) return undefined;
 	if (enemy.player) return "Player";
-	let E = enemy.Enemy;
 	if (enemy.rage > 0) return "Rage";
 	if (enemy.faction) return enemy.faction;
+	if (KDGameData.Collection && KDIsServant(KDGameData.Collection[enemy.id + ""])) return "Player";
+	let E = enemy.Enemy;
 	if ((E && E.allied) || ((enemy.allied || (E && E.faction && KDFactionAllied("Player", E.faction) && !KDEnemyHasFlag(enemy, "NoFollow"))) && !enemy.faction && !KDEnemyHasFlag(enemy, "Shop"))) return "Player";
 	if (E && E.faction) return E.faction;
 	return "Enemy";
@@ -67,9 +99,10 @@ function KDGetFaction(enemy) {
  * @returns {string}
  */
 function KDGetFactionOriginal(enemy) {
-	let E = enemy.Enemy;
 	if (enemy.player) return "Player";
 	if (enemy.faction) return enemy.faction;
+	if (KDGameData.Collection && KDIsServant(KDGameData.Collection[enemy.id + ""])) return "Player";
+	let E = enemy.Enemy;
 	if (E && E.faction) return E.faction;
 	return "Enemy";
 }
@@ -78,9 +111,11 @@ function KDGetFactionOriginal(enemy) {
  * Consults the faction table and decides if the two mentioned factions are hostile
  * @param {string} a - Faction 1
  * @param {string | entity} b - Faction 2
+ * @param {number} mod - modifier to faction rep - constrained to positive
+ * @param {number} modfree - modifier to faction rep - free
  * @returns {boolean}
  */
-function KDFactionHostile(a, b) {
+function KDFactionHostile(a, b, mod = 0, modfree = 0) {
 	if (a == "Player" && b && !(typeof b === "string") && b.hostile > 0) return true;
 	if (!(typeof b === "string") && b.rage > 0) return true;
 	if (a == "Player" && !(typeof b === "string") && b.allied > 0) return false;
@@ -88,7 +123,7 @@ function KDFactionHostile(a, b) {
 	if (a == "Rage" || b == "Rage") return true;
 	if (a == "Player" && b == "Enemy") return true;
 	if (b == "Player" && a == "Enemy") return true;
-	if (KDFactionRelation(a, b) <= -0.5) return true;
+	if (KDFactionRelation(a, b) + Math.max(0, mod) + modfree <= -0.5) return true;
 	if (a == b) return false;
 	return false;
 }
@@ -98,9 +133,10 @@ function KDFactionHostile(a, b) {
  * @param {string} a - Faction 1
  * @param {string | entity} b - Faction 2
  * @param {number} [threshold] - Faction 2
+ * @param {number} mod
  * @returns {boolean}
  */
-function KDFactionAllied(a, b, threshold = 0.7) {
+function KDFactionAllied(a, b, threshold = 0.7, mod = 0) {
 	if (a == "Player" && b && !(typeof b === "string") && b.hostile > 0) return false;
 	if (!(typeof b === "string") && b.rage > 0) return false;
 	if (a == "Player" && !(typeof b === "string") && b.allied > 0) return true;

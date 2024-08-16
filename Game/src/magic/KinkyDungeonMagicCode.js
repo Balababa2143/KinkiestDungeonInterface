@@ -250,10 +250,10 @@ let KinkyDungeonSpellSpecials = {
 		let en = KinkyDungeonEnemyAt(targetX, targetY);
 		if (en?.Enemy) {
 			if (KDCanBind(en) && (KinkyDungeonIsDisabled(en) || (en.playWithPlayer && KDCanDom(en)))) {
-				KDGameData.InventoryAction = "Bondage";
-				KDGameData.BondageTarget = en.id;
-				KinkyDungeonDrawState = "Inventory";
-				KinkyDungeonCurrentFilter = LooseRestraint;
+				//KDGameData.InventoryAction = "Bondage";
+				KDCurrentRestrainingTarget = en.id;
+				KinkyDungeonDrawState = "Bondage";
+				//KinkyDungeonCurrentFilter = LooseRestraint;
 				KinkyDungeonSendTextMessage(8, TextGet("KDBondageTarget"), "#ff5555", 1, true);
 				return "Cast";
 			} else {
@@ -279,7 +279,7 @@ let KinkyDungeonSpellSpecials = {
 				} else if (!KDHostile(en) && en.hp <= en.Enemy.maxhp * 0.1) {
 					en.faction = "Player";
 					let ff = KDGetFactionOriginal(en);
-					if (!KinkyDungeonHiddenFactions.includes(ff)) {
+					if (!KinkyDungeonHiddenFactions.has(ff)) {
 						KinkyDungeonChangeFactionRep(ff, 0.005);
 					}
 				}
@@ -889,6 +889,89 @@ let KinkyDungeonSpellSpecials = {
 				return "Cast";
 			} else return "Fail";
 		} else return "Fail";
+	},
+
+	"UniversalSolvent": (spell, data, targetX, targetY, tX, tY, entity, enemy, moveDirection, bullet, miscast, faction, cast, selfCast) => {
+		if (KDistChebyshev(entity.x - targetX, entity.y - targetY) && KinkyDungeonIsArmsBound(true, true)) {
+			KinkyDungeonSendActionMessage(8, TextGet("KDUniversalSolventFail"), "#ff5555", 1);
+			return "Fail";
+		}
+		let en = KinkyDungeonEntityAt(targetX, targetY);
+		if (en && !en.player) {
+			KinkyDungeonDamageEnemy(en, {
+				type: spell.damage,
+				damage: spell.power,
+				time: spell.time,
+				bind: spell.bind,
+			}, false, true, spell, undefined, entity);
+
+			let bondage = en.specialBoundLevel;
+			let mult = 4;
+			if (bondage)
+				for (let b of Object.entries(bondage)) {
+					if (KDSpecialBondage[b[0]]?.latex) {
+						en.boundLevel = Math.max(0, en.boundLevel - Math.min(b[1], mult * spell.power));
+						bondage[b[0]] -= mult * spell.power;
+						if (bondage[b[0]] <= 0)
+							delete bondage[b[0]];
+					}
+				}
+
+			KinkyDungeonSendActionMessage(3, TextGet("KDUniversalSolventSucceedEnemy")
+				.replace("ENMY", KDGetEnemyName(en)),
+			"#88FFAA", 2 + (spell.channel ? spell.channel - 1 : 0));
+
+
+			return "Cast";
+		} else if (en.player) {
+			let dmg = KinkyDungeonDealDamage({damage: spell.power, type: spell.damage}, bullet);
+
+			KDAddSpecialStat("LatexIntegration", KDPlayer(), -25, true);
+			for (let inv of KinkyDungeonAllRestraintDynamic()) {
+				let r = inv.item;
+				let restraint = KDRestraint(r);
+				if (restraint?.shrine.includes("Latex") || restraint?.shrine.includes("Slime")) {
+					if (!r.events) r.events = KDGetEventsForRestraint(r.inventoryVariant || r.name);
+
+					if (!r.events.some((ev) => {
+						return ev.type == "UniversalSolvent";
+					})) {
+						r.events.push({
+							trigger: "beforeStruggleCalc",
+							type: "UniversalSolvent",
+							power: 0.1,
+						});
+						r.events.push({
+							original: "UniversalSolvent",
+							trigger: "inventoryTooltip",
+							type: "varModifier",
+							msg: "UniversalSolvent",
+							color: "#000000",
+							bgcolor: "#ff8933"
+						});
+						r.events.push({
+							original: "UniversalSolvent",
+							trigger: "drawSGTooltip",
+							type: "simpleMsg",
+							msg: "KDVariableModifier_UniversalSolvent",
+							color: "#ff8933",
+							bgcolor: KDTextGray0,
+						});
+						KDUpdateItemEventCache = true;
+
+
+
+					}
+				}
+			}
+
+			KinkyDungeonSendActionMessage(3, TextGet("KDUniversalSolventSucceedSelf")
+				.KDReplaceOrAddDmg( dmg.string),
+			"#88FFAA", 2 + (spell.channel ? spell.channel - 1 : 0));
+
+			return "Cast";
+		}
+		return "Fail";
 	},
 	"Awaken": (spell, data, targetX, targetY, tX, tY, entity, enemy, moveDirection, bullet, miscast, faction, cast, selfCast) => {
 		let count = 0;

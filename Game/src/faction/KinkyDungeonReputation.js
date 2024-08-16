@@ -221,7 +221,7 @@ function KinkyDungeonChangeFactionRep(Rep, Amount) {
 	let curr = KDFactionRelation("Player", Rep);
 
 	if (curr != last) {
-		let amount = 0.5*Math.round((curr - last)*1000)/10; // 0.5% due to the fact that the scale is -1 to +1 but it gets mapped from 0 to 100%
+		let amount = 0.5*(Amount > 0 ? Math.ceil : Math.floor)((curr - last)*10000)/100; // 0.5% due to the fact that the scale is -1 to +1 but it gets mapped from 0 to 100%
 		KinkyDungeonSendFloater({x: 1100, y: 800 - KDRecentRepIndex * 40}, `${amount > 0 ? '+' : ''}${amount}% ${TextGet("KinkyDungeonFaction" + Rep)} rep`, "white", 5, true);
 		KDRecentRepIndex += 1;
 	}
@@ -423,7 +423,7 @@ function KinkyDungeonDrawFactionRep() {
 
 	for (let e of Object.keys(KinkyDungeonFactionRelations.Player)) {
 		let rep = e;
-		if (rep && !KinkyDungeonHiddenFactions.includes(rep)) {
+		if (rep && !KinkyDungeonHiddenFactions.has(rep)) {
 			index++;
 			if (index < KDFactionRepIndex * KDMaxFactionsPerBar + 1) continue;
 			if (index > KDFactionRepIndex * KDMaxFactionsPerBar + KDMaxFactionsPerBar) continue;
@@ -445,15 +445,15 @@ function KinkyDungeonDrawFactionRep() {
 	DrawButtonKDEx("FactionIndexDown", () => {
 		KDFactionRepIndex += 0.5;
 		return true;
-	}, KDFactionRepIndex < (Object.keys(KinkyDungeonFactionRelations.Player).length - KinkyDungeonHiddenFactions.length) / KDMaxFactionsPerBar,
-	1802 + xOffset, 790, 90, 40, "", KDFactionRepIndex < (Object.keys(KinkyDungeonFactionRelations.Player).length - KinkyDungeonHiddenFactions.length) / KDMaxFactionsPerBar ? "white" : "#888888", KinkyDungeonRootDirectory + "Down.png");
+	}, KDFactionRepIndex < (Object.keys(KinkyDungeonFactionRelations.Player).length - KDHiddenFactions.length) / KDMaxFactionsPerBar,
+	1802 + xOffset, 790, 90, 40, "", KDFactionRepIndex < (Object.keys(KinkyDungeonFactionRelations.Player).length - KDHiddenFactions.length) / KDMaxFactionsPerBar ? "white" : "#888888", KinkyDungeonRootDirectory + "Down.png");
 
 	let text = false;
 
 	for (let e of Object.keys(KinkyDungeonFactionRelations.Player)) {
 		let rep = e;
 
-		if (rep && !KinkyDungeonHiddenFactions.includes(rep)) {
+		if (rep && !KinkyDungeonHiddenFactions.has(rep)) {
 			index++;
 			if (index < KDFactionRepIndex * KDMaxFactionsPerBar + 1) continue;
 			if (index > KDFactionRepIndex * KDMaxFactionsPerBar + KDMaxFactionsPerBar) continue;
@@ -491,7 +491,7 @@ function KinkyDungeonDrawFactionRep() {
 				let enemytext = "";
 				let friendstext = "";
 				for (let ee of Object.keys(KinkyDungeonFactionRelations.Player)) {
-					if (!KinkyDungeonHiddenFactions.includes(ee)) {
+					if (!KinkyDungeonHiddenFactions.has(ee)) {
 						if (rep != ee && KDFactionRelation(rep, ee) >= 0.5) {
 							if (allytext) allytext += ", ";
 							allytext += TextGet("KinkyDungeonFaction" + ee);

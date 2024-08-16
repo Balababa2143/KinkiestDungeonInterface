@@ -39,6 +39,7 @@ AddModel({
 			EraseSprite: "BalletRightErase",
 			EraseAmount: 100,
 			EraseLayers: ToMap(["BalletHeelRight"]),
+			EraseZBonus: 100,
 		},
 
 
@@ -117,6 +118,7 @@ AddModel({
 			EraseSprite: "BalletRightErase",
 			EraseAmount: 100,
 			EraseLayers: ToMap(["BalletHeelRight"]),
+			EraseZBonus: 100,
 		},
 
 
@@ -174,6 +176,7 @@ AddModel({
 			EraseSprite: "BalletRightErase",
 			EraseAmount: 100,
 			EraseLayers: ToMap(["BalletHeelRight"]),
+			EraseZBonus: 100,
 		},
 
 
@@ -223,6 +226,7 @@ AddModel({
 			DisplacementSprite: "Heels",
 			DisplaceAmount: 50,
 			DisplaceLayers: ToMap(["Heels"]),
+			DisplaceZBonus: 100,
 			EraseInvariant: true,
 			EraseMorph: {Spread: "Spread"},
 			EraseSprite: "HeelsErase",
@@ -239,6 +243,7 @@ AddModel({
 			EraseSprite: "HeelsRightErase",
 			EraseAmount: 100,
 			EraseLayers: ToMap(["HeelRight"]),
+			EraseZBonus: 100,
 		},
 		{ Name: "LeatherLegLeft", Layer: "OverShoes", Pri: 31,
 			InheritColor: "Shoe",
@@ -270,6 +275,7 @@ AddModel({
 			DisplacementSprite: "Heels",
 			DisplaceAmount: 50,
 			DisplaceLayers: ToMap(["Heels"]),
+			DisplaceZBonus: 100,
 			EraseInvariant: true,
 			EraseMorph: {Spread: "Spread"},
 			EraseSprite: "HeelsErase",
@@ -286,6 +292,7 @@ AddModel({
 			EraseSprite: "HeelsRightErase",
 			EraseAmount: 100,
 			EraseLayers: ToMap(["HeelRight"]),
+			EraseZBonus: 100,
 		},
 		{ Name: "LegLeft", Layer: "OverShoes", Pri: 29.5,
 			InheritColor: "Shoe",
@@ -318,6 +325,7 @@ AddModel({
 			DisplacementSprite: "Heels",
 			DisplaceAmount: 50,
 			DisplaceLayers: ToMap(["Heels"]),
+			DisplaceZBonus: 100,
 			EraseInvariant: true,
 			EraseMorph: {Spread: "Spread"},
 			EraseSprite: "HeelsErase",
@@ -334,6 +342,7 @@ AddModel({
 			EraseSprite: "HeelsRightErase",
 			EraseAmount: 100,
 			EraseLayers: ToMap(["HeelRight"]),
+			EraseZBonus: 100,
 		},
 		{ Name: "TallLegLeft", Layer: "OverSocks", Pri: 27,
 			InheritColor: "Shoe",
@@ -362,6 +371,67 @@ AddModel({
 });
 
 
+AddModel({
+	Name: "TallSmoothHeels",
+	Folder: "TallSmoothHeels",
+	TopLevel: true,
+	Restraint: false,
+	Categories: ["Shoes"],
+	AddPose: ["Heels"],
+	HideLayers: ["FootRightKneel", "SockRightKneel"],
+	Layers: ToLayerMap([
+		{ Name: "TallLeft", Layer: "ShoeLeft", Pri: 26,
+			InheritColor: "Shoe",
+			GlobalDefaultOverride: ToMap(["KneelClosed", "Hogtie"]),
+			Poses: ToMap([...LEGPOSES]),
+			SwapLayerPose: {Hogtie: "ShoeLeftHogtie"},
+			DisplacementSprite: "Heels2",
+			DisplaceAmount: 80,
+			DisplaceLayers: ToMap(["Heels"]),
+			DisplaceZBonus: 100,
+			EraseInvariant: true,
+			EraseMorph: {Spread: "Spread", Closed: "Closed"},
+			EraseSprite: "HeelsErase",
+			EraseAmount: 100,
+			EraseLayers: ToMap(["Heels"]),
+		},
+		{ Name: "TallRight", Layer: "ShoeRight", Pri: 26,
+			InheritColor: "Shoe",
+			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie", "KneelClosed"]),
+			GlobalDefaultOverride: ToMap(["Hogtie"]),
+			SwapLayerPose: {Kneel: "ShoeRightKneel"},
+			EraseInvariant: true,
+			EraseMorph: {Closed: "Closed"},
+			EraseSprite: "HeelsRightErase",
+			EraseAmount: 100,
+			EraseLayers: ToMap(["HeelRight"]),
+			EraseZBonus: 100,
+		},
+		{ Name: "TallLegLeft", Layer: "OverSocks", Pri: 27,
+			InheritColor: "Shoe",
+			GlobalDefaultOverride: ToMap(["KneelClosed", "Hogtie"]),
+			Poses: ToMap(["Kneel", "KneelClosed", "Hogtie"]),
+		},
+		{ Name: "TallLegRight", Layer: "ShoeRightUnder", Pri: 27,
+			InheritColor: "Shoe",
+			Poses: ToMap(["Kneel", "KneelClosed", "Hogtie"]),
+			GlobalDefaultOverride: ToMap(["Hogtie"]),
+		},
+	])
+});
+
+
+AddModel({
+	Name: "TallSmoothHeelsRestraint",
+	Folder: "TallSmoothHeels",
+	TopLevel: true,
+	Restraint: true,
+	Categories: ["Shoes"],
+	AddPose: ["Heels"],
+	Layers: ToLayerMap([
+		...GetModelLayers("TallSmoothHeels"),
+	])
+});
 
 AddModel({
 	Name: "TallBalletHeels",
@@ -381,6 +451,7 @@ AddModel({
 			DisplacementSprite: "Ballet",
 			DisplaceAmount: 150,
 			DisplaceLayers: ToMap(["Heels"]),
+			DisplaceZBonus: 100,
 			EraseInvariant: true,
 			EraseMorph: {Spread: "Spread"},
 			EraseSprite: "BalletErase",
@@ -397,6 +468,7 @@ AddModel({
 			EraseSprite: "BalletRightErase",
 			EraseAmount: 100,
 			EraseLayers: ToMap(["HeelRight"]),
+			EraseZBonus: 100,
 		},
 		{ Name: "TallLegLeft", Layer: "OverShoes", Pri: 27,
 			InheritColor: "Shoe",

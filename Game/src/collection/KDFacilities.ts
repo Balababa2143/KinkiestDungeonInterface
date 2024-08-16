@@ -14,6 +14,9 @@ interface FacilitiesData {
 	RecyclerInput_Rune: number,
 	Servants_Recycler: number[],
 	Prisoners_Recycler: number[],
+	Servants_CuddleLounge: number[],
+	Prisoners_CuddleLounge: number[],
+	Servants_Management: number[],
 };
 
 let FacilitiesDataBase : FacilitiesData = {
@@ -30,6 +33,9 @@ let FacilitiesDataBase : FacilitiesData = {
 
 	Servants_Recycler: [],
 	Prisoners_Recycler: [],
+	Servants_CuddleLounge: [],
+	Prisoners_CuddleLounge: [],
+	Servants_Management: [],
 };
 
 function InitFacilities() {
@@ -43,13 +49,35 @@ function InitFacilities() {
 	}
 }
 
+let FacilityValidationTags = ["Servants", "Prisoners", "Guests"];
+
+function KDValidateAllFacilities() {
+	for (let facility of Object.keys(KDFacilityTypes)) {
+		for (let tag of FacilityValidationTags) {
+			let servants = KDGameData.FacilitiesData[tag + "_" + facility];
+			if (servants)
+				for (let servant of servants) {
+					if (!KDValidateServant(KDGameData.Collection[servant + ""],
+						facility,
+						tag)) {
+							servants.splice(servants.indexOf(servant), 1);
+							delete KDGameData.Collection[servant + ""].Facility;
+						}
+				}
+		}
+	}
+
+}
+
 function KDUpdateFacilities(delta: number) {
+	KDValidateAllFacilities();
 	let listUpdate = Object.entries(KDFacilityTypes).filter((entry) => {
 		return entry[1].prereq();
 	});
 	for (let fac of listUpdate) {
 		fac[1].update(delta);
 	}
+	KDSortCollection();
 }
 
 function KinkyDungeonDrawFacilities(xOffset = -125) {
@@ -66,6 +94,18 @@ function KinkyDungeonDrawFacilities(xOffset = -125) {
 }
 
 
+function KDValidateServant(value: KDCollectionEntry, facility: string, type: string): boolean {
+	type = KDFacilityCollectionDataTypeMap[type] || "";
+
+	if (value.status != type) return false;
+	if (value.escaped) return false;
+	if (KDIsInPartyID(value.id)) return false;
+	if (KDNPCUnavailable(value.id, value.status)) return false;
+
+	return true;
+
+}
+
 function KDDrawFacilitiesList(xOffset) {
 
 	let padding = 100;
@@ -80,6 +120,52 @@ function KDDrawFacilitiesList(xOffset) {
 	if (FacilitiesIndex >= listRender.length - 1) {
 		FacilitiesIndex = listRender.length - 1;
 	}
+
+	let YYQuik = 50;
+	let XXQuik = 415;
+	let quikSize = 72;
+	let quikSpacing = 80;
+	let quikCols = 1;
+	let quikCurrentCol = 0;
+	if (listRender.length * quikSpacing > 900) {
+		quikSpacing = 40;
+		quikCols = 2;
+		quikSize = 36;
+	}
+	for (let facility of listRender) {
+		DrawButtonKDEx("quikFal" + facility[0],
+			() => {
+				FacilitiesIndex = listRender.findIndex((entry) => {
+					return entry[0] == facility[0];
+				})
+				return true;
+			},
+			true, XXQuik + quikCurrentCol * quikSpacing, YYQuik, quikSize, quikSize, "", "#ffffff",
+			KinkyDungeonRootDirectory + "UI/Facility/" + facility[0] + ".png", undefined, false, false,
+			undefined, undefined, undefined, {
+				centered: true,
+				zIndex: 110,
+			}
+
+
+		)
+
+		if (facility[1].locked && facility[1].locked())
+			KDDraw(kdcanvas, kdpixisprites, "facicon" + facility[0],
+				KinkyDungeonRootDirectory + "Locks/White.png",
+				XXQuik - (quikSize - 56)/2 + quikCurrentCol * quikSpacing, YYQuik - (quikSize - 56)/2, 56, 56
+			);
+		if (facility[1].ping)
+			facility[1].ping(XXQuik, YYQuik, quikCurrentCol, quikSpacing, quikSize);
+
+		if (quikCurrentCol + 1 < quikCols) {
+			quikCurrentCol += 1;
+		} else {
+			quikCurrentCol = 0;
+			YYQuik += quikSpacing;
+		}
+	}
+
 
 	let II = 0;
 	let broken = false;
@@ -165,8 +251,10 @@ function KDGetServantEnemy(servant: KDCollectionEntry): enemy {
 	return null;
 }
 
+let KDFacilityCollectionCallback: (id: number) => boolean = null;
 
-function KDDrawServantPrisonerList(facility: string, x: number, y: number, width: number) : number {
+function KDDrawServantPrisonerList(facility: string, x: number, y: number, width: number, spacing: number = 110,
+		setCallback?: (id: number) => boolean) : number {
 	let yy = 0;
 
 	let fac = KDFacilityTypes[facility];
@@ -174,7 +262,6 @@ function KDDrawServantPrisonerList(facility: string, x: number, y: number, width
 		let ms = fac.maxServants();
 		let mp = fac.maxPrisoners();
 		let w = 72;
-		let spacing = 110;
 		if (ms > 0) {
 			DrawTextFitKD(TextGet("KDServants") + ": ", x + width/2 - (spacing * (ms - 1) + w)/2 - 5, y + yy + 36,
 			500, "#ffffff", KDTextGray0, 24, "right");
@@ -183,8 +270,12 @@ function KDDrawServantPrisonerList(facility: string, x: number, y: number, width
 				let servant = servants[i];
 				DrawButtonKDEx(facility + "serv" + i, (b) => {
 					KDCurrentFacilityTarget = facility;
-					KDCurrentFacilityCollectionType = "Servants";
+					KDCurrentFacilityCollectionType = ["Servants", "Prisoners"];
 					KinkyDungeonDrawState = "Collection";
+					KinkyDungeonCheckClothesLoss = true;
+					KDCollectionTab = "";
+					KDCollectionSelected = servant;
+					KDFacilityCollectionCallback = setCallback;
 					return true;
 				}, true, x + width/2 - (spacing * (ms - 1) + w)/2 + i * spacing, y + yy, w, w, "", "#ffffff", KDCollectionImage(servant),
 				undefined, undefined, !servant, KDButtonColor, undefined, undefined, {
@@ -202,13 +293,25 @@ function KDDrawServantPrisonerList(facility: string, x: number, y: number, width
 				let prisoner = prisoners[i];
 				DrawButtonKDEx(facility + "pris" + i, (b) => {
 					KDCurrentFacilityTarget = facility;
-					KDCurrentFacilityCollectionType = "Prisoners";
+					KDCurrentFacilityCollectionType = ["Servants", "Prisoners"];
 					KinkyDungeonDrawState = "Collection";
+					KinkyDungeonCheckClothesLoss = true;
+					KDCollectionTab = "";
+					KDCollectionSelected = prisoner;
+					KDFacilityCollectionCallback = setCallback;
 					return true;
 				}, true, x + width/2 - (spacing * (mp - 1) + w)/2 + i * spacing, y + yy, w, w, "", "#ffffff", KDCollectionImage(prisoner),
 				undefined, undefined, !prisoner, KDButtonColor, undefined, undefined, {
 					centered: true,
 				});
+				if (KDGameData.Collection["" + prisoner]?.escapegrace) {
+					KDDraw(kdcanvas, kdpixisprites, facility + "pris" + i + "escgrc",
+						KinkyDungeonRootDirectory + "UI/escapegrace.png",
+						x + width/2 - (spacing * (mp - 1) + w)/2 + i * spacing + w/2, y + yy + w/2, w/2, w/2, undefined, {
+							zIndex: 110,
+						}
+					);
+				}
 			}
 
 			yy += 110;

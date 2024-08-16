@@ -41,6 +41,8 @@ let KinkyDungeonDrawStatesModal = ["Heart", "Orb"];
 let KinkyDungeonSpellValid = false;
 let KinkyDungeonCamX = 0;
 let KinkyDungeonCamY = 0;
+let KinkyDungeonCamXLast = 0;
+let KinkyDungeonCamYLast = 0;
 let KinkyDungeonCamXVis = 0;
 let KinkyDungeonCamYVis = 0;
 let KinkyDungeonTargetX = 0;
@@ -178,6 +180,7 @@ let KDBuffSprites = {
 
 let KDStatsSkipLine = {
 	"info": 1,
+	"training": 1,
 	"status": 1,
 	"dmg": 1,
 	"resist": 1,
@@ -191,6 +194,7 @@ let KDStatsSkipLineBefore = {
 let KDStatsOrder = {
 	"info": 10000,
 	"status": 7000,
+	"training": 4000,
 	"resist": 2500,
 	"dmg": 2000,
 	"help": 1500, // Always good, so since they are buffs they should be high priority
@@ -335,6 +339,19 @@ function KinkyDungeonDrawInterface(showControls) {
 	}
 	KDDrawSpellChoices();
 	KDDrawNavBar(-1);
+
+	if (KDToggles.ShowZoom) {
+		DrawButtonKDEx("mainZoomIn", () => {
+			KDChangeZoom(-1);
+			return true;
+		}, true, PIXIWidth - 210, PIXIHeight * 0.5 - 50, 42, 42, undefined, "#ffffff",
+		KinkyDungeonRootDirectory + "UI/ZoomIn.png");
+		DrawButtonKDEx("mainZoomOut", () => {
+			KDChangeZoom(1);
+			return true;
+		}, true, PIXIWidth - 210, PIXIHeight * 0.5 - 50 + 48, 42, 42, undefined, "#ffffff",
+		KinkyDungeonRootDirectory + "UI/ZoomOut.png");
+	}
 
 }
 
@@ -2106,36 +2123,39 @@ function KDDrawPartyMembers(PartyX, PartyY, tooltips) {
 
 			} else {
 				PM = KDGameData.Party[i];
-				KDDrawEnemySprite(kdstatusboard, PM, PartyX/KinkyDungeonGridSizeDisplay, PartyY/KinkyDungeonGridSizeDisplay, 0, 0, true, zIndex, "PM");
-				KDDraw(kdstatusboard, kdpixisprites, "pmFailFind" + PM.id, KinkyDungeonRootDirectory + "Spells/SpellFail.png",
-					PartyX, PartyY, KinkyDungeonGridSizeDisplay, KinkyDungeonGridSizeDisplay, undefined, {
-						zIndex: zIndex + 0.1,
-						alpha: 0.5,
-					},
-				);
-				KinkyDungeonBarTo(kdstatusboard, PartyX, PartyY,
-					PartyDy, 10, PM.visual_hp / PM.Enemy.maxhp * 100, "#88ff88", "#ff5555", undefined, undefined, undefined, undefined, undefined, zIndex + 0.05);
+				if (PM) {
+					KDDrawEnemySprite(kdstatusboard, PM, PartyX/KinkyDungeonGridSizeDisplay, PartyY/KinkyDungeonGridSizeDisplay, 0, 0, true, zIndex, "PM");
+					KDDraw(kdstatusboard, kdpixisprites, "pmFailFind" + PM.id, KinkyDungeonRootDirectory + "Spells/SpellFail.png",
+						PartyX, PartyY, KinkyDungeonGridSizeDisplay, KinkyDungeonGridSizeDisplay, undefined, {
+							zIndex: zIndex + 0.1,
+							alpha: 0.5,
+						},
+					);
+					KinkyDungeonBarTo(kdstatusboard, PartyX, PartyY,
+						PartyDy, 10, PM.visual_hp / PM.Enemy.maxhp * 100, "#88ff88", "#ff5555", undefined, undefined, undefined, undefined, undefined, zIndex + 0.05);
 
-				let selected = (PM.buffs?.AllySelect?.duration > 0);
+					let selected = (PM.buffs?.AllySelect?.duration > 0);
 
-				DrawButtonKDExTo(kdstatusboard, "PM" + i + "click", (bdata) => {
-					KDSendInput("select", {enemy: PM});
-					return true;
-				}, true, PartyX, PartyY, PartyDy, PartyDy, "", KDButtonColor, undefined, undefined, false, !selected,
-				"#000000", undefined, undefined, {zIndex: zIndex - 0.1,});
-
-				if (selected) {
-					DrawButtonKDExTo(kdstatusboard, "PM" + i + "remove", (bdata) => {
-						KDSendInput("cancelParty", {enemy: PM});
+					DrawButtonKDExTo(kdstatusboard, "PM" + i + "click", (bdata) => {
+						KDSendInput("select", {enemy: PM});
 						return true;
-					}, true, PartyX + 170, PartyY, 38, 38, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/X.png", undefined, false, false,
-					"#000000", undefined, undefined, {zIndex: zIndex,});
+					}, true, PartyX, PartyY, PartyDy, PartyDy, "", KDButtonColor, undefined, undefined, false, !selected,
+					"#000000", undefined, undefined, {zIndex: zIndex - 0.1,});
 
+					if (selected) {
+						DrawButtonKDExTo(kdstatusboard, "PM" + i + "remove", (bdata) => {
+							KDSendInput("cancelParty", {enemy: PM});
+							return true;
+						}, true, PartyX + 170, PartyY, 38, 38, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/X.png", undefined, false, false,
+						"#000000", undefined, undefined, {zIndex: zIndex,});
+
+					}
+
+					if (MouseIn(PartyX, PartyY, PartyDy, PartyDy)) {
+						tooltips.push((offset) => KDDrawEnemyTooltip(PM, offset));
+					}
 				}
 
-				if (MouseIn(PartyX, PartyY, PartyDy, PartyDy)) {
-					tooltips.push((offset) => KDDrawEnemyTooltip(PM, offset));
-				}
 			}
 			if (PM) {
 				FillRectKD(
@@ -2345,6 +2365,25 @@ function KDProcessBuffIcons(minXX, minYY, side = false) {
 		};
 	}
 
+	if (KDToggleShowAllBuffs) {
+		for (let training of KDTrainingTypes) {
+			statsDraw["training" + training] = {text: TextGet("KDTrainingLevel" + training)
+				.replace("AMNT",
+				"" + Math.floor((KDGameData.Training ? (KDGameData.Training[training]?.training_points || 0) : 0)*100))
+				.replace("LMT",
+					"" + Math.floor((KDGameData.Training ? (KDGameData.Training[training]?.training_stage || 0) + 1 : 1)*100))
+			,
+				category: "training", icon: "training/" + training, color: "#2fc6ce", bgcolor: "#333333", priority: 14,
+				count: Math.floor(KDGameData.Training ? (KDGameData.Training[training]?.training_stage || 0) : 0) + "",
+				countcolor: "#2fc6ce",
+			};
+		}
+
+	}
+
+
+
+
 	if (KinkyDungeonBrightnessGet(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y) < KDShadowThreshold) {
 		statsDraw.shadow = {text: TextGet("KinkyDungeonPlayerShadow"), icon: "shadow", category: "status", color: "#a3a7c2", bgcolor: "#5e52ff", priority: 1};
 		//DrawTextFitKD(TextGet("KinkyDungeonPlayerShadow"), X1, 900 - i * 35, 200, KDTextGray0, "#5e52ff", ); i++;
@@ -2401,7 +2440,7 @@ function KDProcessBuffIcons(minXX, minYY, side = false) {
 		}
 	}
 
-	if (KinkyDungeonFlags.has("Quickness")) {
+	if (KinkyDungeonFlags.has("Quickness") || KDEntityBuffedStat(KDPlayer(), "Quickness")) {
 		statsDraw.quickness = {text: TextGet("KinkyDungeonPlayerQuickness"), icon: "quickness", category: "buffs", color: "#e7cf1a", bgcolor: "#333333", priority: 100};
 		//DrawTextFitKD(TextGet("KinkyDungeonPlayerQuickness"), X1, 900 - i * 35, 200, "#e7cf1a", "#333333"); i++;
 	}
@@ -3029,9 +3068,9 @@ function KDDrawStruggleGroups() {
 						if (StruggleType == "Cut") {
 							let maxPossible;
 							let threshold = 0.75;
-							if (struggleData.limitChance > struggleData.escapeChance) {
+							if (struggleData.limitChance > struggleData.escapeChance && struggleData.limitChance > 0) {
 								threshold = Math.min(threshold, 0.9*(struggleData.escapeChance / struggleData.limitChance));
-							} else if (struggleData.limitChance == struggleData.escapeChance) {
+							} else if (struggleData.limitChance == struggleData.escapeChance || struggleData.limitChance == 0) {
 								threshold = 0;
 							}
 
@@ -3039,7 +3078,7 @@ function KDDrawStruggleGroups() {
 								threshold = KDMaxCutDepth(threshold, struggleData.cutBonus, struggleData.origEscapeChance, struggleData.origLimitChance);
 								// Find the intercept
 								maxPossible = Math.max(0, threshold);
-							} else maxPossible = 1;
+							} else maxPossible = struggleData.escapeChance > 0 ? 1 : 0;
 							a = maxPossible;
 							b = maxPossible;
 						}

@@ -881,6 +881,20 @@
             <key type="filename">../Models/CyberLink/GlowThighLinkSpreadHigh.png</key>
             <key type="filename">../Models/CyberLink/ThighLinkSpread.png</key>
             <key type="filename">../Models/CyberLink/ThighLinkSpreadHigh.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenLeftBoxtie.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenLeftCrossed.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenLeftFree.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenLeftFront.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenLeftUp.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenLeftWristtie.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenLeftYoked.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenRightBoxtie.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenRightCrossed.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenRightFree.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenRightFront.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenRightUp.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenRightWristtie.png</key>
+            <key type="filename">../Models/CyberMitts/ArmLongMittenRightYoked.png</key>
             <key type="filename">../Models/CyberMitts/CapForeLongMittenLeftFront.png</key>
             <key type="filename">../Models/CyberMitts/CapForeLongMittenRightFront.png</key>
             <key type="filename">../Models/CyberMitts/CapLongMittenLeftCrossed.png</key>
@@ -1715,6 +1729,25 @@
             <key type="filename">../Models/Labcoat/ShouldersSpread.png</key>
             <key type="filename">../Models/Labcoat/ShouldersUp.png</key>
             <key type="filename">../Models/Labcoat/ShouldersYoked.png</key>
+            <key type="filename">../Models/LatexPetsuit/Arms.png</key>
+            <key type="filename">../Models/LatexPetsuit/ArmsBelts.png</key>
+            <key type="filename">../Models/LatexPetsuit/GlowArms.png</key>
+            <key type="filename">../Models/LatexPetsuit/GlowLeftLegsKneel.png</key>
+            <key type="filename">../Models/LatexPetsuit/GlowLeftLegsKneelClosed.png</key>
+            <key type="filename">../Models/LatexPetsuit/GlowLegsHogtie.png</key>
+            <key type="filename">../Models/LatexPetsuit/GlowLegsKneel.png</key>
+            <key type="filename">../Models/LatexPetsuit/GlowLegsKneelClosed.png</key>
+            <key type="filename">../Models/LatexPetsuit/GlowTorso.png</key>
+            <key type="filename">../Models/LatexPetsuit/LeftLegsBeltsKneel.png</key>
+            <key type="filename">../Models/LatexPetsuit/LeftLegsBeltsKneelClosed.png</key>
+            <key type="filename">../Models/LatexPetsuit/LeftLegsKneel.png</key>
+            <key type="filename">../Models/LatexPetsuit/LeftLegsKneelClosed.png</key>
+            <key type="filename">../Models/LatexPetsuit/LegsBeltsHogtie.png</key>
+            <key type="filename">../Models/LatexPetsuit/LegsBeltsKneel.png</key>
+            <key type="filename">../Models/LatexPetsuit/LegsBeltsKneelClosed.png</key>
+            <key type="filename">../Models/LatexPetsuit/LegsHogtie.png</key>
+            <key type="filename">../Models/LatexPetsuit/LegsKneel.png</key>
+            <key type="filename">../Models/LatexPetsuit/LegsKneelClosed.png</key>
             <key type="filename">../Models/Leash/Leash.png</key>
             <key type="filename">../Models/Leash/LeashCrossed.png</key>
             <key type="filename">../Models/Leash/LeashFree.png</key>
@@ -2695,6 +2728,21 @@
             <key type="filename">../Models/TallBallet/TallRightClosed.png</key>
             <key type="filename">../Models/TallBallet/TallRightKneel.png</key>
             <key type="filename">../Models/TallBallet/TallRightSpread.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLeftClosed.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLeftHogtie.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLeftKneel.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLeftKneelClosed.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLeftSpread.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLegLeftHogtie.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLegLeftKneel.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLegRightHogtie.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLegRightKneel.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLegRightKneelClosed.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallLegleftKneelClosed.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallRightClosed.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallRightHogtie.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallRightKneel.png</key>
+            <key type="filename">../Models/TallSmoothHeels/TallRightSpread.png</key>
             <key type="filename">../Models/TapeHeavy/AnklesClosed.png</key>
             <key type="filename">../Models/TapeHeavy/AnklesHogtie.png</key>
             <key type="filename">../Models/TapeHeavy/AnklesKneelClosed.png</key>
@@ -2857,6 +2905,9 @@
             <key type="filename">../Models/TapeMed/TopStrapCrossed.png</key>
             <key type="filename">../Models/TapeMed/TopStrapWristtie.png</key>
             <key type="filename">../Models/TapeMed/TopWristtie.png</key>
+            <key type="filename">../Models/Vibe/Band.png</key>
+            <key type="filename">../Models/Vibe/Remote.png</key>
+            <key type="filename">../Models/Vibe/Wire.png</key>
             <key type="filename">../Models/Visors/Dollmaker.png</key>
             <key type="filename">../Models/Visors/DollmakerFull.png</key>
             <key type="filename">../Models/Visors/DollmakerFullRim.png</key>
@@ -4183,6 +4234,72 @@
                 <rect>377,225,754,450</rect>
                 <key>scale9Paddings</key>
                 <rect>377,225,754,450</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/GagLatex/NeckCorset2.png</key>
+            <key type="filename">../Models/GagLatex/NeckCorsetGag2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>392,243,783,485</rect>
+                <key>scale9Paddings</key>
+                <rect>392,243,783,485</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/GagLatex/NeckCorsetGagRim2.png</key>
+            <key type="filename">../Models/GagLatex/NeckCorsetRim2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>382,238,763,475</rect>
+                <key>scale9Paddings</key>
+                <rect>382,238,763,475</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/Hood/Blindfold.png</key>
+            <key type="filename">../Models/Hood/BunnyEars.png</key>
+            <key type="filename">../Models/Hood/Gag.png</key>
+            <key type="filename">../Models/Hood/KittyEars.png</key>
+            <key type="filename">../Models/Hood/WolfEars.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>376,239,751,479</rect>
+                <key>scale9Paddings</key>
+                <rect>376,239,751,479</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/Hood/Hood.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>376,210,751,419</rect>
+                <key>scale9Paddings</key>
+                <rect>376,210,751,419</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

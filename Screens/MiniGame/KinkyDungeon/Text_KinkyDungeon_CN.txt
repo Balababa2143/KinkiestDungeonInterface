@@ -64,6 +64,10 @@ Controls
 控制
 Skip Intro
 跳过序言
+No Forced Greetings
+不强迫问候
+Show Restraint Info on Escape Hover
+悬停在挣扎按钮时显示束缚信息
 Always Show Warnings
 总是显示警告
 Always Show Minimap
@@ -92,6 +96,8 @@ Distraction Particles
 性奋粒子
 Vibration Particles
 震动粒子
+Gag Particle FX
+堵嘴粒子特效
 Show NPC Status
 显示NPC状态
 Show Spell Range
@@ -116,8 +122,8 @@ High Quality Animations
 高品质动画
 Enemy Animations
 敌人动画
-One-Click Move
-单击移动
+One-Click Move (when slowed)
+单击移动（当速度减慢时）
 Latch Shift Key
 闩锁移位键
 Crotch Rope under panties
@@ -294,6 +300,12 @@ Flip Player Display
 翻转玩家显示
 Grayscale when Blind
 失明时视野变成黑白
+Faster Floater Fade
+漂浮物更快消散
+No Damage Floaters
+无伤漂浮物
+Dynamic Armor (must hide armor)
+动态盔甲 (必须隐藏盔甲)
 Helpless!
 无助！
 Evaded!
@@ -318,6 +330,10 @@ Animation Time:
 动画时间:
 Map Brightness:
 地图亮度:
+Game Font:
+游戏字体:
+Button Font:
+按钮字体:
 Select a journey. This will determine the ordering of game areas.
 选择旅程。这将决定游戏区域的顺序。
 Standard: The intended experience
@@ -646,10 +662,16 @@ Magic Hands
 魔法之手
 Enemies can add restraints underneath existing restraints.
 敌人可以透过外层拘束具添加内层拘束。
+Fully Integrated
+完全集成
+Start with your body sealed in an adhesive layer of latex.
+开局时将你的身体密封在一层粘合乳胶层中。
+Start atop a conveyor on your way to be sealed away inside the Facility.
+从传送带顶部开始，被封闭在设施内。
 Cyber Doll
 赛博娃娃
-Start in Cyber restraints.
-开局时穿戴赛博束缚。
+Start in full Cyber restraints.
+开局时穿戴全套赛博束缚。
 Fuuka's Pet
 Fuuka的宠物
 Start with Fuuka's collar and a few restraints.
@@ -660,8 +682,13 @@ All humanoids that can bind you also apply Fuuka's special restraints.
 所有可束缚你的人形生物可以使用Fuuka特制的拘束具。
 Collected
 搜集
-Start with The Warden's special collar and some restraints.
+Start with The Warden's special belt which punishes you for defiling spell orbs.
+开局时穿戴典狱长的特殊贞操带，它会惩罚你玷污法术球。
 从典狱长的特殊项圈和一些束缚开始。
+Enforcers
+执法者
+All humanoids that can bind you also apply The Warden's cuffs.
+所有能够束缚你的人形生物也会使用典狱长的手铐。
 The Warden's Property
 典狱长的财产
 All humanoids that can bind you also apply The Warden's special restraints.
@@ -824,15 +851,15 @@ You take 50% more tickle damage.
 你受到的挠痒伤害增加 50%。
 Stoic
 忍耐
-You gain 82% tickle resist.
-你获得 82% 挠痒抗性。
+You gain +82 tickle resist.
+自身挠痒抗性 +82 点。
 Lascivious
 好色
 You take 50% more grope damage.
 你受到的抚摸伤害增加 50%。
 Unperturbed
 冰洁
-You gain 82 grope resist.
+You gain +82 grope resist.
 自身抚摸抗性 +82 点。
 Masochist
 受虐
@@ -840,7 +867,7 @@ Pain is strongly arousing.
 疼痛会使你强烈地性奋。
 Pain Tolerance
 坚韧
-You gain 200 pain resist.
+You gain +200 pain resist.
 自身疼痛抗性 +200 点。
 Fashionable
 时尚之星
@@ -1392,16 +1419,10 @@ Load from Code
 从代码中加载
 Confirm Reset?
 确认重置？
-(Copy the code above and save it on your computer to load later)
-（复制上面的代码并将其保存在您的计算机上以供以后加载）
-You come across a black monolith with its face inscribed in runes.
-你会看到一个黑色的石碑，上面刻着符文。
-You study them, but can't come up with an interpretation.
-你尝试研究它们，但无法提出解释。
-They may still prove useful to future adventurers should you get caught...
-如果你被抓住，它们可能仍然对未来的冒险者有用......
-(Your game has been saved automatically, but you can save the code for later)
-（你的游戏已自动保存，但你可以保存代码以备后用）
+(Your game has been saved)
+（您的游戏已保存）
+(Copy the code above and save it on your computer to backup)
+（复制以上代码并保存到电脑上以备份存档）
 Continue...
 继续
 Menu
@@ -1572,10 +1593,18 @@ Return
 返回
 Keybindings
 按键绑定
+Show free characters on map
+在地图上显示自由的角色
+Detailed jailed NPCs (experimental)
+被监禁的 NPC 细节 (实验性)
+Show Struggle Bars
+显示挣扎条
 Allow Suspicious Mods
 允许可疑模组
 Auto Load Mods (offline only)
 自动加载模组（仅离线版）
+Classic Inventory Background
+经典背包背景
 Game Options
 游戏选项
 Load from code
@@ -1678,8 +1707,8 @@ Play with Self
 玩弄自己
 Message Log
 消息日志
-Close Door
-关门
+Interact
+交互
 Pass thru allies
 绕过盟友
 Auto-Struggle
@@ -2112,6 +2141,10 @@ Bola x3
 投石索 x3
 Bomb x3
 炸弹 x3
+Dynamite x2
+甘油炸药 x2
+Plastic Explosive x2
+塑胶炸药 x2
 Mana Potion
 魔力药水
 You sip the mana potion and feel empowered.
@@ -2552,8 +2585,8 @@ Four Seasons
 四季法杖
 Activate to reduce the cost of your next fire, water/ice, air/lightning, and earth spell by 50, once per element.
 激活后，下一次使用时 -50% 火/水/冰/风/雷/岩属性法术的消耗，但每个属性仅可使用一次。
-Deals shadow damage. +25% fire, ice, acid, crush, electric, blast damage. Offhand: Applies passive bonus.
-造成暗影伤害，+25% 火/水/冰/风/雷/岩/压力/爆炸伤害。副手：应用被动奖励。
+Deals shadow damage. +25% fire, ice, soap, crush, electric, blast damage. Offhand: Applies passive bonus.
+造成暗影伤害，+25% 火/冰/皂化/风/雷/岩/压力/爆炸伤害。副手：应用被动奖励。
 The Arbiter
 仲裁者之杖
 I have altered the rules. Pray I do not alter them further.
@@ -3458,6 +3491,17 @@ The enforcer fires off restraints that wrap around your body and apprehend you! 
 执法器发射出束缚包裹在你身上并逮捕了你！（+RestraintAdded）
 The enforcer releases small drones which lock onto your restraints! (DamageTaken)
 执法器释放小型无人机锁定你的束缚具！（DamageTaken）
+Time to get you into your uniform~
+该穿上制服了~
+You won't be needing any of this.
+你不需要这些。
+There we go, all ready for training!
+好了, 一切准备就绪, 可以进行训练了!
+Cyber Storage
+网络容器
+多功能金属箱，配备有聚碳酸酯防爆门和钢筋。
+Used throughout the reign of the Old Civilization to store slaves and prisoners.
+在整个古代文明统治时期，它被用来关押奴隶和囚犯。
 Artillery Unit
 炮兵部队
 The artillery unit releases magic smoke and explodes.
@@ -4203,7 +4247,7 @@ The guard passes out and drops her possessions!
 The guard locks your restraints!
 守卫锁住你的拘束具！
 The guard places a NewRestraintName on you
-警卫在你身上放置了一个 NewRestraintName
+警卫在你身上放置了一个新的 RestraintName
 The guard plays with you, groping and rubbing your body!
 守卫玩弄你，摸索揉你的身体！
 Armed Guard
@@ -4215,7 +4259,7 @@ The guard shocks you and slaps on some restraints! (+RestraintAdded)
 The guard shocks you with her taser!!!
 警卫用她的电击枪电击你！！！
 The EnemyName applies a NewRestraintName over your OldRestraintName
-EnemyName 在你的 OldRestraintName 上应用 NewRestraintName
+EnemyName 在你的 OldRestraintName 上束缚 NewRestraintName
 The EnemyName removes your OldRestraintName
 EnemyName 移除了你的 OldRestraintName
 The EnemyName restrains you with a NewRestraintName
@@ -4438,20 +4482,18 @@ A light restores the will of its allies!
 一道光恢复了盟友的意志！
 You do not have enough resources to cast the spell!
 你没有足够的资源来施放咒语！
-You AttackName TargetEnemy for DamageDealt DamageType damage!
-你 AttackName TargetEnemy 造成 DamageDealt 点 DamageType 伤害！
-You AttackName TargetEnemy for a decreased DamageDealt DamageType damage!
-你 AttackName TargetEnemy 造成了少量的 DamageDealt 点 DamageType 伤害！
-You AttackName TargetEnemy for an increased DamageDealt DamageType damage!
-你 AttackName TargetEnemy 造成大量的 DamageDealt 点 DamageType 伤害！
-You AttackName TargetEnemy for a devastating DamageDealt DamageType damage!
-你 AttackName TargetEnemy 造成毁灭性的 DamageDealt 点 DamageType 伤害！
-You AttackName TargetEnemy, but your DamageType weapon has no effect!
-你 AttackName TargetEnemy，但你的武器没有效果！
-You AttackName TargetEnemy for DamageDealt DamageType damage!, reduced by an anti-magic ward!
-你 AttackName TargetEnemy 造成 DamageDealt 点 DamageType 伤害！减少了它的魔法抗性！
 AttackName hits TargetEnemy for DamageDealt DamageType damage!
-AttackName 击中 TargetEnemy 造成 DamageDealt 点 DamageType 伤害！
+AttackName 命中 TargetEnemy 造成了 DamageDealt 点 DamageType 伤害!
+AttackName hits TargetEnemy for a decreased DamageDealt DamageType damage!
+AttackName 命中 TargetEnemy 造成了 DamageDealt 点少量的 DamageType 伤害!
+AttackName hits TargetEnemy for an increased DamageDealt DamageType damage!
+AttackName 命中 TargetEnemy 造成了 DamageDealt 点大量的 DamageType 伤害！
+AttackName hits TargetEnemy for a devastating DamageDealt DamageType damage!
+AttackName 命中 TargetEnemy 造成了 DamageDealt 点毁灭性的 DamageType 伤害！
+AttackName hits TargetEnemy, but your DamageType weapon has no effect!
+AttackName 命中 TargetEnemy, 但你的 DamageType 武器似乎没有任何效果！
+AttackName hits TargetEnemy for DamageDealt DamageType damage!, reduced by an anti-magic ward!
+AttackName 命中 TargetEnemy 造成了 DamageDealt 点 DamageType 伤害! 减少了它的魔法抗性!
 AttackName hits TargetEnemy for a reduced DamageDealt DamageType damage!
 AttackName 击中 TargetEnemy 造成了少量的 DamageDealt 点 DamageType 伤害！
 AttackName hits TargetEnemy but DamageType damage doesn't have any effect!
@@ -4462,10 +4504,10 @@ AttackName hits TargetEnemy for DamageDealt DamageType damage, reduced by an ant
 AttackName 击中 TargetEnemy 造成 DamageDealt 点 DamageType 伤害，减少了它的魔法抗性！
 AttackName hits TargetEnemy for a devastating DamageDealt DamageType damage!
 AttackName 击中 TargetEnemy 造成毁灭性的 DamageDealt 点 DamageType 伤害！
-attack
-攻击
-damage
-伤害
+Your attack
+你的攻击
+An effect
+效果
 You miss the TargetEnemy!
 你没有命中目标敌人！
 Your attack is too feeble to hurt the TargetEnemy!
@@ -4542,8 +4584,8 @@ The lock doesn't even have a keyhole to pick!
 这锁甚至连钥匙孔都没有！
 You need a special tool to pick this kind of lock.
 你需要一个特殊的工具来撬开这种锁。
-The lock doesn't have a keyhole to pick.
-这把锁没有钥匙孔可撬。
+The lock is technological and does not use a key.
+这把锁是科技锁，不需要钥匙。
 The lock is brimming with security features and is nigh impossible to pick!
 这把锁充满了安全特征，几乎不可能被撬开！
 The key sticks in the lock and jams, mangling the key!
@@ -4617,23 +4659,23 @@ You groan and tug but nothing budges on the TargetRestraint. You're bound too ti
 You are too tightly bound to have a chance against the TargetRestraint.
 你被束缚得太紧了，没有机会尝试挣脱 TargetRestraint。
 You shake and moan as you realize your struggles against the TargetRestraint are futile.
-你意识到你与 TargetRestraint 的斗争是徒劳的，你开始害怕地颤抖和呻吟。
+你意识到对 TargetRestraint 的挣扎是徒劳的，你开始害怕地颤抖和呻吟。
 You can't find a keyhole on the TargetRestraint!
 你在 TargetRestraint 上找不到锁孔！
 You sigh as you give up trying to find any kind of keyhole on the TargetRestraint.
 你叹了口气，最终放弃在 TargetRestraint 上寻找任何类型的锁孔。
 The TargetRestraint can't be unlocked without a special command!
-如果没有特殊指令，TargetRestraint 无法解锁！
+如果没有特殊命令就无法解锁 TargetRestraint ！
 You can't reach the keyhole on the TargetRestraint by yourself!
-你一个人够不到 TargetRestraint 上的锁孔！
+你自己够不到 TargetRestraint 上的锁孔！
 You can't hold the key to unlock the TargetRestraint with.
-你无法拿钥匙来解锁 TargetRestraint。
+你无法拿起钥匙来解锁 TargetRestraint。
 Your bound and shaking hands can't even hold the key for the TargetRestraint.
-你被束缚和颤抖的双手甚至无法抓住 TargetRestraint 的钥匙。
+你被束缚的双手颤抖着，甚至拿不住 TargetRestraint 的钥匙。
 The goddess punishes you for trying to unlock the TargetRestraint!
 女神会因为你试图解锁 TargetRestraint 而惩罚你！
 You try, but something is keeping your hands away from the TargetRestraint.
-你试过了，但是有些东西总是让你的手无法靠近 TargetRestraint。
+你尝试这么做，但有一股神秘力量让你的手无法靠近 TargetRestraint。
 You flail the key around uselessly but a strap is preventing you from unlocking the TargetRestraint!
 你徒劳地挥动钥匙，但一条带子阻止你解锁 TargetRestraint！
 This lock on the TargetRestraint is beyond your skill level!
@@ -4643,7 +4685,7 @@ You whimper as you realize the lock on the TargetRestraint is far too secure.
 There is no visible locking mechanism on the TargetRestraint.
 TargetRestraint 上没有可见的锁扣。
 You can't pick the TargetRestraint by yourself, you'll need help.
-你无法自己解开 TargetRestraint，你需要帮助。
+你自己解不开 TargetRestraint，你需要帮助。
 You can't maneuver the lockpick well enough to unlock the TargetRestraint.
 你无法很好地操纵撬锁器来解锁 TargetRestraint。
 You let out a frustrated sigh as your quivering pick makes no progress on the TargetRestraint.
@@ -4671,15 +4713,15 @@ You twist your body trying to use the furniture, but it doesn't seem to work. Th
 You wiggle and squirm, trying to use the furniture to no avail. The TargetRestraint remains tight.
 你扭动身体，试图使用家具，但无济于事。 TargetRestraint 仍然很紧。
 You need something sharp to loosen the fasteners on the TargetRestraint.
-你需要一些锋利的东西来松开 TargetRestraint 上的紧固件。
+你需要一些锋利的东西来松开 TargetRestraint 上的锁扣。
 This is not a job for your trembling fingers right now.
-这不是你现在正在颤抖的手指的工作。
+你现在颤抖的手指无法胜任这个工作。
 Tugging on the TargetRestraint is useless. Maybe if you had something sharp...
 拉扯 TargetRestraint 是没有用的。也许如果你有锋利的东西...
 You sigh as the TargetRestraint resists all your attempts at breaking through.
 你叹了口气， TargetRestraint 抵御了你所有的挣脱尝试。
 You fidget with the TargetRestraint but can't reach the clasps without some kind of edge.
-你很想挣脱 TargetRestraint ，但如果没有某种边缘你就无法够到扣子。
+你很想挣脱 TargetRestraint ，但如果不借助某种边沿你就无法够到扣子。
 You flail about but your hands are unable to reach the TargetRestraint.
 你尝试挥动双手去够它，但够不到 TargetRestraint。
 You can't reach the clasps on the TargetRestraint. If only you had some other way...
@@ -4687,9 +4729,9 @@ You can't reach the clasps on the TargetRestraint. If only you had some other wa
 You squirm around, rubbing the TargetRestraint against the smooth floor to no avail...
 你扭动身体，在光滑的地板上摩擦着 TargetRestraint，但无济于事......
 The knots on the TargetRestraint are too tight to pull apart without a hook.
-TargetRestraint 上的结太紧，如果没有钩子就无法拉开。
+TargetRestraint 上的结太紧，如果没有钩子你拉不开它。
 You struggle fruitlessly against the knots on the TargetRestraint, but they're too tight.
-你徒劳地与 TargetRestraint 上的结进行斗争，但它们太紧了。
+你想挣脱 TargetRestraint 的绳结，但这是徒劳的，它们太紧了。
 The TargetRestraint is too tight against your body. You'll need more leverage to pull it off.
 TargetRestraint 在你的身体上太紧了。你需要更多的外力作用才能成功。
 You shake yourself around trying to rub off the TargetRestraint, but it's hopeless.
@@ -4701,7 +4743,7 @@ Your trembling hands cant grip anything as they are, let alone undo the TargetRe
 You rub yourself against the floor to no avail...
 你在地板上蹭了蹭，但无济于事……
 The fastenings are too tight and secure on the TargetRestraint!
-TargetRestraint 上的紧固件过于紧固！
+TargetRestraint 上的锁扣过于紧固！
 You roll around tryng to loosen the TargetRestraint to no avail.
 你翻滚着试图松开 TargetRestraint，但无济于事。
 The TargetRestraint tightens itself as you try to undo it!
@@ -4711,9 +4753,9 @@ You can't reach the TargetRestraint by yourself!
 You are too tightly bound to manipulate the TargetRestraint.
 你被束缚得太紧而无法控制 TargetRestraint。
 Your futile struggles do nothing to loosen the fasteners on the TargetRestraint.
-你徒劳的挣扎并不能松开 TargetRestraint 上的紧固件。
+你的挣扎对于松开 TargetRestraint 上的锁扣毫无作用。
 You try to undo the fasteners on the TargetRestraint, but they are blocked by other straps!
-你尝试松开 TargetRestraint 上的紧固件，但它们被其他带子挡住了！
+你尝试松开 TargetRestraint 上的锁扣，但它们被其他带子挡住了！
 You rub your body uselessly as you find another strap securing the TargetRestraint.
 你摩擦自己的身体试图挣脱，但当你发现另一条固定 TargetRestraint 的带子时，你意识到之前所有努力都是徒劳。
 You feel the Goddess' hand keeping the TargetRestraint tightly secured!
@@ -4839,13 +4881,13 @@ TargetRestraint 将你牢牢地束缚住！
 You sigh and moan as the TargetRestraint aren't getting any looser.
 当 TargetRestraint 没有松开一点时，你叹了口气并呻吟道。
 You look around for a fastener on the TargetRestraint...
-你正在四处寻找 TargetRestraint 上的紧固件……
+你正在四处寻找 TargetRestraint 上的锁扣……
 Shivering, you look for a fastener on the TargetRestraint...
-你瑟瑟发抖，在 TargetRestraint 上寻找紧固件……
+你瑟瑟发抖，在 TargetRestraint 上寻找锁扣……
 The TargetRestraint has no fastener!!!
-TargetRestraint 上没有紧固件！
+TargetRestraint 上没有锁扣！
 The TargetRestraint is sealed around your body, with no fasteners to speak of!
-TargetRestraint 密封在你的身体周围，无需任何紧固件！
+TargetRestraint 密封在你的身体周围，无需任何锁扣！
 The TargetRestraint is firmly sealed around your body.
 TargetRestraint 牢牢地密封在你的身体周围。
 You are sealed in ice. There is no escape.
@@ -4914,8 +4956,8 @@ Non-Lockable
 不可上锁
 Unlocked
 解锁的
-Lock Type:
-锁类型：
+Lock:
+锁：
 Simple
 简单
 Standard
@@ -4932,6 +4974,10 @@ Magic
 魔法
 Cyber
 赛博
+Integrated Cyber
+赛博（集成）
+Advanced Cyber
+赛博（先进）
 Ancient
 古代
 Simple Lock
@@ -4952,30 +4998,32 @@ Purple Lock
 紫锁
 Cyber Lock
 赛博锁
+Integrated Cyber Lock
+赛博锁（集成）
+Advanced Cyber Lock
+赛博锁（先进）
 You can't use that while gagged!
 你不能在嘴被堵住的时候使用它！
 You can't use that without your fingers!
 你不能在无法使用手指的时候使用它！
 You struggle against your bindings but it's too strict!.
-你与你的拘束作斗争，但它太严苛了！
+你在你的拘束具中挣扎，但它太严密了！
 You drop the pick due to your bound hands!
 由于你的双手被束缚，你放弃了撬锁！
 You drop your knife due to your bound hands!
-刀从你缚住的手中掉了出去！
+刀从你被缚住的手中掉了出去！
 You drop the precious knife due to your bound hands!
-珍贵的刀从你缚住的手中掉了出去！
+珍贵的刀从你被缚住的手中掉了出去！
 You drop the key due to your bound hands!
-钥匙从你缚住的手中掉了出去！
+钥匙从你被缚住的手中掉了出去！
 You drop the magic key due to your bound hands!
-魔法钥匙从你缚住的手中掉了出去！
+魔法钥匙从你被缚住的手中掉了出去！
 Journal (N)
 日记 (N)
 Passing...
 通过中...
 Closing...
 关门中...
-Close door
-关门
 Sprinting!!!
 疾跑中！！！
 Sprint!
@@ -5209,6 +5257,8 @@ Level RestraintLevel (Rarity)
 Consumable
 消耗品
 Worn
+佩戴中
+Equipped
 已装备
 Weapons
 武器
@@ -5295,9 +5345,9 @@ The display stand suddenly locks into place around you!
 Doll Stand
 玩偶架
 A mobile display stand for dolls to keep them in place.
-可移动玩偶展示架，可将娃娃固定到位。
+一个用于固定玩偶的移动展示架。
 As long as it's... inserted, you won't be going anywhere!
-只要它……插入，你就哪儿也去不了！
+只要它插入……那里，你就哪儿也去不了！
 As long as it's attached, you won't be going anywhere!
 只要它附在身上，你就哪儿也去不了！
 A devious way to immobilize people.
@@ -5313,31 +5363,31 @@ Restraining Bed
 A bed with a booby trap designed to trap you on top of it!
 带有拘束装置的床，旨在将你困在上面！
 You have to get out somehow...
-你必须以某种方式离开......
+你得个想办法逃脱......
 Belts emerge from underneath the bed and wrap around you, strapping you down tightly!
 腰带从床底下出来，缠绕在你身上，把你紧紧地绑起来！
 Binding Dress
 捆绑连衣裙
 It's a devious dress! I hope your elbows are flexible~
-这是一件狡猾的衣服！希望你的手肘灵活~
+这是一件不寻常的衣服！希望你的手肘足够柔韧~
 So many laces! It would take quite a while to put this on normally. That's what magic is for!
-这么多带子！正常戴上这个需要相当长的时间。这就是魔法的用途！
+很多系带！正常穿这个要很长的时间。这就是魔法的用途！
 Ornamental Corset
 装饰束胸
 Your figure looks gorgeous in this~
 你的身材看起来真漂亮〜
 It's so tight you won't be able to undo the laces yourself, dear!
-亲爱的，这太紧了，你将无法自己解开系带！
+哎呀！这个绑带太紧了，你自己解不开！
 Fancy Ball Gag
 精致口球
 A cute ball gag that fills your mouth right up!
-一个可爱的口球，你的塞满嘴！
+一个可爱的口球，塞满你的嘴！
 What's this? it seems to have a magic spell protecting it from harm!
 这是什么？ 它似乎有一个神奇的法术保护它免受伤害！
 Fancy Muzzle
 精致口套
 A muzzle to keep you from spitting out what's underneath.
-口套可防止你吐出下面的东西。
+口套可防止你吐出底下的东西。
 Sorry dear, there's a mystic seal on there to keep it on nice and tight.
 对不起，亲爱的，那里有一个神秘的封印，可以使其保持良好且紧密。
 Ornamental Dress
@@ -5345,7 +5395,7 @@ Ornamental Dress
 A devious dress that forces the arms into an elbows-touching position.
 一种连衣裙，迫使手臂在背后保持胳膊接触的位置。
 It is extremely strict but it is only fabric. The lacing is intricate and will take a long time to remove.
-它非常严苛，但它只是织物。绑带很复杂，需要很长时间才能去除。
+它非常严密，但它只是织物。绑带很复杂，需要很长时间才能去除。
 Ornamental Gag
 装饰堵嘴
 A gag meant to keep servants of the Resurrection Temple quiet by forcing a plug into their mouth.
@@ -5537,9 +5587,9 @@ A pair of heels coated in a nonstick material.
 They will slow you down, but you can walk on slime without getting stuck!
 它们会减慢你的速度，但你可以在粘液上行走而不会被黏住！
 Duster Gag
-掸子堵嘴
+掸子口塞
 A special gag designed for maids to be useful even while tied up! It's self-locking too!
-专为女仆设计的特殊堵嘴，即使在被绑着的情况下也能打扫卫生！并且会自动锁定！
+专为女仆设计的特殊口塞，即使在被绑着的情况下也能打扫卫生！并且会自动锁定！
 Deals 0.5 tickle damage on attack and adds +30 distraction. Bonus damage vs dirt and mold.
 攻击时造成 0.5 点挠痒伤害，并增加 30 分心值。对抗污垢和霉菌会造成额外伤害。
 Gas Mask
@@ -5641,19 +5691,19 @@ This collar is designed to make sure its wearer does not escape their charms.
 It will occasionally cause charms to appear out of nowhere and bind the wearer.  Effect increases in speed based on the number of charms you have on you.
 它偶尔会突然出现符咒，并束缚佩戴者。效果的速度增加取决于你身上的符咒数量。
 Leather Panel Gag
-皮革面板堵嘴
+口罩型皮革口塞
 A gag that seals your lips tightly and stuffs your mouth with a ball.
-一个堵住你的嘴唇并用一个球塞住你的嘴的堵嘴。
+把你的嘴唇紧紧地封住，并用一个球塞进你的嘴里。
 Keep your mouth to yourself!
 管好自己的嘴吧！
 Harness Panel Gag
-马具式面板堵嘴
+口罩型马具口球
 The harness is comprehensive and it's locked in place.
 束带很全面，并且锁定到位。
 Harness Ball Gag
-马具式球口塞
+马具式口球
 A gag that stuffs your mouth with a large silicone ball.
-一个塞满你嘴的大硅胶球口塞。
+一个塞满你嘴的硅胶大口球。
 Bast Gag
 Bast 堵嘴
 A gag used to silence new initiates of the Bast cult.
@@ -5681,7 +5731,7 @@ Bast 套装
 A skintight suit used on unruly initiates of the Bast cult.
 Bast 教派不守规矩的新信徒穿的紧身衣。
 It's nearly impossible to escape without help once locked inside.
-一旦被锁在里面，几乎不可能在没有帮助的情况下逃脱。
+一旦被锁在里面，没有帮助几乎不可能逃脱。
 Bast Petsuit
 Bast 宠物套装
 Enhanced suit used for select members of the Bast cult.
@@ -5789,7 +5839,7 @@ A pair of cuffs keeping your arms behind your back.
 A pair of leather cuffs keeping your arms behind your back.
 一对皮革手铐将你的手臂束缚在背后。
 A full set of leather cuffs keeping your arms in a strict elbow tie!
-全套皮革手铐，将你的手臂严格绑在肘部！
+全套皮革手铐，将你的手臂严格地绑在肘部！
 Your cuffs detatch!
 你的手铐松了！
 The enemy attaches your elbow cuffs together!
@@ -5814,6 +5864,10 @@ Several vine pods sprout out of the ground!
 数颗藤蔓破土而出！
 A vine pod sprouts out of the ground!
 一颗藤蔓破土而出！
+Several flowers sprout out of the ground!
+几朵花从地上发芽！
+A magical flower sprouts out of the ground!
+一个神奇的花朵从地上萌芽！
 A wall of ice rises from the ground!
 一道冰墙从地底升起！
 The dragon's breath poisons you!
@@ -5955,7 +6009,7 @@ ENMYNME CHTRNME 的 RMNME
 Cuffs Chain
 链式手铐
 A full set of cuffs keeping your arms in a strict elbow tie!
-全套手铐将你的手臂严格绑在肘部！
+全套手铐将你的手臂严格地绑在肘部！
 Your wrists detatch, leaving your elbows still bound!
 你的手腕松开了，你的手肘仍然被束缚着！
 Elbow Chain
@@ -6137,7 +6191,7 @@ Leather Mittens
 A pair of tight leather mittens enclosing your hands.
 一副紧绷的皮手套包住你的双手。
 They make it almost impossible to manipulate keys and tools. Keep your hands to yourself!
-它们使操作按键和工具几乎成为不可能。把手留给自己！
+令你几乎不可能操纵钥匙和工具，保持你的手紧握！
 Leather Legbinder
 皮革束腿套
 A tight leather legbinder that keeps your feet glued together.
@@ -6162,6 +6216,12 @@ It's quite tight and secured by lockable buckles on your sides.
 它非常紧，并由你两侧的可上锁带扣固定。
 The armbinder harness comes off with the armbinder.
 会随着束手套一起挣脱。
+The energy link between your ankle cuffs fizzles into nothing.
+踝铐之间的能量链条逐渐消失。
+The energy link between your arm cuffs fizzles into nothing.
+臂铐之间的能量链条逐渐消失。
+The energy link between your thigh cuffs fizzles into nothing.
+大腿铐之间的能量链接逐渐消失。
 Handcuffs
 手铐
 A pair of steel cuffs locked securely around your wrists.
@@ -6209,17 +6269,17 @@ A mouth-filling gag made of a red squishy material.
 Tight Ball Gag
 紧致口球
 A gag made of a red squishy material, buckled as tight as it will go.
-一个由红色柔软材料制成的堵嘴物，扣得尽可能紧。
+一个由红色柔软材料制成的口球，被扣的很紧。
 Huge Ball Gag
 巨大号口球
 A massive gag made of a red squishy material, buckled as tight as it will go.
-一个巨大的口塞，由红色软材料制成，扣得尽可能紧。
+一个巨大的口球，由红色软材料制成，被扣的很紧。
 You absolutely can't enunciate your spells properly with this in.
 佩戴上后，你绝对无法正确地念出你的咒语。
 Magic Ball Gag
 附魔口球
 A gag enchanted with magic. It grows to fill your mouth so you can hardly speak.
-一个被附魔的堵嘴物。它会长到填满你的嘴巴，所以你几乎不能说话。
+一个被附魔的口球。它会长到填满你的嘴巴，所以你几乎不能说话。
 It's brimming with conjured energy. A normal knife won't work here!
 它充满了魔法能量。普通的刀在这里是行不通的！
 Anti-Magic Gag
@@ -6651,7 +6711,7 @@ There is no hope of struggling out. Better get back to work...
 Devious Maid Costume
 狡猾的女仆服装
 A devious maid outfit that forces the arms into an elbows-touching position.
-一个狡猾的女仆服装，迫使手臂进入肘部接触的姿势。
+一套阴险的女仆装，强迫手臂处于手肘相互紧贴的姿势。
 Makes sure you focus on your work and not fooling around.
 确保你专注于你的工作而不是闲逛。
 Reinforced Leather Belt
@@ -6659,7 +6719,7 @@ Reinforced Leather Belt
 A leather belt used to keep your legs hobbled.
 用来保持双腿跛行的皮带。
 It's made of a very tough reinforced leather. It will take some time to cut.
-它由非常坚韧的强化皮革制成。需要一些时间来削减。
+它由非常坚韧的强化皮革制成。切开它需要一些时间。
 Maid Cuffs
 女仆铐
 A pair of steel cuffs used by the Maidforce.
@@ -6795,9 +6855,9 @@ Slave Cuffs Chain
 High-Tech Gag
 高科技口球
 A gag with a soft and filling mouthpiece, reinforced with a metallized strap.
-带有柔软填充喉舌的堵嘴，并用金属化表带加固。
+带有柔软喉舌填充物的口塞，并用金属化系带加固。
 It will be impossible to force it out or cut it with just a knife.
-只用一把刀就不可能把它强行取出或切开。
+仅凭一把刀做不到把它强行取出或切开。
 Nylon Plug Gag
 尼龙塞子口塞
 A gag with a soft and filling mouthpiece, kept in place by an adjustable nylon strap.
@@ -6901,7 +6961,7 @@ Rubber (Feet)
 Sticky rubber that has fused itself into a skintight layer.
 粘性橡胶已自身融合成一层紧密的外壳。
 There's no struggling out now, but since it's solid it may be cuttable.
-现在不可能挣脱了，但由于它是坚固的，它可能是可切割的。
+现在不可能挣脱了，但由于它是固体的，也许可以切开它。
 Rubber (Ankles)
 橡胶（脚踝）
 Rubber (Legs)
@@ -7081,9 +7141,9 @@ Scarf Ankle Tie
 Arm Belts
 手臂绑带
 A ludicrous amount of belts secured with a buckle.
-用一些扣子固定的一些滑稽的皮带。
+用皮带扣固定的数量惊人的皮带。
 Lockable and fully adjustable to ensure snugness.
-可上锁且完全可调，以确保舒适。
+可上锁且完全可调节，以确保舒适。
 Leg Belts
 腿部绑带
 Ankle Belts
@@ -7101,7 +7161,7 @@ Tough to walk in.
 Thumbcuffs
 指铐
 Interferes with the use of your hands.
-妨碍双手的使用。
+阻碍双手的使用。
 Another layer of restriction.
 又一层限制。
 Hinged Handcuffs
@@ -7115,11 +7175,11 @@ Heavy Handcuffs
 A set of irish-8 style snap-shut cuffs fitted with a rudimentary lock.
 一套爱尔兰 8 式镣铐，配有基本锁。
 The position is too awkward to free yourself, even with a key...
-这个位置太尴尬了，即使有钥匙也无法自己解开......
+锁的位置令人难堪，即使有钥匙也无法自己解锁......
 Heavy Leg Irons
 重型脚镣
 The position is awkward, but it's on your feet so you can remove them yourself if you have free hands.
-这个位置很尴尬，但它在你的脚上，所以如果你有时间的话，你可以自己把它们解开。
+锁的位置令人难堪，但它在你的脚上，所以如果你有时间的话，你可以自己把它们解开。
 Thigh Shackles
 大腿镣铐
 Heavy shackles with a rudimentary lock.
@@ -7382,6 +7442,22 @@ Looking for a new wearer
 寻找新的佩戴者
 Chains
 链条
+Harnesses
+安全带
+Maid
+女仆
+Utility
+实用的
+Enchanted
+附魔的
+Unlocked
+已解锁
+Locked
+已锁定
+Accessible
+可访问
+Inaccessible
+不可访问
 Broken pieces of chain
 链条碎片
 Belts
@@ -7678,6 +7754,10 @@ Battle Trance
 战斗恍惚
 While at 40 Battle Rhythm, you attack twice per turn.
 当战斗节拍达到 40 时，你每回合可以攻击两次。
+Combat Maneuver
+战斗机动
+When Battle Trance is active, you gain a free move if the target is defeated before the second attack hits.
+当战斗恍惚激活时，如果目标在第二次攻击命中之前被击败，你将获得一次自由移动。
 Devious Ingenuity
 邪恶的独创性
 Trap-type spells and consumables no longer require you to channel them, but still have a delay before arming.
@@ -8708,7 +8788,7 @@ Target only Helpless enemies. Creates a fixture that increases passive mana reco
 仅可对无助的敌人施放。创建一个装置，可以增加法力池中的被动法力恢复，恢复 50 点能量，并使附近的敌人受到 50% 的妩媚/精神伤害。
 You conjure a fixture to hold your helpless target in place!
 你召唤出一个装置来束缚无助的目标！
-You watch in horror as your own creation surrounds you, locking you in place with a hefty click!
+You watch in horror as your own creation encircles you, locking you in place with a hefty click!
 你惊恐地看着你自己的创造物束缚着你，用沉重的锁将你固定在了原地！
 Lesser Flash
 小闪光
@@ -8912,6 +8992,10 @@ Chain Strike
 锁链攻击
 You have the power to summon chains when you attack. When enabled: Your attacks deal +10 chain damage and create chains. 125% bind efficiency.
 你拥有在攻击时召唤锁链的力量。启用后：你的攻击造成 +10 锁链伤害并制造锁链。125% 束缚效率。
+Ropework
+结绳术
+You have the power to weave ropes between your attacks. When enabled: Your attacks deal +10 chain damage and create ropes. 400% bind efficiency.
+你有能力在攻击之间编织绳索。启用后：你的攻击造成 +10 连锁伤害并制造绳索。400% 束缚效率。
 Leather Whip
 皮鞭
 You have the power to strike with conjured belts when you attack. When enabled: Your attacks deal +10 pain damage and create belts. 250% bind efficiency.
@@ -10215,7 +10299,7 @@ Layered underneath:
 Layered with:
 隐藏的拘束具：
 Increased strictness due to:
-由于以下装备增加了挣扎难度：
+由于以下束具增加了挣扎难度：
 Mana
 魔力
 Bondage
@@ -10287,7 +10371,7 @@ You close your eyes and breath rapidly in anticipation...
 You tilt your head back and moan as your heart beats faster...
 当你的心跳加快时，你将头向后仰并呻吟……
 You groan with pleasure as you approach the edge...
-当你接近边缘时，你高兴地呻吟着……
+当你接近高潮时，你兴奋地呻吟着……
 You whimper as you rub your legs together furiously...
 当你愤怒地摩擦双腿时，你呜咽着……
 You feel frustrated as the stimulation isn't quite enough...
@@ -10299,9 +10383,9 @@ This is starting to feel like torture...
 You let out a frustrated scream as the torment continues...
 随着折磨的继续，你发出了一声沮丧的尖叫……
 You simmer just under the edge, heart racing, breathing quickly...
-你在边缘沸腾，心跳加速，呼吸急促......
+你即将在高潮中爆发，心跳加速，呼吸急促......
 You let out an anguished moan as release dances just out of reach...
-你发出一声痛苦的呻吟，高潮的舞蹈遥不可及……
+你发出一声痛苦的呻吟，高潮之舞遥不可及……
 You squirm helplessly as your futile struggles simply arouse you more...
 你无助地蠕动，因为你徒劳的挣扎只会让你更加性奋......
 The vibration suddenly weakens.
@@ -10313,7 +10397,7 @@ The vibrators cut off suddenly, leaving you wanting.
 The toys turn off at the last moment, cutting you off.
 玩具在最后一刻关闭，中断了你的高潮。
 The toys leave you without pleasure as they turn off.
-当它们关闭时，这些玩具让你感到不愉快。
+这些玩具关掉后，你就没有乐趣了。
 You are left feeling empty as the toys stop vibrating.
 当玩具停止振动时，你感到空虚。
 You stomp your foot on the ground in frustration as the vibration ceases.
@@ -10351,7 +10435,7 @@ Your will is draining as you crave release, but can't quite get there without he
 Your will is draining as your heart beats faster and your body trembles...
 你的意志在耗尽，你的心跳加速，身体颤抖……
 Your will is draining as you simmer just under the edge...
-当你在边缘下慢慢沸腾时，你的意志正在耗尽......
+当你在高潮边缘酝酿时，你的意志正在耗尽......
 Your will is draining as you crave release, and the toys continue to vibrate...
 当你渴望释放时，你的意志正在枯竭，玩具继续振动……
 Your will is draining as the toys continue buzzing...
@@ -10361,9 +10445,9 @@ Your will is draining as you are tormented by vibrations...
 A buzzing vibration wakes you up!
 嗡嗡的振动将你唤醒！
 Your RestraintName constricts, warning you not to misbehave!
-你的 RestraintName 会收紧，警告你不要行为不端！
+你的 RestraintName 收紧，警告你不要行为不端！
 Your RestraintName tightens painfully to punish your misbehavior!
-你的 RestraintName 会痛苦地收紧以惩罚你的不当行为！
+你的 RestraintName 痛苦地收紧以惩罚你的不当行为！
 Your RestraintName punishes you for your behavior!
 你的 RestraintName 因为你的行为而惩罚你！
 Your RestraintName punishes you and warns you with a harsh beep!
@@ -10391,9 +10475,9 @@ Are you sure you want to go to the next level? (Click self to confirm)
 You shudder as you apply the RestraintName to yourself...
 当你给自己装备 RestraintName 时，你不寒而栗……
 You insert the RestraintName and close your belt's shield over it, with a click as it locks in place.
-你将 RestraintName 插入并在其上关闭你的贞操带的防护，听到它锁定到位时发出咔嚓一声。
+你将 RestraintName 插入并将你的贞操带的护罩合上，它锁定到位时发出咔哒一声。
 You attack the RestraintName and close your bra's shield over it, with a click as it locks in place.
-你放入 RestraintName 并关闭你的胸罩护罩，当它锁定到位时发出咔嚓一声。
+你放入 RestraintName 并合上你的胸罩护罩，它锁定到位时发出咔哒一声。
 You slowly put on the RestraintName, amazed at how it seems to mold to your size...
 你慢慢穿上 RestraintName，惊讶于它似乎是如何适应你的体型的……
 You struggle fruitlessly. There is no keyhole and the material is nigh-unbreakable!
@@ -10427,7 +10511,7 @@ A pair of towering heels, enchanted with combat magic. When powered, they reduce
 'Shoes of the graceful'
 '优雅之鞋'
 You can barely stand in these heels. They are rigid, metallic, and unbreakable, yet padded on the inside.
-你几乎不能穿着这些高跟鞋站立。它们是刚性的、金属的、牢不可破的，但内部有衬垫。
+穿着这双高跟鞋你都站不稳了。它们牢不可破，由坚硬金属打造，但内部有衬垫。
 Ancient Blindfold
 远古眼罩
 A full-blackout mask. When powered, it negates accuracy penalties due to vision, boosts accuracy by +100%, and boosts melee damage by +10.
@@ -10435,11 +10519,11 @@ A full-blackout mask. When powered, it negates accuracy penalties due to vision,
 'Mask of the Warrior'
 《战士的面罩》
 You tug at the mask but it won't come off. It's molded so close to your face that no light shines through!
-你拉扯面具，但它不会脱落。它的模制非常贴近你的脸，没有光线透过！
+你用力拉面具，但它就是取不下来。它被塑造得离你的脸很近，没有光线照进来!
 Ancient Muzzle
 远古口套
 You find a muzzle with a long rubbery plug on the inside, glowing magnificently, along with a strange crystal next to it.
-你会发现一个口套，里面有一个长长的橡胶塞子，发出华丽的光芒，旁边还有一个奇怪的水晶。
+你发现里面有一个长长的橡胶棒，闪闪发光，旁边还有一个奇怪的水晶。
 A muzzle that seals over the face tightly. When powered, it regenerates mana, boosts sneak, and multiplies damage dealt to unaware enemies by 2.5x.
 一个紧紧地盖在脸上的口套。充能后，它会恢复法力值，提高潜行能力，并对失去意识的敌人造成的伤害增加 2.5 倍。
 'Muzzle of the Saboteur'
@@ -10449,13 +10533,13 @@ You claw at your face, but not only does the soft plug fill your mouth completel
 Ancient Gag
 远古口塞
 You find a ball gag harness with a long rubbery plug instead of a ball, glowing magnificently, along with a strange crystal next to it.
-你会发现一个带有长橡胶塞而不是球的口塞，它发出华丽的光芒，旁边还有一个奇怪的水晶。
+你会发现一个带有长橡胶棒而不是球的口塞，它发出华丽的光芒，旁边还有一个奇怪的水晶。
 A gag that fills the mouth. When powered, regens mana, reduces miscast by 30%, and boosts damage to enemies that are stunned, frozen, bound, or slowed by 30%.
 塞满嘴巴的堵嘴。充能后，恢复法力，减少 30% 的施法失败几率，并使对被击晕、冰冻、束缚或减速的敌人造成的伤害提高 30%。
 'Gag of the Focused'
 '专注的口塞'
 You tug on the straps at your cheeks, but the straps are so tight the plug doesn't even move!
-你拉着脸颊上的带子，但带子太紧了，口塞甚至一动不动！
+你拉扯着脸颊上的口塞束带，但束带太紧了，口塞甚至一动不动！
 Ancient Rear Plug
 远古肛塞
 You find a huge, flexible, segmented plug, along with a strange crystal next to it.
@@ -10499,7 +10583,7 @@ Ancient Armbinder
 You find a monoglove, glowing magnificently, along with a strange crystal next to it.
 你会发现一只单手套，闪闪发光，旁边还有一块奇怪的水晶。
 An extremely strict armbinder. When powered, reduces miscast chance by 30%, increases all magic damage to enemies by 40%, and increases spell range by 50%.
-一个极其严格的束手套。充能后，施法错误率降低30%，对敌人的所有魔法伤害提高40%，施法距离提高50%。
+一个极其严厉的束手套。充能后，施法错误率降低30%，对敌人的所有魔法伤害提高40%，施法距离提高50%。
 'Armbinder of the Artillerist'
 '炮手的束手套'
 You try to wiggle your arms, but they can barely move in this position and are clasped tight. Your arms are sealed.
@@ -10513,7 +10597,7 @@ A pair of cuffs designed for summoners. Heals nearby allies by 15 per turn, and 
 'Anklets of the Faithful Friend'
 '忠实朋友的脚链'
 You jingle the chains around and realize that these unbreakable restraints won't be coming off.
-你叮当晃动锁链，并意识到这些牢不可破的束缚不会脱落。
+你把链子叮当作响，意识到这些牢不可破的束缚是不会解开的。
 ...when powered down, they snap together, rendering the wearer immobile.
 ...无充能时脚镣会连起来，阻碍行动。
 'Anklets of the Unfaithful Friend'
@@ -10607,7 +10691,7 @@ Blinded
 Apprehended!
 被捕！
 Restrained!
-束缚！
+受缚！
 Restricted!
 束缚！
 Fully Bound!
@@ -10626,6 +10710,8 @@ Vibed!
 震动中！
 Flying
 飞行中
+Distracted!
+分心!
 Acid
 皂化
 Acid
@@ -10672,6 +10758,16 @@ Unstoppable
 势不可挡
 Unflinching
 坚定不移
+You found a magical amulet! Choose one of the following to determine its benefits:
+你发现了一个神奇的护身符！ 你可以在以下选项中选择一种加成：
+Focus: +50% max distraction and faster decay. +5% stamina protected from damage (base: 30%).
+专注：+50% 最大分心和更快的衰减。 +5% 体力伤害保护（基础：30%）。
+Stamina: +50 max stamina, +50% stamina potion effectiveness.
+体力：+50 最大体力，+50% 体力药水效果。
+Magic: +50 max mana. +50% mana potion effectiveness.
+魔法：+50 最大魔法，+50% 魔法药水效果。
+Willpower: +50 max willpower, +50% willpower potion effectiveness. +1 stamina regen/turn.
+意志：+50最大意志，+50%意志药剂效果。 每回合 +1 体力恢复。
 +Focus
 +专注
 +Stamina
@@ -10831,7 +10927,7 @@ Extreme
 A supposedly reasonable difficulty curve.
 据称合理的难度曲线。
 Play at your own peril. Unlocked by double-clicking the Hard Mode button.
-以提高自身风险来游玩。通过双击“困难模式”按钮解锁。
+风险自负。通过双击“困难模式”按钮解锁。
 Aroused
 性欲
 Removes all chastity belts, vibrating restraints, plugs, and removes the option to play with yourself.
@@ -10879,7 +10975,7 @@ Easy
 Strict
 严密
 If you get captured, you might get rescued if you have good relations.
-当你被抓后，如果你与其他人良好的关系，你可能会获救。
+当你被抓后，如果你与其他人有良好的关系，你可能会获救。
 If you get captured, you will always get rescued and pay a fee.
 当你被抓后，你总是会被营救并支付费用。
 If you get captured, you are totally on your own.
@@ -10887,7 +10983,7 @@ If you get captured, you are totally on your own.
 Start Playing
 开始游玩
 Lock your settings in, nice and tight.
-锁定你的设置，又好又紧。
+锁定你的设置，享受紧缚。
 Choose some perks to spice up your run.
 选择一些额外技能，为你的游玩增添趣味。
 This game engages in safe and consensual analytics.
@@ -11227,7 +11323,7 @@ You're coming with me!
 Hand it over.
 把它交出来。
 Nice and tight!
-又好又紧！
+绑的很紧！
 The name's PTRN.
 名字是 PTRN。
 What the--
@@ -11869,7 +11965,7 @@ I'm going to ask you to leave
 You're ruining the books!
 你毁了这书！
 Do you need a gag?
-需要堵嘴吗？
+想要被堵嘴吗？
 Shut up.
 闭嘴。
 Put that back!
@@ -12003,7 +12099,7 @@ I diagnose you with a case of bratty behavior...
 Have you had your daily cuddles yet?
 你每天都拥抱过吗？
 It's time for your edging treatment~
-是时候进行极限治疗了~
+是时候进行寸止治疗了~
 Sexual health is physical health, my dear~
 性健康就是身体健康，亲爱的~
 PTRN MD here. Let's see what we've got...
@@ -12078,6 +12174,70 @@ Pathetic.
 真可怜。
 Such feeble attempts.
 没用的。
+It's over, human. You've lost.
+已经结束了，人类。你输了。
+There is no escape.
+跑不了的。
+You are beneath me.
+你比我低下。
+Nice gear. I'll take it.
+好东西。我要了。
+Try getting out of that!
+尝试挣脱它！
+Who am I? You beings may call me PTRN.
+我是谁？你们可以叫我 PTRN。
+She thinks she can beat us~
+她以为她能打败我们~
+No one will save you.
+没有人会救你。
+Come and accept your fate.
+来接受你的命运吧。
+An unruly subject. She needs training.
+一个难以管教的对象。她需要训练。
+You should consider your actions and their consequences~
+你应该考虑你的行为及其后果~
+Now now, a mortal should know her place!
+现在，凡人应该知道自己的地位！
+We are the keepers of balance.
+我们是平衡的维持者。
+Do not mess with us!
+别来惹我们！
+I shall take you myself~
+我亲自带你去~
+Where do you think you're going?
+你觉得你能往哪去？
+I will be free... even if it takes me a thousand years!
+我将获得自由……即使需要一千年！
+Release me you pathetic creature!
+放开我！你这个可怜的家伙！
+I will not be contained!
+我才不会被收容！
+Oh no, whatever shall I do!
+哦不，我该怎么办呢！
+I will be back, mortal!
+我会回来的，凡人！
+You will never trap me!
+你永远也困不住我！
+I yearn for a challenging puzzle!
+我渴望有挑战性的谜题！
+Show me your strongest restraints!
+展现你最强的束缚吧！
+I could probably escape anything.
+我或许能够逃避一切。
+Come here my plaything~
+快过来，我的玩物~
+Mortals are my favorite toy.
+凡人是我最喜欢的玩具。
+It's more fun when you resist!
+反抗才会更有趣！
+Know your place, mortal~
+认清自己的地位吧，凡人~
+I will bring you to my lair~
+我会带你去我的巢穴~
+Mortals shouldn't have too much freedom~
+凡人不应该有太多的自由~
+Mortals should keep their hands to themselves~
+凡人还是先管好自己的事吧~
 Humans are fun to play with.
 和人类一起玩很有趣。
 Toying with me? I shall oblige!
@@ -12099,7 +12259,7 @@ Defiler! You will pay for your crimes!
 A game of chase? Fun.
 追逐游戏？有意思。
 Not the edging training! Anything but that!
-不要边缘训练！除了那个之外什么都可以！
+不要寸止训练！除了那个之外什么都可以！
 Forgive me!
 请原谅我！
 No! Don't punish me!
@@ -12190,8 +12350,8 @@ Moving to assist!
 正在移动以提供帮助！
 You really think you're special, huh?
 你真的认为你很特别，是吗？
-I'm sorry! I didn't mean to break that vase!
-对不起！我不是故意打破那个花瓶的！
+That thing... it scares me.
+那东西……它吓到我了。
 I won't do it again, I swear!
 我不会再这样做了，我发誓！
 Don't you need a bodyguard, miss?
@@ -12725,7 +12885,7 @@ Why don't you wear it instead? (OFFPERC chance, may aggro)
 (The SPEAKER looks at you curiously)|Oh, you'd be perfect!|Would you please model my latest design?
 （SPEAKER 好奇地看着你）|哦，你好完美！|你能为我的最新设计做模特吗？
 (The SPEAKER holds up a restrictive outfit)|This RESTRAINT might be a tight fit|so hold still while I lace it~
-（SPEAKER 举起了一件有着束缚性的衣服）|这件 RESTRAINT 可能是紧身的|所以我系在束紧它时请保持不动~
+（SPEAKER 举起了一件有着束缚性的衣服）|这件 RESTRAINT 可能会很紧|所以在我束紧它时请保持不动~
 (The SPEAKER giggles)|It looks even better than I thought!|Thank you girl~
 （SPEAKER 咯咯笑）|看起来比我想象的还要好！|谢谢你，女孩~
 (The SPEAKER sighs and moves away)|Such a shame...
@@ -12813,7 +12973,7 @@ I don't have time for this. (PERCENT chance to avoid)
 (The SPEAKER shrugs)|Fine, I'll get someone else to clean up.
 （SPEAKER 耸耸肩）|好吧，那我去找其他人来清理。
 (The SPEAKER places the gag in your mouth)|(She then buckles up the straps.)|(You feel a locking mechanism pull the straps in tight...)|Good maid!
-（SPEAKER 将口塞放入你的嘴里）|（然后她扣上带子。）|（你感觉到锁定装置将带子拉紧......）|好女仆！
+（SPEAKER 将口塞放入你的嘴里）|（然后她扣上带子。）|（你感觉到一个锁紧装置把束带拉得紧紧的......）|好女仆！
 (The SPEAKER catches you and forces the gag on you)|(You feel it tighten as it locks on securely...)|I don't want to hear it!|Now go and do your job~
 （SPEAKER 抓住你并强行塞住你的嘴）|（当它牢牢锁定时，你会感觉到它收紧了......）|我不想听！|现在去做你的工作吧~
 I'll do it!
@@ -12903,7 +13063,7 @@ Ah! T-That's freezing! (PERCENT chance to avoid)
 (Wriggle to warm up) (PERCENT chance to avoid)
 （蠕动着尝试热身）（PERCENT 的概率避开）
 (A robotic SPEAKER approaches)|QUERY: Good girl detected:|Restraint desired?
-（机器人 SPEAKER 走近）|查询：发现好女孩：|需要束缚吗？
+（机器人 SPEAKER 走近）|查询：发现好女孩：|想要被束缚吗？
 (The SPEAKER beeps and whirrs)|SPEAKER will add RESTRAINT.|Acceptable?
 （SPEAKER 发出嘟嘟声和呼呼声）|SPEAKER 将添加 RESTRAINT。|可以接受吗？
 (The SPEAKER spins around you, releasing tape)|RESTRAINT dispensed.|Have a nice day.
@@ -13213,7 +13373,7 @@ Y-Yes miss~
 (The SPEAKER gulps)|M-Maybe I won't then!
 （SPEAKER 咽了咽口水）|也-也许我不会！
 (The SPEAKER adds the RESTRAINT)|You're blushing dear~|She doth protest too much?
-（SPEAKER 加了 RESTRAINT）|亲爱的你脸红了~|她抗议太多了？
+（SPEAKER 添加了 RESTRAINT）|亲爱的你脸红了~|她抗议太多了？
 (The SPEAKER giggles as she catches you and slaps on the cuffs)|No so fast, dear~
 （说话者咯咯笑着抓住你并拍了拍手铐）|别那么快，亲爱的~
 Maybe a bit~
@@ -13313,7 +13473,7 @@ You ran into me! (PERCENT chance to avoid)
 (The SPEAKER smugly nods)|(With surprising speed, the RESTRAINT locks in place)|Excellent, a good fit.
 （SPEAKER 得意地点点头）|（RESTRAINT 以惊人的速度锁定到位）|太棒了，非常合适。
 (The SPEAKER covers your mouth with her hand)|Shush, no more bad decisions.|(You feel her buckle the restraint strictly)
-（SPEAKER 用手捂住你的嘴）|嘘，别再做出错误的决定了。|（你感觉到她严格地扣住了束缚）
+（SPEAKER 用手捂住你的嘴）|嘘，别再做出错误的决定了。|（你感觉到她严厉地扣住了束缚）
 No, thank you.
 不，谢谢。
 I accept~
@@ -13437,7 +13597,7 @@ Ah! Cold! (PERCENT chance to avoid)
 (The SPEAKER smiles)|That's right~
 （SPEAKER 微笑）|这就对了~
 (The SPEAKER restrains you and clicks a lock on)|There! Nice and tight!
-（SPEAKER 制止了你并按下了锁）|那里！又好又紧！
+（SPEAKER 束缚了你并上了锁）|瞧瞧！美妙的束缚！
 Why of course!
 当然！怎么了？
 That sounds fun!
@@ -13489,9 +13649,9 @@ I won't help you. Wear it yourself. (PERCENT chance to avoid)
 (Look at your belt...)
 （看你的贞操带……）
 (The SPEAKER walks up to you)|We don't get a lot of visitors.|I take it that you enjoy bondage?
-（SPEAKER 向你走来）|访客可是很少见的。|你喜欢束缚吗？
+（SPEAKER 向你走来）|少见的访客。|我猜你喜欢被束缚？
 (The SPEAKER tilts her head)|Well, I have a RESTRAINT lying around,|and I figured you'd enjoy it.
-（SPEAKER 歪着头）|嗯，我这里有一个 RESTRAINT 放在这里，|我觉得你会喜欢的。
+（SPEAKER 歪着头）|嗯，我这里有一个 RESTRAINT ，|我觉得你会喜欢的。
 (The SPEAKER smiles)|I'm glad you like it!
 （SPEAKER 微笑）|很高兴你喜欢！
 (The SPEAKER frowns)|I guess I'll have to find someone else to wear it.
@@ -13539,7 +13699,7 @@ Actually, I'm having second thoughts...
 (Shake your head nervously)
 （紧张地摇头）
 Fine. You win.
-美好的。你赢了。
+好吧。你赢了。
 Go away! (PERCENT chance to avoid)
 离开！ （ PERCENT 的概率闪避）
 (The SPEAKER perks her ears as she sees you)|You've got a nice body.|I think it'll do better with some training!
@@ -13686,8 +13846,10 @@ I'm sorry sweetie, I don't sell merchandise here.|Who would set up a shop inside
 （SPEAKER 挥手）|你好，|我制造各种武器。|你想买一些吗？
 (The SPEAKER nods)|Speak softly and carry a big hammer.
 （SPEAKER 点点头）|轻声细语，手持重锤。
-(The SPEAKER waves)|Greetings,|I manufacture all sorts of armor.|Would you like to buy some?
-（SPEAKER 挥手）|你好，|我制造各种防具。|你想买一些吗？
+(The SPEAKER waves)|Hi.|I make armor. Only the finest.|I don't sell it cheap, unlike my twin.
+（SPEAKER 挥手）|嗨。|我只做最好的盔甲。|我与我的孪生兄弟不同，我卖的盔甲可不便宜。
+(The SPEAKER looks at you.)|Do you have a dealer's license?
+（SPEAKER 看着你。）|您有经销商执照吗？
 (The SPEAKER folds her arms)|I don't do charity, girl.
 （SPEAKER 交叉双臂）|我不做慈善事业，小姑娘。
 (The SPEAKER nods)|The most high-impact of sports bras.
@@ -13708,6 +13870,8 @@ I'm sorry sweetie, I don't sell merchandise here.|Who would set up a shop inside
 （SPEAKER 挥手）|你好啊小姐！|什么风把您吹到这来了
 (The SPEAKER folds her arms)|That's not very nice!
 （SPEAKER 交叉双臂）|那样做可不好哦！
+(The SPEAKER looks at you and smiles.)|Don't you already have one?
+（SPEAKER 微笑着看着你）|你不是已经有一个了吗？
 (The SPEAKER folds her arms)|I don't do charity, miss.
 （SPEAKER 交叉双臂）|我不做慈善事业，小姐。
 (The SPEAKER nods)|Could use a higher heel...
@@ -14091,7 +14255,7 @@ There is no valid space next to you!
 Got something for me?
 有东西给我吗？
 (Present your body to her~)
-（把身体献给她~）
+（向她展示你的身体~）
 (The SPEAKER smiles)|Am I thinking what you're thinking?
 （SPEAKER 微笑）|咱俩想的一样吗？
 (The SPEAKER grins)|Why yes, I have just the thing~
@@ -14100,8 +14264,36 @@ Got something for me?
 （SPEAKER 脸红了）|哦……让我检查一下。
 (The SPEAKER smirks)|Be careful what you ask for~
 （SPEAKER 傻笑）|小心你的要求~
+(The SPEAKER giggles)|Mmmph~
+（SPEAKER 咯咯地笑着）|Mmmph~
 (The SPEAKER pauses)|Calculating strictness threshold...
 （SPEAKER 停顿）|正在计算严格阈值...
+You look quite distracted...
+你看起来很分心...
+(Help her with her distraction)
+（帮她分散注意力）
+(The SPEAKER nervously smiles)|H-how'd you know
+（SPEAKER 紧张地笑了笑）你-你怎么知道
+(The SPEAKER smiles)|Indeed I am... Won't you assist me?
+（SPEAKER 微笑）|确实是...你不愿意帮助我吗？
+(The SPEAKER wiggles excitedly)|Y-yes miss!
+（SPEAKER 兴奋地扭动着身体）|是-是的，小姐！
+(The SPEAKER shakes her head while blushing)|W-what makes you think that?
+（SPEAKER 脸红了，摇了摇头）|你怎么会这么想？
+(The SPEAKER computes something)|Error...
+（SPEAKER 计算某事）|错误...
+(The SPEAKER nods)|Mmmph!
+（SPEAKER 点头）|Mmmph!
+(Give her release with a magic wand)
+（用魔杖释放她）
+(Set her toys to high for a while)
+（将她的玩具调高一段时间）
+(Cuddle with her for 2 turns)
+（与她拥抱 2 回合）
+(The SPEAKER trembles with pleasure)
+（SPEAKER 高兴得浑身颤抖）
+(The SPEAKER struggles to let go due to her chastity belt)
+（由于贞操带的存在，SPEAKER 很难高潮）
 Let's go for a walk!
 让我们出去走走！
 (Jump excitedly, presenting your collar for a leash)
@@ -14878,6 +15070,12 @@ An enemy found you while you were busy!
 （你躺在床上打瞌睡…）
 (Lie down and sleep)
 （躺下睡觉）
+(There is a pole sticking out of the ground)|(A footrest rises from the floor on either side of the pole)|(This seems like an automated binding system for prisoners...)
+（有一根杆子从地上伸出来）|（杆子两侧的地板上升起一个脚凳）|（这看起来像是囚犯的自动捆绑系统…）
+(The pole rises and immobilizes you!)
+（杆子升起并把你制服！）
+(Stand over it and place your feet in the footrests)
+（站在上面并将脚放在脚凳上）
 FOODMSG|(It invites you to partake in its culinary delights)
 FOODMSG|（它邀请你分享它的美食）
 (You eat the food and feel your willpower rising)
@@ -15203,9 +15401,21 @@ A soft, flexible plug pressed into your mouth and held in place with a metal shi
 Doll Muzzle
 玩偶口套
 A metallic shield preventing you from removing any gags underneath.
-金属罩可防止你移除下面的任何口塞。
+金属罩阻止你移除下面的任何塞子。
 It's made of exquisite Old Civilization metals, resistant to almost all forms of damage.
-它由精致的旧文明金属制成，可以抵抗几乎所有形式的损坏。
+它由精致的古代文明金属制成，可以抵抗几乎所有形式的损坏。
+Cyber Mittens
+赛博手套
+These mittens force your hands into fists, keeping you from using them to do anything useful.
+这些手套迫使你的手握成拳头，使你无法用它们做任何有用的事情。
+It is made of a strong mesh of ancient metallic fiber, kept in place with a metal band.
+它由古老金属纤维制成的坚固网状物制成，并用金属带固定。
+Cyber Lockdown Mitts
+赛博封锁手套
+These long mittens force your hands into fists, keeping you from using them to do anything useful.
+这些长手套迫使你的手握成拳头，使你无法用它们做任何有用的事情。
+It is made of a strong mesh of ancient metallic fiber, wrapped snugly around your arms to make removal by yourself impossible.
+它由古老的金属纤维制成的坚固网状物，紧紧缠绕在你的手臂上，让你无法自行脱下。
 Doll Mittens
 玩偶手套
 These long mittens force your hands into fists, keeping you from using them to do anything useful.
@@ -15283,9 +15493,9 @@ Your struggling sets off your [RESTRAINTNAME]
 Your attack sets off your [RESTRAINTNAME]
 你的攻击引发了你的 [RESTRAINTNAME]
 The straps on your gag prevent you from loosening the blindfold!
-堵嘴物上的带子可以防止眼罩松动！
+口塞上的带子可以防止眼罩松动！
 The straps on your gag keep your blindfold securely in place!
-堵嘴物上的带子可将眼罩牢固固定住！
+口塞上的带子可将眼罩牢牢固定住！
 Revert
 恢复
 Confirm Revert?
@@ -15330,8 +15540,12 @@ Transparency
 透明度
 Reset Layer!
 重置图层！
+Reset Properties!
+重置属性！
 Export All Layers
 导出所有图层
+Export All Props
+导出所有属性
 Copy
 复制
 Paste
@@ -15380,6 +15594,16 @@ Body
 身体
 Gloves
 手套
+RibbonBelt
+丝带绳衣
+Upper Chest Strap
+上胸绳
+Shoulder Straps
+肩绳
+Lower Chest Straps
+下胸绳
+Arm Straps
+手臂绳
 Arm Ropes
 手臂绳缚
 Cuffs
@@ -15604,22 +15828,22 @@ A quick tie for apprehending prisoners.
 用于逮捕囚犯的快速捆绑。
 It's not very secure.
 这不是很牢固。
-Intricate Ropework
-复杂的绳索
+Chest Straps
+胸绳
 A quick tie for apprehending prisoners, looped through buckles on the hand restraints.
 用于逮捕囚犯的快速捆绑，穿过手部束缚装置上的带扣。
-Strict Ropework
-严格的绳索
-The finishing touches on a tight and strict piece of ropework.
-最后的收尾工作是对一根紧密而严格的绳索进行最后的修饰。
+Chest Harness
+胸束衣
+The finishing touch on a tight and strict piece of ropework.
+最后的收尾工作是对一根紧密而严厉的绳索进行最后的修饰。
 Rope Hogtie
 驷马
 A very strict and tight hogtie, good for subduing unruly captives.
-一种非常严苛和牢固的捆绑，适合制服不守规矩的俘虏。
+一种非常严厉和牢固的捆绑，适合制服不守规矩的俘虏。
 It holds you strictly in a boxtie. You tug on the rope connecting your feet and struggle.
 它把你严格地束缚在后手缚捆扎带里。你需要首先挣扎开连接腿部的绳子。
-It holds you strictly with your back arched. You tug on the rope connecting your feet and struggle.
-它牢牢地把你绑住，让你弓起后背。你拉动连接双脚的绳子并挣扎。
+It holds you strictly with your elbows nearly touching. You tug on the rope connecting your feet and struggle.
+它会严格地固定住您，让您的肘部几乎与身体完全接触。你拉扯着连接双脚的绳子挣扎着。
 Rope Belt
 绳衣
 Rope Harness
@@ -15637,13 +15861,13 @@ A wrist and elbow tie keeping your arms secured behind your back.
 Upper Knee Ropes
 上膝绳缚
 A tie that hobbles your knees together..
-一条带子将你的膝盖束缚在一起。
+一条绳带将你的膝盖绑在一起。
 Thigh Ropes
 大腿绳缚
 Upper Thigh Ropes
 上腿绳缚
 A tie that hobbles your thighs together..
-一条带子将你的大腿束缚在一起。
+一条绳带将你的大腿绑在一起。
 Ankle Ropes
 脚踝绳缚
 Lower Leg Ropes
@@ -15651,7 +15875,7 @@ Lower Leg Ropes
 Lower Knee Ropes
 下膝绳缚
 A tie keeping your knees secured together.
-束带将膝盖固定在一起。
+一条绳带将你的膝盖绑在一起。
 Toe Rope
 趾绳
 A tie keeping your toes tightly together.
@@ -15673,7 +15897,7 @@ Looks like our time is coming to an end...
 Time to bring you back to your place~
 是时候带你回到原处了~
 You've been quite adorable! Until next time~
-你真是太可爱了！直到下次~
+你真是太可爱了！下次见~
 It's time for your walk, miss.
 小姐，该散步了。
 Now let's see, where to go...
@@ -15760,6 +15984,10 @@ Mundane
 平凡
 Armbinders
 束手套
+Legbinders
+束手套
+Boxbinders
+盒束包扎带
 Devices
 装置
 Toys
@@ -15767,6 +15995,8 @@ Toys
 Collars
 项圈
 Straitjackets
+拘束衣
+Jackets
 拘束衣
 Dresses
 裙子
@@ -15787,7 +16017,7 @@ Spellbound Rope Cuffs
 Spellbound Ropework
 绳索（符咒）
 Strict Spellbound Ropework
-严格的绳索（符咒）
+严密的绳索（符咒）
 Spellbound Hogtie
 驷马（符咒）
 Spellbound Rope Belt
@@ -15803,17 +16033,17 @@ Spellbound Knees
 Spellbound Thighs
 大腿缚带（符咒）
 A tie that holds your legs together..
-一条带子将你的双腿束缚在一起。
+绳带将你的双腿束缚在一起。
 Spellbound Upper Thighs
 上腿缚带（符咒）
 A tie that holds your thighs together..
-一条带子将你的大腿束缚在一起。
+绳带将你的大腿束缚在一起。
 Spellbound Ankles
 脚踝缚带（符咒）
 Spellbound Lower Legs
 小腿束带（符咒）
 A tie keeping your legs secured together.
-束带将双腿固定在一起。
+绳带将双腿固定在一起。
 Spellbound Lower Knees
 下膝束带（符咒）
 Spellbound Toe Rope
@@ -15833,7 +16063,7 @@ Magic Rope Cuffs
 Magic Ropework
 绳索（附魔）
 Strict Magic Ropework
-严格的绳索（附魔）
+严密的绳索（附魔）
 Magic Hogtie
 驷马（附魔）
 It's very secure. You tug on the rope connecting your feet and struggle.
@@ -15873,7 +16103,7 @@ Holy Rope Cuffs
 Holy Ropework
 神圣绳索
 Strict Holy Ropework
-严格的神圣绳索
+严密的神圣绳索
 Holy Hogtie
 神圣驷马
 Holy Rope Belt
@@ -15911,7 +16141,7 @@ Mithril Rope Cuffs
 Mithril Ropework
 绳索（秘银）
 Strict Mithril Ropework
-严格的绳索（秘银）
+严密的绳索（秘银）
 Mithril Hogtie
 驷马（秘银）
 Mithril Rope Belt
@@ -16029,7 +16259,7 @@ Magic Remote
 The key to absolute power.
 绝对权力的按键。
 Triggers long-duration edging on basic attack if the target has a toy. Offhand: Applies short-duration teasing to targets you hit.
-如果目标有玩具，则在基本攻击时触发长时间的边缘。 副手：对你击中的目标进行短暂的玩弄。
+如果目标有玩具，则在基本攻击时触发长时间的寸止。 副手：对你击中的目标进行短暂的玩弄。
 Vibrator Remote
 振动器遥控器
 You click the remote and hear a buzzing noise!
@@ -16377,7 +16607,7 @@ Your attempt to call upon chaotic energies fails.
 You are already at max mana.
 你已经达到最大法力值了。
 The vibrator holds at full power to drive you over the edge!
-振动器保持最大功率，让你越过极限！
+振动器保持最大功率，让你到达绝顶！
 The weapon needs to be loaded to fire.
 武器需要装弹才能开火。
 Recurve Bow
@@ -16630,6 +16860,8 @@ Unflinching (Resist status/bondage)
 坚定不移（抵抗状态/束缚）
 Relentless (Stun resist when stunned)
 无情（眩晕时抵抗眩晕）
+Bulwark (Blocks some explosions)
+壁垒（阻挡一些爆炸）
 Blindsight (See through walls)
 盲视（看穿墙壁）
 Mana Harvesting
@@ -17089,6 +17321,8 @@ Magical water reduces your accuracy and slows you significantly!
 魔法水会降低你的精准度并显着减慢你的速度！
 You attack twice!
 你攻击了两次！
+You gain a free move from Combat Maneuvers!
+你可以通过战斗机动获得一次自由行动！
 Access denied.
 拒绝访问。
 Facility is under lockdown.
@@ -17270,7 +17504,7 @@ You lose focus and the seal on your RESTRAINTNAME strengthens!
 The item refuses to budge as you try to take it off.
 当你尝试将其取下时，该物品不愿意移动。
 The item bears a seal of dark pleasure. You can suppress it by edging yourself.
-该物品带有黑暗愉悦的印记。你可以通过让自己达到极限来抑制它。
+该物品带有黑暗愉悦的印记。你可以通过让自己处与高潮边缘来抑制它。
 Saved Outfits
 已保存的服装
 Manage this Outfit
@@ -17299,6 +17533,8 @@ Show Quick Inventory
 显示快速背包
 Skip Tutorial
 跳过教程
+Mod Compatibility Mode
+模组兼容模式
 Welcome to Kinky Dungeon! It looks like this is your first time,|Would you like a brief walkthrough of the interface?
 欢迎来到淫荡地牢！您似乎是第一次来到这里，|您想了解一下界面的简要介绍吗？
 (Leave and Disable Tutorial)
@@ -17394,7 +17630,7 @@ Bottle the mana in the shrine for later. Can be done once.
 Cancel Quest
 取消任务
 Cancels the quest. You will not be penalized.
-取消任务。你不会受到处罚。
+取消这个任务。你不会受到处罚。
 You can't cancel this quest.
 你无法取消此任务。
 You have no quests currently.
@@ -17418,7 +17654,7 @@ Slay the Rope Kraken.
 You did not do your quest! The Goddess has decided to punish you.
 你没有完成你的任务！女神决定惩罚你。
 You have pleased the Goddess.
-你已经让女神高兴了。
+你取悦了女神。
 The Goddess calls you a good girl.
 女神夸你是个好女孩。
 Rescue some alchemists from their own experiment.
@@ -17436,9 +17672,9 @@ Stop some witches from performing a dubious summoning ritual.
 Defeat a congregation of the Shadow Clan.
 击败暗影族的教徒。
 The Goddess grants you knowledge of SpellLearned!
-女神赐予你法术学习知识！
+女神授予你法术学习知识！
 You Goddess grants you +AMOUNT spell points!
-你女神授予你 +AMOUNT 法术点！
+你女神授赐予你 +AMOUNT 法术点！
 The Goddess bestows a WeaponAcquired on you!
 女神赐予你一件 WeaponAcquired！
 The Goddess grants you a ArmorAcquired!
@@ -17455,6 +17691,8 @@ Challenge Settings:
 挑战设置：
 Advanced
 高级
+Expert Tools
+专家工具
 Exits locked! Find NUMBER keys!
 出口被锁住了！寻找 NUMBER 把钥匙！
 Got the keys!
@@ -17806,7 +18044,7 @@ Divine Chastity Belt
 A chastity belt forged in holy light. Only a Goddess' will can release you.
 圣光锻造的贞操带。只有女神才能释放你。
 There is no way out but to repent. Its divine aura causes vibrators to cease right before you go over the edge.
-除了悔改，没有任何出路。它神圣的光环会导致振动器在你到达高潮边缘之前停止。
+除了忏悔别无选择。它神圣的光环会导致振动器在你到达高潮边缘之前停止。
 Your Divine Chastity Belt causes the vibrators to stop.
 你的神圣贞操带会使振动器停止。
 A chastity belt forged in holy light. Only the will of a Goddess will release you!
@@ -17818,7 +18056,7 @@ Divine Chastity Bra
 A chastity bra forged in holy light. Only a Goddess' will can release you.
 圣光锻造的贞操文胸。只有女神才能释放你。
 There is no way out but to repent. Its divine aura prevents you from pleasuring yourself.
-除了悔改，没有任何出路。它神圣的光环会阻止你自慰。
+除了忏悔别无选择。它神圣的光环会阻止你自慰。
 Your Divine Chastity Bra causes your whole body to go numb.
 你的神圣贞操文胸会让你整个身体变得麻木。
 A chastity bra forged in holy light. Only the will of a Goddess will release you!
@@ -17828,13 +18066,13 @@ You find a heavenly chastity bra. Who could it be for?
 Heavenly Chastity Belt
 天堂贞操带
 There is no way out but to repent. Its divine aura causes vibrators to dampen right before you go over the edge.
-除了悔改，没有任何出路。它神圣的光环会让振动器抑制你到达高潮边缘。
+除了忏悔别无选择。它神圣的光环会让振动器抑制你到达高潮边缘。
 Your Divine Chastity Belt magically dampens the vibrations just enough to edge you.
 你的神圣贞操带神奇地减弱振动，足以让你感到紧张。
 Heavenly Chastity Bra
 天堂贞操文胸
 There is no way out but to repent. Its divine aura converts self-pleasure to stamina.
-除了悔改，没有任何出路。它神圣的光环会将自我取悦转化为体力。
+除了忏悔别无选择。它神圣的光环会将自我取悦转化为体力。
 The divine aura drains the pleasure from your self-pleasuring and converts it to stamina.
 神圣的光环会耗尽你自慰的快乐，并将其转化为体力。
 Magic Arm Belts
@@ -18029,6 +18267,8 @@ The items float to you!
 物品飘向了你！
 There's nothing to pick up.
 没有什么能捡到的。
+That container is locked!
+那个容器已被锁定！
 The chest is locked.
 箱子是锁住的。
 Select a tile with items
@@ -18136,9 +18376,9 @@ Let's check your restraints.
 You look so cute like that, miss!
 你这样看起来真可爱，小姐！
 All nice and tight. Certainly no longer a threat~
-一切又好又紧。你不再是个威胁了~
+绑的严严实实，你不再是个威胁了~
 I'm going to make sure you're nice and tight~
-我会确保你又好又紧~
+我会把你绑的严严实实~
 Surely nothing can happen now!
 现在肯定什么都不会发生了！
 Rubber Elemental
@@ -18387,6 +18627,8 @@ Replaces 60% of cages with a different kind of kinky furniture such as display s
 用不同种类的古怪场景家具（例如展示架）取代 60% 的笼子。
 Collection
 收藏
+Facilities
+设施
 Storage
 存储
 Management
@@ -18412,7 +18654,7 @@ Feral
 Status
 状态
 Guest
-游客
+客人
 Servant
 仆人
 Manager
@@ -18425,6 +18667,8 @@ Willpower
 意志
 Prisoner #NUMR/TTL
 囚犯 #NUMR/TTL
+Guest #NUMR/TTL
+客人 #NUMR/TTL
 Select a character to examine
 选择要检查的角色
 Former Faction:
@@ -18534,7 +18778,7 @@ ENMY 因为你太可爱而脸红！
 The ENMY makes fun of you! (DMGDLT)
 ENMY 取笑你！(DMGDLT)
 The ENMY struggles to find words!
-ENMY 很难找到言语！
+ENMY 努力寻找词语！
 The ENMY buzzes you with her VTY! (DMGDLT)
 ENMY 拿她嗡嗡作响的振动玩具走向你！(DMGDLT)
 The ENMY reaches for her VTY!
@@ -18546,7 +18790,7 @@ ENMY 将填充物塞入你张开的嘴里！(DMGDLT)
 The ENMY reaches for your mouth and fails!
 ENMY 将手伸向你的嘴，但失败了！
 The ENMY pulls your hands together and sticks a clip between them! (DMGDLT)
-ENMY 将你们的双手拉到一起，并在你们的双手之间夹上一个绑带！(DMGDLT)
+ENMY 将你们的双手拉到一起，并在你的双手之间夹上一个绑带！(DMGDLT)
 The ENMY grabs your wrists but you pull away!
 ENMY 抓住你的手腕，但你却挣脱了！
 The ENMY pulls your weapon away!
@@ -18558,27 +18802,27 @@ ENMY 伸手去拿你的物品，但无法完全够到！
 More Armbinders
 更多束手套
 Armbinders are favored over other heavy bondage.
-与其他沉重的束缚相比，束手套更受青睐。
+与其他重型的束缚相比，束手套更受欢迎。
 Less Armbinders
 减少束手套
 Armbinders are less favored over other heavy bondage.
-与其他沉重的束缚相比，束手套似乎不太受青睐。
+与其他重型束缚相比，束手套更不受欢迎。
 More Boxbinders
 更多盒束包扎带
 Boxbinders are favored over other heavy bondage.
-与其他沉重的束缚相比，盒束包扎带更受青睐。
+与其他重型束缚相比，盒束包扎带更不受欢迎。
 Less Boxbinders
 减少盒束包扎带
 Boxbinders are less favored over other heavy bondage.
-与其他沉重的束缚相比，盒束包扎带似乎不太受青睐。
+与其他重型束缚相比，盒束包扎带似乎不太受青睐。
 More Straitjackets
 更多拘束衣
 Straitjackets are favored over other heavy bondage.
-与其他沉重的束缚相比，拘束衣更受青睐。
+与其他重型束缚相比，拘束衣更受青睐。
 Less Straitjackets
 减少拘束衣
 Straitjackets are less favored over other heavy bondage.
-与其他沉重的束缚相比，拘束衣似乎不太受青睐。
+与其他重型束缚相比，拘束衣似乎不太受青睐。
 More Yokes
 更多枷锁
 Yokes are favored over other heavy bondage.
@@ -18900,7 +19144,7 @@ Warden Leg Cuffs
 Warden Ankle Cuffs
 典狱长踝铐
 Play the game the way it was intended. Cruel and restrictive.
-按照游戏的初衷来玩。严厉且充满限制性
+按照游戏的初衷来玩，残酷的束缚。
 Unconventional Warfare
 非常规作战
 Select a weapon to attach it to your body. You can have one attached weapon at a time. Attaching it takes 5 turns.|An attached weapon can be equipped without hands and maintains 60% accuracy as long as you have arms or legs unbound.
@@ -18919,7 +19163,7 @@ In most cases you will not get blindfolded, except for cloth blindfolds which ca
 在大多数情况下，你不会被蒙上眼睛，但布眼罩除外，因为布眼罩很容易逃脱。
 No Kigurumi Masks
 没有KIG面具
-Removes face-mimicing masks from the game.
+Removes face-mimicking masks from the game.
 取消游戏中的仿脸面具。
 Safeword Please
 请说安全词
@@ -19051,7 +19295,7 @@ The dragon girl reaches out with a shadowy grip! (+RestraintAdded)
 (SPEAKER 看着你)|你的就很好，亲爱的。
 (The SPEAKER chuckles)|You don't have enough gold for that, dear.|Try coming back after a good round of looting!
 (SPEAKER 笑着说)|你没有足够的金币，亲爱的。|等你洗劫一空再回来吧！
-(The SPEAKER nods)|My great grandmother used to wear these."
+(The SPEAKER nods)|My great grandmother used to wear these.
 (SPEAKER 点点头)|我的曾祖母曾经戴过这个。
 (The SPEAKER nods)|Adventurers used to love a good burlap sack.|Nowadays they've got that newfangled magic instead...
 (SPEAKER 点点头)|冒险家们过去喜欢麻布袋，|如今他们用新式魔术袋代替了麻布袋...
@@ -19059,7 +19303,7 @@ The dragon girl reaches out with a shadowy grip! (+RestraintAdded)
 (SPEAKER 点点头)|在我那个年代，人们用蜡烛来照明！|这些可以让你把它们熄灭，以节省蜡。
 (The SPEAKER giggles)|I had all sorts of use for this back on the farm.
 (SPEAKER 咯咯地笑着)|我在农场的时候，这个东西有各种用途。
-Click a hotbar slot to assign the current item to it.|You can click the swap button on the right|to switch between your three hotbars.||You can also save and load presets for your hotbar.|These are shared between runs.
+Click a hotbar slot to assign the current item to it.|You can click the swap button on the right|to switch between your five hotbars.||You can also save and load presets for your hotbar.|These are shared between runs.
 点击热键栏位置，即可将项目分配到该槽。|您可以点击右侧的交换按钮，在三个热栏之间进行切换。||您还可以为您的热键栏保存和加载预设。|这些预设在运行时共享。
 Zero Resistance
 放弃反抗
@@ -19155,8 +19399,12 @@ A very short chain connecting your wrist cuffs together.
 一条非常短的链条，将你的手腕铐连接在一起。
 ESCP Difficulty: AMNT
 ESCP 难度：AMNT
-ESCP Power: AMNT%
-ESCP 力量：AMNT%
+ESCP Power: AMNT
+ESCP 力量：AMNT
+ESCP Ability: AMNT
+ESCP 能力: AMNT
+Max ESCP Depth: AMNT%
+最大 ESCP 深度: AMNT%
 Your collar channels the vigor of excitement into magical energy!
 你的项圈将兴奋的活力转化为神奇的能量！
 The collar has already squeezed what it can out of you. Clear your mind first!
@@ -19273,6 +19521,8 @@ You don't have enough mana
 你没有足够的魔力
 The enemy rune is wiped clean.
 敌方符文已被清除干净。
+You pour negation magic into the ground, but nothing happens.
+你把否定魔法灌注到地面，但什么也没有发生。
 All of your runes have been removed.
 你的所有符文都已被移除。
 E-Stimulation
@@ -19297,3 +19547,480 @@ Your keycard blinks red as the facility remotely locks it!
 当设备远程锁定时，你的钥匙卡会闪烁红色！
 Unauthorized removal detected. System lockout progress: AMNT%
 检测到未经授权的删除。系统锁定进度：AMNT%
+You attack TargetEnemy for DamageDealt total damage.
+你攻击了 TargetEnemy, 造成 DamageDealt 点伤害。
+You attack TargetEnemy for DamageDealt damage / BondageDealt binding.
+你攻击了 TargetEnemy, 造成 DamageDealt 点伤害并施加 BondageDealt 束缚。
+You attack TargetEnemy but don't do any damage.
+你攻击了 TargetEnemy，但没有造成任何伤害。
+ENMY calls for help!
+ENMY 请求帮助！
+Combat
+战斗
+Actions
+行动
+Self
+自身
+Dialogue
+对话
+Ambient
+环境
+Struggle
+挣扎
+(Go to The Summit)
+（前往顶点）
+The Summit is a safe area. Items can be left here without fear of losing them.
+顶点是一个安全地区。物品可以放在这里，不用担心丢失。
+Leash
+皮带
+Target an NPC to attach a leash. Enemies and unwilling allies must be tied up to 50% first. Target self to release all leashes, or target a leashed NPC to unleash them.
+以NPC为目标绑上皮带。敌人和不情愿的盟友必须首先被捆绑到50%。以自身为目标释放所有的束缚，或者以一个被束缚的NPC为目标释放它们。
+Target an NPC to leash, or self to unleash all.
+以NPC为目标进行束缚，或以自我为目标进行释放。
+Brat Handler
+顽童处理员
+Target an NPC with an equipped leash restraint (via Truss'em'up) to attach a leash. Target self to release all leashes, or target a leashed NPC to unleash them.
+以装备了牵引绳束缚装置的 NPC 为目标（通过'把他们捆起来！'动作）来系上牵引绳。以自己为目标来松开所有牵引绳，或以被牵引的 NPC 为目标来解开它们。
+Clip-On Leash
+夹子皮带
+A beloved favorite of pets and trainers alike.
+宠物和训练师的最爱。
+You ready the leash...
+你准备好了皮带...
+You pick up a leash.
+你拿起一条皮带。
+You are not in a condition to use a leash on her.
+你不能用皮带拴住她。
+She refuses to be leashed unless you tie her up!
+除非你把她绑起来，否则她不能被拴住！
+You attach a leash to ENMY.
+你给 ENMY 系上皮带。
+You remove your leash from ENMY.
+你把皮带从 ENMY 上取下来。
+You let go of all leashes.
+你松开了所有的皮带。
+Plastic Explosive
+塑胶炸弹
+Has a 60 turn timer, but can be detonated by other explosives. Deals 210 blast damage in a huge radius and leaves behind a huge field of rubble. Enemies hit have their armor reduced by 50 BEFORE taking damage.
+有一个60回合的计时器，但可以被其他炸药引爆。在巨大的半径范围内造成210处爆炸破坏，并留下一大片瓦砾。被击中的敌人在受到伤害之前，护甲减少50。
+It's totally harmless! Probably.
+这完全无害！可能吧。
+You set the clock ticking...
+你让时钟滴答作响...
+Dynamite
+甘油炸药
+10 turn fuse with a 25% chance each turn to detonate prematurely. Deals 140 blast damage in a large radius. Enemies hit have their armor reduced by 20 BEFORE taking damage.
+10回合的引信，每回合有25%的几率提前引爆。在大范围内造成140点爆炸伤害。被击中的敌人在受到伤害之前，护甲减少20。
+Arguably more dangerous to the user than the target.
+可以说，对用户来说比目标更危险。
+10 turn fuse with a 25% chance each turn to detonate. Deals 140 blast damage in a large radius. Enemies hit have their armor reduced by 20 BEFORE taking damage.
+10回合的引信，每回合有25%的几率引爆。在大范围内造成140点爆炸伤害。被击中的敌人在受到伤害之前，护甲减少20。
+You light the fuse and pray it doesn't blow up in your face.
+你点燃保险丝，祈祷它不要在你脸上爆炸。
+You are holding too many leashes!
+你的皮带太多了！
+You feel a corrupting influence... (+AMNT Corruption)
+你感觉到了一种堕性的影响...（+AMNT 堕落）
+You feel a restoring influence! (-AMNT Corruption)
+你感觉到了一种恢复性的影响！（-AMNT 堕落）
+While you have an evasion penalty, even clumsy enemies...
+虽然你有逃避惩罚，但即使是笨拙的敌人......
+... will get an accuracy bonus against you in melee range.
+... 将在近战范围内对你的准确度获得加成。
+You are more likely to succumb to curses.
+你更容易被诅咒。
+X Offset
+X 补偿
+Y Offset
+Y 补偿
+X Scale
+X 比例
+Y Scale
+Y 比例
+X Pivot
+X 轴
+Y Pivot
+Y 轴
+Rotation
+旋转
+Layer Bonus
+图层补偿
+Load from File
+从文件载入
+Save to File
+保存至文件
+Tip: Slime/Latex tiles only affect entities with less than 45 Glue Resist.
+提示：粘液/乳胶块仅影响胶水抗性低于 45 的实体。
+Being drenched in water also prevents slime/latex from sticking to you.
+浸湿在水中还可以防止粘液/乳胶粘在你身上。
+Use the interact tool in the bottom right HUD to sleep in a bed.
+使用右下角 HUD 中的交互工具在床上睡觉。
+Clear Vision
+视野通透
+Blindfolds are much rarer.
+眼罩将会很少见。
+Free the Boob
+胸部自由
+Chastity bras are rarer unless you are wearing nipple toys.
+除非你穿着乳头玩具，否则贞操文胸将会很少见。
+Liberate the Boob
+解放胸部
+Chastity bras are much rarer.
+贞操文胸将会很少见。
+Find an elevator to the Summit in order to access facilities.
+找到通往山顶的电梯以便使用设施。
+Visit the Summit to allow additional interactions with this facility.
+参观峰会可以与该设施进行更多互动。
++AMNT% Training/Tick
++AMNT% 训练/刻
++AMNT% Opinion/Tick
++AMNT% 观点/刻
++AMNT% Productivity
++AMNT% 生产力
+AMNT/MAXX Prisoners Assigned
+AMNT/MAXX 囚犯分配
+AMNT/MAXX Servants Assigned
+AMNT/MAXX 仆从分配
+Management
+管理
+Assign servants as managers to boost the production of other facilities. Managers gain increased opinion and training over time.
+指派仆人担任管理员，以促进其他设施的生产。随着时间的推移，管理员会获得更多的观点和训练。
+Bondage Dojo
+束缚道场
+Assign servants to perfect the art of walking in heels, wearing tight corsets, communicating while gagged, and overall flexibility.
+指派仆人完善穿高跟鞋走路、穿紧身胸衣、堵嘴交流的艺术以及整体的灵活性。
+Rescue Operations
+救援行动
+Assign servants to train squads of rescue maids, which you can call upon in times of need.
+指派仆人训练救援女仆小队，以便在需要时可以召唤她们。
+Alchemy Lab
+炼金实验室
+Assign servants to produce potions from base ingredients you acquire in your adventures.
+指派仆人使用你在冒险中获得的基本材料制作药水。
+Recycler
+回收者
+Convert low tier restraints into raw materials and output higher quality restraints. Adding more servants increase the conversion speed.
+将低阶束缚转化为原材料，产出更高品质束缚，增加从者数量可加快转化速度。
+Cuddle Lounge
+拥抱休息室
+Assign prisoners to the lounge in order to improve servant and prisoner opinion.
+将囚犯分配到休息室以提高仆人和囚犯对你的看法。
+Recycle Restraints
+回收限制
+Recycle One
+回收一个
+Recycle ALL!
+回收所有！
+Recycle all but one
+除一个外全部回收
+You recycle a ITM
+你回收了 ITM
+你回收了 #x ITM
+You're blocking me.
+你挡住我了。
+You're in my way!
+你挡住我的路了！
+Miss, you're blocking me...
+小姐，你挡住我了……
+Step aside~
+请让开~
+Path blocked by citizen.
+道路被市民阻挡。
+*Bumps into you*
+*撞到你*
+Cyber Hogtie Tether
+赛博驷马绑带
+A very strict and tight hogtie, good for subduing unruly captives.
+非常严格且紧密的捆绑，适合制服不守规矩的俘虏。
+It is maintained by a projector inside your cyber cuffs. The energy repels any force and doesn't seem to falter even after repeated attempts to damage it.
+它由你电子手铐内的投影仪维持。能量可以排斥任何力量，即使多次试图破坏它，它似乎也不会减弱。
+Cyber Thigh Tether
+赛博大腿绑带
+An energy tether connecting your thigh cuffs together. You can still walk, albeit slower than usual.
+一条能量绳将你的大腿袖口连接在一起。你仍然可以行走，尽管速度比平时慢。
+Cyber Ankle Tether
+赛博脚踝绑带
+An energy  tether connecting your ankle cuffs together. It gives you enough room to walk around, albeit slower than usual.
+一条能量绳将你的脚踝铐连接在一起。它为你提供了足够的走动空间，尽管走动速度比平时要慢。
+Ankle Chain (Short)
+脚链（短）
+A short energy tether connecting your ankle cuffs together. You can barely separate your legs with this on.
+一条短能量绳，将你的脚踝铐连接在一起。戴上它，你的双腿几乎无法分开。
+Cyber Elbow Tether
+赛博肘部绑带
+A very short energy tether connecting your elbow cuffs together. It is quite awkward to remove by yourself.
+一根很短的能量绳将你的肘铐连接在一起。自己取下它会很不方便。
+Cyber Wrist Tether
+赛博手腕绑带
+A very short energy tether connecting your wrist cuffs together.
+一条非常短的能量绳将你的手腕铐连接在一起。
+Desperate Struggle
+绝望的挣扎
+Spend 20 WP to shake around violently. Has a chance to loosen restraints you are wearing, based on existing struggle progress. Spreading the effect over multiple restraints reduces the chance of loosening.|Requires 25% or more WP to activate.
+消耗 20 意志剧烈晃动。根据现有的挣扎进度，有机会松开绑在你身上的束缚。将效果分散到多个束缚上可降低松动的几率。|需要 25% 或更多意志力才能使用。
+None of your restraints will budge.
+任何束缚都不会松动。
+You thrash around with all your might.
+你用尽全身的力气挣扎。
+You don't have the willpower left to struggle...
+你没有足够的意志力去挣扎……
+Owned: AMNT
+所属: AMNT
+Inputs:
+输入:
+You slip off the conveyor!
+你从传送带上滑下来了！
+The Summit
+顶点
+Back to Collection
+返回收藏
+Edit Restraints
+修改束缚
+Editing Restraints
+正在修改束缚
+Imprison in Furniture
+囚禁在家具中
+Module (Utility)
+模块 (实用程序)
+Leash
+皮带
+Module (Punishment)
+模块 (惩罚)
+~~~ Collar ~~~
+~~~ 项圈 ~~~
+Blindfold / Earplugs
+眼罩 / 耳塞
+Blindfold
+眼罩
+Mask/Hood
+面罩/头套
+Gag
+口塞
+Gag / Stuffing
+口塞 / 填充
+Muzzle
+口套
+Wrists
+腕部
+Heavy Bondage
+重型束缚
+Extra Bondage
+额外束缚
+Encasement
+包裹
+Mittens
+连指手套
+Mittens / Tape
+连指手套 / 胶带
+Gloves / Tape
+手套 / 胶带
+Piercings
+穿孔
+Weights
+砝码
+Vibes
+震动
+Chastity Bra
+贞操文胸
+Catsuit / Leotard
+紧身连体衣 / 紧身衣
+Harness
+束衣
+Corset
+束胸
+Rear Plug
+肛塞
+Front Plug
+阴塞
+Vibrator
+震动棒
+Chastity Belt
+贞操带
+Thigh Cuffs
+大腿镣铐
+Leg Bondage
+腿部束缚
+Legbinder
+绑腿
+Ankles
+脚踝
+Shins
+小腿
+Knees
+膝盖
+Toe Cuffs
+脚趾铐
+Toe Tie
+脚趾绑带
+Heels
+高跟鞋
+Equipped:
+已装备:
+Click to Add
+点击添加
+Free Prisoners
+释放囚犯
+Perk Unlocked:
+解锁技能:
+Latex Solvent
+乳胶溶剂
+You ready the bottle of Latex Solvent.
+你准备好了一瓶乳胶溶剂。
+A potent acid, capable of dissolving slime and latex.
+一种强酸，能够溶解粘液和乳胶。
+Deal 90 acid damage to target. Adds a 10% debuff to the cut and struggle resistance of latex restraints currently worn.
+对目标造成 90 点酸性伤害。当前穿戴的乳胶束缚带的切割和抗挣扎能力增加 10% 的减益效果。
+Weakened by Latex Solvent (10%)
+被乳胶溶剂削弱 (10%)
+You spill the solvent on yourself and loosen your latex bonds!
+你将溶剂洒在自己身上，乳胶束缚松动!
+You splash the ENMY with latex solvent!
+你将乳胶溶剂泼向 ENMY!
+You can't use solvents on targets other than yourself while bound.
+被束缚时，你不能对除自己之外的目标使用溶剂。
+Random
+随机
+Choose Palette
+选择调色板
+Restraint Palette
+限制调色板
+Choose Restraint
+选择限制
+Def. Palette: 
+默认调色板:
+Set All Palette
+设置所有调色板
+Prisoners
+囚犯
+Guests
+客人
+Assign to
+分配给
+Remove from
+移除自
+Imprison
+监禁
+Opinion:
+观点:
+Last Seen on Floor FLR, LOC
+最后出现在楼层 FLR 的 LOC 位置
+Present in current level
+存在于当前层级
+Captured by FCTN
+由 FCTN 捕获
+Captured by enemies
+由敌人捕获
+Use 'Truss'em'Up' to edit restraints on this NPC
+使用 '把他们捆起来！' 修改此 NPC 的束缚
+The NPC needs tightening, but is unavailable right now
+NPC 需要收紧束缚，但目前无法做到
+Tighten loose restraints
+收紧宽松的束缚
+NPC has escaped!
+NPC 已逃脱!
+NPC is likely to escape.
+NPC 很有可能逃脱。
+NPC has managed to loosen her bonds.
+NPC 已成功解开她的束缚。
+Any
+全员
+NPC Opinion:
+NPC 好感度:
+NPC Escape Status:
+NPC 逃脱状态:
+NPC Binding:
+NPC 拘束程度:
+NPC Availability:
+NPC 状况:
+Favorited:
+收藏:
+Rank:
+阶级:
+Minor
+低级
+Normal
+正常
+Elite
+精英
+Miniboss
+小型Boss
+Legendary
+传奇
+Bound
+拘束
+Free
+自由
+Secure
+安全
+At Risk
+面临风险
+Escaped
+已逃脱
+Imprisoned
+已监禁
+Positive
+积极
+Negative
+消极
+Favorite
+受欢迎的
+Non-Favorite
+不受欢迎
+Present
+可用
+Unavailable
+不可用
+Auto Bind Interface
+自动拘束接口
+AutoBind
+自动拘束
+Copy Restraints
+复制束缚
+Paste Restraints from NME
+从 NME 粘贴束缚
+Paste to All!
+粘贴到全部！
+OVERWRITE All!
+覆盖所有！
+Need Positive Opinion to Promote
+需要积极的意见来推广
+Servant Enjoyment: AMNT
+仆人享受: AMNT
+Prisoner Enjoyment: AMNT
+囚犯享受: AMNT
+Submissive prisoners and dominant servants add different amounts of opinion per cycle
+顺从的囚犯和占主导地位的仆人每周期增加不同的好感度
+Release Prisoners
+释放囚犯
+Release
+释放
+Mark
+标记
+Unmark
+取消标记
+Mark ALL
+标记所有
+Cancel Selection
+取消选中
+Release Marked Prisoners!
+释放选中的囚犯！
+Ransom Marked Prisoners for GP!
+使用 GP 赎金来赎回囚犯！
+Ransom Value: GP
+赎金: GP
+Current Gold: GP
+当前金币: GP
+[EXP: AMNT/LMT] Heel training improves your balance to keep you from falling.
+[经验: AMNT/LMT] 高跟鞋训练可以提高你的平衡能力，防止你摔倒。
+Phase Dance active. Your next move is instant.
+相位舞蹈激活。你的下一步动作是即时的。
+Combat Maneuver active. Your next move is instant.
+战斗机动激活。你的下一步行动是即时的。
+The furniture space is occupied
+家具空间被占用
+Combat Maneuver: Your next move is instant.
+战斗机动: 你的下一步行动是即时的。
+Appointing managers increases the efficiency of other facilities.
+任命管理人员可以提高其他设施的效率。
+Total Efficiency Boost: AMNT
+总体效率提升: AMNT

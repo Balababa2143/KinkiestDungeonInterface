@@ -238,6 +238,31 @@ function KDRestraint(item) {
 	return KinkyDungeonRestraintsCache.get(item.name);
 }
 
+
+
+
+/**
+ * gets a restraint
+ * @param {Named} item
+ * @returns {number}
+ */
+function KDRestraintBondageMult(item) {
+	let r = KDRestraint(item);
+	if (r) {
+		let data = {
+			item: item,
+			restraint: r,
+			type: KDRestraintBondageType(item),
+			override: undefined,
+			overridePriority: 0,
+			mult: r.npcBondageMult || 2,
+		};
+
+		KinkyDungeonSendEvent("calcBondageMult", data);
+		return data.mult * ((KDSpecialBondage[data.type]) ? (KDSpecialBondage[data.type].enemyBondageMult || 1) : 1);
+	}
+	return 1;
+}
 /**
  * gets a restraint
  * @param {Named} item
@@ -250,7 +275,7 @@ function KDRestraintBondageType(item) {
 			item: item,
 			restraint: r,
 			type: "",
-			override: undefined,
+			override: r.npcBondageType,
 			overridePriority: 0,
 		};
 		// Stock methodology
@@ -316,6 +341,7 @@ function KDRestraintBondageStatus(item) {
 				toy: 0,
 				plug: 0,
 				belt: 0,
+				immobile: 0,
 			},
 			override: undefined,
 			overridePriority: 0,
@@ -359,6 +385,7 @@ function KDRestraintBondageStatus(item) {
 		toy: 0,
 		plug: 0,
 		belt: 0,
+		immobile: 0,
 	};
 }
 
@@ -1312,6 +1339,11 @@ function KinkyDungeonIsArmsBoundC(C, ApplyGhost, Other) {
 	if (C == KinkyDungeonPlayer) {
 		return KinkyDungeonIsArmsBound(ApplyGhost, Other);
 	} else {
+		for (let inv of KDGetRestraintsForCharacter(C)) {
+			if (KDRestraint(inv).bindarms) {
+				return true;
+			}
+		}
 		return false;
 	}
 }
@@ -2742,6 +2774,8 @@ let KDHeavyRestraintPrefs = [
 let KDNoOverrideTags = [
 	"NoVibes",
 	"Unmasked",
+	"NoSenseDep",
+	"NoHood",
 	"FreeBoob",
 	"Unchained",
 	"Damsel",
@@ -3155,6 +3189,8 @@ function KinkyDungeonUpdateRestraints(C, id, delta) {
 		}
 		if (KinkyDungeonStatsChoice.get("Deprived")) playerTags.set("NoVibes", true);
 		if (KinkyDungeonStatsChoice.get("Unmasked")) playerTags.set("Unmasked", true);
+		if (KinkyDungeonStatsChoice.get("NoSenseDep")) playerTags.set("NoSenseDep", true);
+		if (KinkyDungeonStatsChoice.get("NoHood")) playerTags.set("NoHood", true);
 		if (KinkyDungeonStatsChoice.get("FreeBoob2")) playerTags.set("FreeBoob", true);
 		if (KinkyDungeonStatsChoice.get("FreeBoob1") && !KinkyDungeonPlayerTags.get("ItemNipples")) playerTags.set("FreeBoob", true);
 		if (KinkyDungeonStatsChoice.get("NoKigu")) playerTags.set("NoKigu", true);
@@ -3174,11 +3210,11 @@ function KinkyDungeonUpdateRestraints(C, id, delta) {
 
 		KinkyDungeonSendEvent("updatePlayerTags", {tags: playerTags, player:KinkyDungeonPlayerEntity});
 		return playerTags;
-	} else if (KDGameData.NPCRestraints[id + ""]) {
+	} else if (KDGameData.NPCRestraints && KDGameData.NPCRestraints[id + ""]) {
 
 		let playerTags = new Map();
 		for (let inv of Object.values(KDGameData.NPCRestraints[id + ""])) {
-			let group = KDRestraint(inv).Group;
+			let group = KDRestraint(inv)?.Group;
 			if (group) {
 				if (KDGroupBlocked(group)) playerTags.set(group + "Blocked", true);
 				playerTags.set(group + "Full", true);
@@ -3192,6 +3228,7 @@ function KinkyDungeonUpdateRestraints(C, id, delta) {
 			})) playerTags.set(group + "Empty", true);
 		}
 		for (let inv of Object.values(KDGameData.NPCRestraints[id + ""])) {
+			if (!KDRestraint(inv)) continue;
 			playerTags.set("Item_"+inv.name, true);
 
 			if (KDRestraint(inv).Link)
@@ -4054,16 +4091,6 @@ function KinkyDungeonAddRestraint(restraint, Tightness, Bypass, Lock, Keep, Link
 
 
 
-			let color = (typeof restraint.Color === "string") ? [restraint.Color] : Object.assign([], restraint.Color);
-			if (restraint.factionColor && faction && KinkyDungeonFactionColors[faction]) {
-				for (let i = 0; i < restraint.factionColor.length; i++) {
-					for (let n of restraint.factionColor[i]) {
-						if (KinkyDungeonFactionColors[faction][i])
-							color[n] = KinkyDungeonFactionColors[faction][i]; // 0 is the primary color
-					}
-				}
-			}
-
 			// If we did not link an item (or unlink one) then we proceed as normal
 			if (!KinkyDungeonCancelFlag) {
 				KinkyDungeonRemoveRestraint(restraint.Group, Keep, false, undefined, undefined, r && r.dynamicLink&& restraint.name == r.dynamicLink.name);
@@ -4297,6 +4324,16 @@ function KinkyDungeonRemoveRestraint(Group, Keep, Add, NoEvent, Shrine, UnLink, 
 								}
 
 							}
+						} else if (Keep && rest.disassembleAs) {
+							let dropped = {x:KDPlayer().x, y:KDPlayer().y,
+								name: rest.disassembleAs,
+								amount: rest.disassembleCount || 1};
+							let newPoint = KinkyDungeonGetNearbyPoint(KDPlayer().x, KDPlayer().y, false, undefined, true);
+							if (newPoint) {
+								dropped.x = newPoint.x;
+								dropped.y = newPoint.y;
+							}
+							KDMapData.GroundItems.push(dropped);
 						}
 
 
@@ -4317,7 +4354,7 @@ function KinkyDungeonRemoveRestraint(Group, Keep, Add, NoEvent, Shrine, UnLink, 
 
 
 				if (rest.Group == "ItemNeck" && !Add && KinkyDungeonGetRestraintItem("ItemNeckRestraints"))
-					rem.push(...KinkyDungeonRemoveRestraint("ItemNeckRestraints", KDRestraint(KinkyDungeonGetRestraintItem("ItemNeckRestraints")).inventory, undefined, undefined, Shrine, undefined, Remover, ForceRemove));
+					rem.push(...KinkyDungeonRemoveRestraint("ItemNeckRestraints", true, undefined, undefined, Shrine, undefined, Remover, ForceRemove));
 
 				let sfx = (rest && KDGetRemoveSFX(rest)) ? KDGetRemoveSFX(rest) : "Struggle";
 				if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/" + sfx + ".ogg");
@@ -4400,6 +4437,16 @@ function KinkyDungeonRemoveDynamicRestraint(hostItem, Keep, NoEvent, Remover, Fo
 						KinkyDungeonInventoryGetLoose(rest.name).quantity += 1;
 					}
 				}
+			} else if (Keep && rest.disassembleAs) {
+				let dropped = {x:KDPlayer().x, y:KDPlayer().y,
+					name: rest.disassembleAs,
+					amount: rest.disassembleCount || 1};
+				let newPoint = KinkyDungeonGetNearbyPoint(KDPlayer().x, KDPlayer().y, false, undefined, true);
+				if (newPoint) {
+					dropped.x = newPoint.x;
+					dropped.y = newPoint.y;
+				}
+				KDMapData.GroundItems.push(dropped);
 			}
 
 
@@ -4841,6 +4888,7 @@ let KDSlimeParts = {
 	"Head": {},
 	"Mouth": {},
 	"Hands": {},
+	"Raw": {},
 };
 
 let KDRopeParts = {
@@ -4863,6 +4911,7 @@ let KDRopeParts = {
 	"Harness": {},
 	"Crotch": {},
 	"Toes": {},
+	"Raw": {},
 };
 
 let KDCuffParts = {
@@ -4959,6 +5008,7 @@ function KDAddCuffVariants(CopyOf, idSuffix, ModelSuffix, tagBase, extraTags, al
 					props.Filters[layer] = Object.assign({}, Filters[layer]);
 				}
 			}
+			if (origRestraint.disassembleAs) props.disassembleAs = idSuffix + "Raw";
 			if (Properties && props.Properties) {
 				for (let layer of Object.keys(Properties)) {
 					props.Properties[layer] = Object.assign({}, Properties[layer]);
@@ -5059,6 +5109,7 @@ function KDAddRopeVariants(CopyOf, idSuffix, ModelSuffix, tagBase, allTag, remov
 				linkSize: origRestraint.linkSizes ? JSON.parse(JSON.stringify(origRestraint.linkSizes)) : undefined,
 			};
 
+			if (origRestraint.disassembleAs) props.disassembleAs = idSuffix + "Raw";
 			if (!Enchantable && props.linkCategories) {
 				for (let i = 0; i < props.linkCategories.length; i++) {
 					if (props.linkCategories[i].includes("Enchantable")) {
@@ -5150,6 +5201,7 @@ function KDAddHardSlimeVariants(CopyOf, idSuffix, ModelSuffix, tagBase, allTag, 
 					props.Filters[layer] = Object.assign({}, Filters[layer]);
 				}
 			}
+			if (origRestraint.disassembleAs) props.disassembleAs = idSuffix + "Raw";
 			if (Properties && props.Properties) {
 				for (let layer of Object.keys(Properties)) {
 					props.Properties[layer] = Object.assign({}, Properties[layer]);

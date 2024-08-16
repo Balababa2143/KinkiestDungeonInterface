@@ -16,6 +16,7 @@ let KDPerkParams = {
 
 let KDCategoriesStart = [
 	{name: "Toggles", buffs: [], debuffs: [],},
+	{name: "Toggles2", buffs: [], debuffs: [],},
 	{name: "Multiclass", buffs: [], debuffs: [],},
 	{name: "Major", buffs: [], debuffs: [],},
 	{name: "Restraints", buffs: [], debuffs: [],},
@@ -347,6 +348,7 @@ let KinkyDungeonStatsPresets = {
 	"StartLatex": {startPriority: 15, category: "Start", id: "StartLatex", cost: -2, tags: ["start"]},
 	"StartShadow": {startPriority: 1, category: "Start", id: "StartShadow", cost: -1, tags: ["start"]},
 
+	"StartLatexIntegration": {startPriority: 1000, category: "Boss", id: "StartLatexIntegration", cost: -1, locked: true, buff: true, tags: ["start"]},
 
 	"StartCyberDollStorage": {startPriority: 1000, category: "Boss", id: "StartCyberDollStorage", cost: -1, locked: true, buff: true, tags: ["start"]},
 	"StartCyberDoll": {startPriority: 7, category: "Boss", id: "StartCyberDoll", cost: -2, locked: true, tags: ["start"]},
@@ -392,6 +394,8 @@ let KinkyDungeonStatsPresets = {
 
 	"NoBlindfolds": {category: "Toggles", id: "NoBlindfolds", cost: 1, tags: ["start"], block: ["Blackout", "TotalBlackout"]},
 	"Unmasked": {category: "Toggles", id: "Unmasked", cost: 0, tags: ["start"]},
+	"NoHood": {category: "Toggles2", id: "NoHood", cost: 0, tags: ["start"]},
+	"NoSenseDep": {category: "Toggles2", id: "NoSenseDep", cost: 0, tags: ["start"], debuff: true},
 	"NoKigu": {category: "Toggles", id: "NoKigu", cost: 0, tags: ["start"], debuff: true},
 
 	"NoDoll": {category: "Toggles", id: "NoDoll", cost: 0, tags: ["start"], debuff: true},
@@ -736,6 +740,12 @@ let KDPerkStart = {
 		KDEnterDollTerminal(false);
 		if (!KDHasSpell("ZeroResistance")) KDPushSpell(KinkyDungeonFindSpell("ZeroResistance"));
 	},
+	StartLatexIntegration: () =>{
+		KDFixPlayerClothes("AncientRobot");
+		KDAddSpecialStat("LatexIntegration", KDPlayer(), 100, true);
+
+		if (!KDHasSpell("ZeroResistance")) KDPushSpell(KinkyDungeonFindSpell("ZeroResistance"));
+	},
 	StartCyberDoll: () =>{
 		KDAddQuest("EscapedDoll");
 		KinkyDungeonChangeRep("Metal", 10);
@@ -789,13 +799,13 @@ let KDPerkStart = {
 
 	Stranger: () => {
 		for (let key of Object.keys(KinkyDungeonFactionTag)) {
-			if (!KinkyDungeonHiddenFactions.includes(key))
+			if (!KinkyDungeonHiddenFactions.has(key))
 				KDSetFactionRelation("Player", key, -1 + 0.45 * KDRandom() + 0.45 * KDRandom() + 0.45 * KDRandom());
 		}
 	},
 	WrongNeighborhood: () => {
 		for (let key of Object.keys(KinkyDungeonFactionTag)) {
-			if (!KinkyDungeonHiddenFactions.includes(key)) {
+			if (!KinkyDungeonHiddenFactions.has(key)) {
 				KDSetFactionRelation("Player", key, -1);
 				for (let key2 of Object.keys(KinkyDungeonFactionTag)) {
 					KDSetFactionRelation(key, key2, 0.5);
@@ -940,10 +950,13 @@ function KinkyDungeonDrawPerks(NonSelectable) {
 							ElementValue("KDCopyPerks", txt);
 						}
 						return true;
-					}, !NonSelectable && (KinkyDungeonState == "Stats" || (KinkyDungeonDrawState == "Perks2" && KDDebugPerks)), XX, YY, KDPerksButtonWidth, KDPerksButtonHeight, TextGet("KinkyDungeonStat" + (stat[1].id)) + ` (${KDGetPerkCost(stat[1])})`,
+					}, !NonSelectable && (KinkyDungeonState == "Stats" || (KinkyDungeonDrawState == "Perks2" && KDDebugPerks)), XX, YY, KDPerksButtonWidth, KDPerksButtonHeight,
+					TextGet("KinkyDungeonStat" + (stat[1].id)) + ` (${KDGetPerkCost(stat[1])})`,
 						(!KinkyDungeonStatsChoice.get(stat[0]) && KinkyDungeonCanPickStat(stat[0])) ? colorAvailable : (KinkyDungeonStatsChoice.get(stat[0]) ? colorSelected : (NonSelectable ? colorAvailable : colorExpensive)),
-						KinkyDungeonStatsChoice.get(stat[0]) ? (KinkyDungeonRootDirectory + "UI/TickPerk.png") : "", undefined, false, true,
-						KinkyDungeonStatsChoice.get(stat[0]) ? "rgba(140, 140, 140, 0.5)" : KDButtonColor, undefined, undefined, {
+						KinkyDungeonStatsChoice.get(stat[0]) ? (KinkyDungeonRootDirectory + "UI/TickPerk.png") : "",
+						undefined, false, true,
+						KinkyDungeonStatsChoice.get(stat[0]) ? "rgba(140, 140, 140, 0.5)" : KDButtonColor,
+						undefined, undefined, {
 							noTextBG: true,
 							unique: true,
 						});

@@ -345,6 +345,21 @@ function KDGetSpellAccuracy() {
 	return (data.accuracy + data.accuracyBonus) * data.accuracyMult;
 }
 
+function KDGetSlowMult(Enemy) {
+	let mult = 1;
+
+	if (Enemy && Enemy.bind > 0) mult *= 3;
+	else if (Enemy && Enemy.slow > 0) mult *= 2;
+
+	if (Enemy && KinkyDungeonIsStunned(Enemy)) mult *= 5;
+	else {
+		if (Enemy && Enemy.distraction > 0) mult *= 1 + 2 * Math.min(1, Enemy.distraction / Enemy.Enemy.maxhp);
+		if (Enemy) mult *= 1 + 0.25 * KDBoundEffects(Enemy);
+	}
+
+	return mult;
+}
+
 function KinkyDungeonGetEvasion(Enemy, NoOverride, IsSpell, IsMagic, cost) {
 	let flags = {
 		KDEvasionHands: true,
@@ -385,13 +400,8 @@ function KinkyDungeonGetEvasion(Enemy, NoOverride, IsSpell, IsMagic, cost) {
 	}
 
 	if (!IsSpell) hitChance *= KinkyDungeonPlayerDamage.chance;
-	if (Enemy && Enemy.bind > 0) hitChance *= 3;
-	else if (Enemy && Enemy.slow > 0) hitChance *= 2;
-	if (Enemy && (Enemy.stun > 0 || Enemy.freeze > 0)) hitChance *= 5;
-	else {
-		if (Enemy && Enemy.distraction > 0) hitChance *= 1 + 2 * Math.min(1, Enemy.distraction / Enemy.Enemy.maxhp);
-		if (Enemy) hitChance *= 1 + 0.25 * KDBoundEffects(Enemy);
-	}
+	let slowMult = KDGetSlowMult(Enemy);
+	hitChance *= slowMult;
 	if (Enemy && Enemy.vulnerable) hitChance *= KDVulnerableHitMult;
 
 	if (!IsSpell) {
@@ -404,12 +414,16 @@ function KinkyDungeonGetEvasion(Enemy, NoOverride, IsSpell, IsMagic, cost) {
 
 
 function KinkyDungeonAggro(Enemy, Spell, Attacker, Faction) {
-	if (Enemy && Enemy.Enemy && (!Spell || !Spell.enemySpell) && (!Faction || Faction == "Player") && !(Enemy.rage > 0) && (!Attacker || Attacker.player || Attacker.Enemy.allied)) {
+	if (Enemy && Enemy.Enemy && (!Spell || !Spell.enemySpell) && (!Spell || !Spell.noAggro) && (!Faction || Faction == "Player") && !(Enemy.rage > 0) && (!Attacker || Attacker.player || Attacker.Enemy.allied)) {
 		if (Enemy.playWithPlayer && (KDCanDom(Enemy) || !KDHostile(Enemy))) {
 			KDAddThought(Enemy.id, "Embarrassed", 5, 1);
 			Enemy.distraction = (Enemy.distraction || 0) + Enemy.Enemy.maxhp * 0.1;
-			if (KDCanDom(Enemy))
-				KDAddOpinion(Enemy, 1);
+			if (KDCanDom(Enemy)) {
+				if (!KDEntityHasFlag(Enemy, "playOpin")) {
+					KDAddOpinionPersistent(Enemy.id, 1);
+					KinkyDungeonSetEnemyFlag(Enemy, "playOpin", -1);
+				}
+			}
 		} else {
 			if (Enemy && !Enemy.Enemy.allied) {
 				if (Enemy.vp) Enemy.vp = Math.min(2, Enemy.vp*2);
@@ -1256,7 +1270,7 @@ function KinkyDungeonDamageEnemy(Enemy, Damage, Ranged, NoMsg, Spell, bullet, at
 	if (resistDamage == -2) mod = "VeryStrong";
 	if (Damage && !mod && spellResist > 0 && !KinkyDungeonMeleeDamageTypes.includes(predata.type)) mod = "SpellResist";
 
-	if (predata.faction == "Player" || predata.faction == "Rage") {
+	if (predata.faction == "Player") {
 		if (!Enemy.playerdmg) Enemy.playerdmg = 0.01;
 		Enemy.playerdmg += predata.dmgDealt;
 	}
@@ -2375,7 +2389,8 @@ function KinkyDungeonBulletTrail(b) {
 
 function KinkyDungeonBulletsCheckCollision(bullet, AoE, force, d, inWarningOnly, delta) {
 	let mapItem = KinkyDungeonMapGet(bullet.x, bullet.y);
-	if (!bullet.bullet.passthrough && !bullet.bullet.piercing && !KinkyDungeonOpenObjects.includes(mapItem)) return false;
+	if (bullet.vx || bullet.vy) // Moving projectiles get blocked by grates and walls, but not still objects
+		if (!bullet.bullet.passthrough && !bullet.bullet.piercing && !KinkyDungeonOpenObjects.includes(mapItem)) return false;
 
 	KDBulletEffectTiles(bullet);
 
@@ -2728,7 +2743,7 @@ function KDHealRepChange(enemy, amount) {
 	else if (KDFactionRelation("Player", KDGetFactionOriginal(enemy)) > 0.45) amountRep *= 0;
 	else if (KDFactionRelation("Player", KDGetFactionOriginal(enemy)) > 0.35) amountRep *= 0.25;
 	else if (KDFactionRelation("Player", KDGetFactionOriginal(enemy)) > 0.25) amountRep *= 0.5;
-	if (amountRep > 0 && !KinkyDungeonHiddenFactions.includes(KDGetFactionOriginal(enemy))) {
+	if (amountRep > 0 && !KinkyDungeonHiddenFactions.has(KDGetFactionOriginal(enemy))) {
 		if (amountRep > 0.01) amountRep = 0.01;
 		KinkyDungeonChangeFactionRep(KDGetFactionOriginal(enemy), amountRep);
 	}

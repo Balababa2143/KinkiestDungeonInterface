@@ -9,6 +9,7 @@ interface NamedAndTyped extends Named {
 
 /** Kinky Dungeon Typedefs*/
 interface item extends NamedAndTyped {
+
 	id: number,
 	/** Used in order to boost performance */
 	linkCache?: string[],
@@ -201,6 +202,8 @@ interface KDRestraintPropsBase {
 		level_magic?: number,
 	},
 
+	npcBondageMult?: number,
+	npcBondageType?: string,
 	/**
 	 * Subjective modifier for how pissed off an enemy has to be in order to use this item on you. Good for items that "tighten" for example.
 	 * The effects are not straightforward, but some of the things a higher aggro level will do in the future (TODO) are:
@@ -255,6 +258,11 @@ interface KDRestraintPropsBase {
 	renderWhenLinked?: string[];
 	// Player must have one of these PlayerTags to equip
 	requireSingleTagToEquip?: string[];
+	noRecycle?: boolean,
+	/** Disassembles into a raw item */
+	disassembleAs?: string,
+	/** Disassembles into a raw item */
+	disassembleCount?: number,
 	// Player must have all of these PlayerTags to equip
 	requireAllTagsToEquip?: string[];
 	/** This item always renders when linked */
@@ -535,7 +543,9 @@ interface restraint extends KDRestraintProps {
 	weight: number,
 	minLevel: number,
 
-	Color: string[] | string,
+	deaf?: number,
+
+	Color?: string[] | string,
 
 	/** Descriptor for tightness, e.g. Secure, Thick */
 	tightType?: string,
@@ -744,6 +754,12 @@ interface enemy extends KDHasTags {
 	/** These enemies always carry these items at the start */
 	startingItems?: string[]
 
+	/** Sound effects */
+	SFX?: {
+		/** Sound effect for dying */
+		death?: string,
+	},
+
 	/** Restraint filters */
 	RestraintFilter?: {
 		/** Increases effective level */
@@ -752,6 +768,8 @@ interface enemy extends KDHasTags {
 		bonusRestraints?: number,
 		/** This enemy can apply restraints without needing them in her pockets */
 		unlimitedRestraints?: boolean,
+		/** Forces stock, even if restraints are unlimited */
+		forceStock?: boolean,
 		/** Restraints applied must all be from inventory */
 		invRestraintsOnly?: boolean,
 		/** Restraints applied must all be limited */
@@ -1248,6 +1266,7 @@ interface enemy extends KDHasTags {
 	ignoreflag?: string[],
 	/** flags set when the player is hit but no binding occurs*/
 	failAttackflag?: string[],
+	failAttackflagChance?: number,
 	/** How long to set the flag for */
 	failAttackflagDuration?: number,
 	/** */
@@ -1553,6 +1572,9 @@ interface String {
 }
 
 interface entity {
+	refreshSprite?: boolean,
+	FacilityAction?: string,
+
 	/** Optional leash data, used for both NPC and player */
 	leash?: KDLeashData,
 	blockedordodged?: number,
@@ -1682,6 +1704,8 @@ interface entity {
 	allied?: number,
 	ceasefire?: number,
 	bind?: number,
+	/** Makes the enemy temporarily immobavle */
+	immobile?: number,
 	blind?: number,
 	disarm?: number,
 	slow?: number,
@@ -1691,7 +1715,7 @@ interface entity {
 	stun?: number,
 	silence?: number,
 	vulnerable?: number,
-	buffs?: any,
+	buffs?: Record<string, any>,
 	warningTiles?: any,
 	visual_x?: number,
 	visual_y?: number,
@@ -2398,6 +2422,8 @@ interface KDInventoryActionDef {
 	click: (player: entity, item: item,) => void;
 	cancel: (player: entity, delta: number) => boolean;
 	icon: (player: entity, item: item) => string;
+	hotkey?: () => string,
+	hotkeyPress?: () => string,
 	alsoShow?: string[],
 }
 
@@ -2448,6 +2474,7 @@ interface KinkyDungeonSave {
 	KDEventData: Object;
 	KDCurrentWorldSlot: {x: number, y: number};
 	KDPersistentNPCs: string,
+	KDDeletedIDs: string,
 	KDPersonalAlt: string,
 	flags: [string, number][];
 	uniqueHits: [string, boolean][];
@@ -2572,6 +2599,7 @@ type KDSideRoom = {
 	name: string,
 	faction?: string,
 	weight: number,
+	tags?: string[],
 	/** Rolled once each time it gets a map mod */
 	chance: number,
 	/**
@@ -2609,6 +2637,7 @@ type MapMod = {
 	bonussetpieces?: {Type: string, Weight: number}[],
 	altRoom: string,
 	escapeMethod?: string,
+	noPersistentPrisoners?: boolean,
 }
 
 type AIType = {
@@ -2920,6 +2949,7 @@ type KDBondageStatus = {
 	toy: number,
 	plug: number,
 	belt: number,
+	immobile: number,
 }
 
 type KDMapTile = {
@@ -2975,6 +3005,9 @@ interface KDBondage {
 	powerStruggleBoost: number,
 	/** Multiplier for command level */
 	mageStruggleBoost?: number,
+
+	/** Affected by latex solvents */
+	latex?: boolean,
 }
 
 interface KDCursedVar {
@@ -3179,8 +3212,8 @@ type KDEventData_CurseCount = {restraints: {item: item, host: item}[], count: nu
 type KDExpression = {
 	priority: number;
 	stackable?: boolean,
-	criteria: (C: any) => boolean;
-	expression: (C: any) => {
+	criteria: (C: any, flags: Map<string, number>) => boolean;
+	expression: (C: any, flags: Map<string, number>) => {
 		EyesPose: string,
 		Eyes2Pose: string,
 		BrowsPose: string,
@@ -3434,6 +3467,8 @@ interface KDCommanderOrder {
 	global_after: (data: KDCommanderOrderData) => void;
 }
 
+type KDCollectionTabDrawDef = (value: KDCollectionEntry, buttonSpacing: number, III: number, x: number, y: number) => number
+
 interface KDCollectionEntry {
 	name: string,
 	color: string,
@@ -3441,11 +3476,18 @@ interface KDCollectionEntry {
 	sprite: string,
 	Facility: string,
 	customSprite: boolean,
+	escaped?: boolean,
+	escapegrace?: boolean,
+	personality: string,
+
+	spawned?: boolean,
+
 	id: number,
 	Enemy?: enemy, // for unique ones
-
-	outfit?: string,
+	/** Todo remove this and replace with persistent NPC flag */
+	flags?: Record<string, number>,
 	customOutfit?: string,
+	outfit?: string,
 	hairstyle?: string,
 	bodystyle?: string,
 	facestyle?: string,
@@ -3453,6 +3495,7 @@ interface KDCollectionEntry {
 
 	/** Status: Guest, Prisoner, Servant, or Manager */
 	status: string,
+	oldstatus: string,
 	class: string,
 
 	Faction: string,

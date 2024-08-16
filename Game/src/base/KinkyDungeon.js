@@ -3,6 +3,8 @@
 let KDFullscreen = false;
 let KDExitButton = false;
 
+let KDPaletteWidth = 6;
+
 let KDDefaultPalette = "";
 let KDCULLTIME = 10000; // Garbage collection
 
@@ -123,7 +125,7 @@ let KinkyDungeonKeySpellPage = ['`'];
 let KinkyDungeonKeySwitchWeapon = ['F', 'G', 'H', 'J']; // Swap, Offhand, OffhandPrevious
 let KinkyDungeonKeySwitchLoadout = ['[', ']', '\\'];
 let KinkyDungeonKeyLogFilter = ['{', '}', ':', '"'];
-let KinkyDungeonKeyMap = ['+'];
+let KinkyDungeonKeyMap = ['+', '<', '>'];
 
 let KDLoadingTextKeys = {};
 
@@ -187,8 +189,6 @@ let KDToggles = {
 	OutlineAura: true,
 	GreyscaleBlindness: true,
 	NearestNeighbor: true,
-	ZoomIn: false,
-	ZoomOut: false,
 	LazyWalk: false,
 	ShiftLatch: true,
 	Nipples: false,
@@ -205,9 +205,15 @@ let KDToggles = {
 	NoDmgFloaters: false,
 	NoForceGreet: false,
 	StruggleBars: true,
+	ShowJailedNPCSprites: true,
+	ShowZoom: true,
+	Backgrounds: true,
 };
 
 let KDToggleCategories = {
+	Backgrounds: "GFX",
+	ShowZoom: "UI",
+	ShowJailedNPCSprites: "GFX",
 	StruggleBars: "UI",
 	SpellBook: "UI",
 	FastFloaters: "UI",
@@ -253,8 +259,6 @@ let KDToggleCategories = {
 	EnemyAura: "UI",
 	OutlineAura: "UI",
 	NearestNeighbor: "GFX",
-	ZoomIn: "UI",
-	ZoomOut: "UI",
 	Helper: "UI",
 	FlipStatusBars: "UI",
 	ShowRestraintOnHover: "UI",
@@ -298,6 +302,8 @@ let KDDefaultKB = {
 	Skip: KinkyDungeonKeySkip[0],
 	Enter: KinkyDungeonKeyEnter[0],
 	Map: KinkyDungeonKeyMap[0],
+	ZoomOut: KinkyDungeonKeyMap[1],
+	ZoomIn: KinkyDungeonKeyMap[2],
 
 	SwitchLoadout1: KinkyDungeonKeySwitchLoadout[0],
 	SwitchLoadout2: KinkyDungeonKeySwitchLoadout[1],
@@ -331,6 +337,9 @@ let KDDefaultKB = {
 	Crouch: KinkyDungeonKeyToggle[9],
 	BulletTransparency: KinkyDungeonKeyToggle[10],
 };
+
+let KDZoomIndex = 4;
+let KDZoomLevels = [6, 4, 2, 0, -1, -2, -3];
 
 let KinkyDungeonRootDirectory = "Game/";
 
@@ -542,7 +551,7 @@ let KDDefaultAlt = ["tmb", "lib", "cry", "ore", "bel"];
 * JourneyMap: KDJourneyMap,
 * JourneyTarget: {x: number, y: number},
 * LastDragon: string,
-* ElevatorsUnlocked: Record<number, boolean>,
+* ElevatorsUnlocked: Record<number, string>,
 * TeleportLocations: Record<string, {x: number, y: number, type: string, checkpoint: string, level: number}>,
 * MaxVisionDist: number,
 * MinVisionDist: number,
@@ -799,6 +808,7 @@ let KDGameDataBase = {
  */
 let KDGameData = Object.assign({}, KDGameDataBase);
 
+
 function KinkyDungeonLeashingEnemy() {
 	if (KDGameData.KinkyDungeonLeashingEnemy || KDUpdateEnemyCache) {
 		return KinkyDungeonFindID(KDGameData.KinkyDungeonLeashingEnemy);
@@ -832,7 +842,10 @@ function KinkyDungeonAngel() {
 }
 
 function KDUnlockPerk(Perk) {
-	if (Perk && !KDUnlockedPerks.includes(Perk)) KDUnlockedPerks.push(Perk);
+	if (Perk && !KDUnlockedPerks.includes(Perk)) {
+		KDSendMusicToast(TextGet("KDPerkUnlockedToast") + TextGet("KinkyDungeonStat" + (KinkyDungeonStatsPresets[Perk]?.id || Perk)));
+		KDUnlockedPerks.push(Perk);
+	}
 	KDLoadPerks();
 	localStorage.setItem("KDUnlockedPerks", JSON.stringify(KDUnlockedPerks));
 }
@@ -1062,6 +1075,13 @@ function KinkyDungeonLoad() {
 					kdgammafilterstore[0] = KDGamma;
 				}
 			}
+			if (localStorage.getItem("zoomLvl") != undefined) {
+				let parsed = parseInt(localStorage.getItem("zoomLvl"));
+				if (parsed != undefined) {
+					KDZoomIndex = parsed;
+				}
+			}
+
 
 			KinkyDungeonSexyMode = localStorage.getItem("KinkyDungeonSexyMode") != undefined ? localStorage.getItem("KinkyDungeonSexyMode") == "True" : true;
 			KinkyDungeonClassMode = localStorage.getItem("KinkyDungeonClassMode") != undefined ? localStorage.getItem("KinkyDungeonClassMode") : "Mage";
@@ -1284,8 +1304,8 @@ function KinkyDungeonRun() {
 			KDGlobalFilterCacheRefresh = true;
 		}
 
-		for (let MC of KDCurrentModels.values()) {
-
+		for (let ent of KDCurrentModels.entries()) {
+			let MC = ent[1];
 
 			// Cull containers that werent drawn this turn
 			for (let Container of MC.Containers.entries()) {
@@ -1296,7 +1316,8 @@ function KinkyDungeonRun() {
 					Container[1].Mesh.destroy();
 					Container[1].Container.destroy();
 					Container[1].RenderTexture.destroy();
-				} else if (refresh)
+				} else if (refresh && (ent[0] == KinkyDungeonPlayer || ent[0] == KDSpeakerNPC))
+					// We only refresh NPCs that are front and center, for optimization reasons
 					MC.Update.delete(Container[0]);
 			}
 
@@ -2258,6 +2279,21 @@ function KinkyDungeonRun() {
 			);
 		}
 
+
+		DrawButtonKDEx("randomName", () => {
+
+
+			let name = "Ada";
+
+			let nameList = KDDefaultNames[Math.floor(Math.random() * KDDefaultNames.length)];
+			if (nameList && KDNameList[nameList]) {
+				name = KDNameList[nameList][Math.floor(Math.random() * KDDefaultNames.length)];
+			}
+			ElementValue("PlayerNameField", name);
+			return true;
+		}, true, 1550, 450, 200, 64, TextGet("KDRandom"), "#ffffff", "");
+
+
 		DrawButtonKDEx("selectName", () => {
 
 			localStorage.setItem("PlayerName", ElementValue("PlayerNameField") || "Ada");
@@ -2690,7 +2726,7 @@ function KinkyDungeonRun() {
 				let scale = 72;
 				let x = 1500;
 				let y = 100;
-				let w = 4;
+				let w = KDPaletteWidth;
 				DrawTextFitKD(TextGet("KDBackgroundColor"), x + scale*(0.5 + w)/2, y, scale*w, "#ffffff", KDTextGray0, 20);
 
 
@@ -2713,7 +2749,7 @@ function KinkyDungeonRun() {
 				}
 
 
-				KDDrawPalettes(x, 250, w, scale);
+				KDDrawPalettes(x, 250, w, scale, undefined, undefined);
 			}
 			DrawButtonKDEx("KBBackOptions", () => {
 				KinkyDungeonKeybindingsTemp = Object.assign({}, KinkyDungeonKeybindingsTemp);
@@ -2823,10 +2859,13 @@ function KDCullSprites() {
 	for (let sprite of kdpixisprites.entries()) {
 		if (!kdSpritesDrawn.has(sprite[0])) {
 			if (cull) {
-				sprite[1].parent.removeChild(sprite[1]);
+				if (sprite[1].parent) {
+					sprite[1].parent.removeChild(sprite[1]);
+				}
 				if (kdprimitiveparams.has(sprite[0])) kdprimitiveparams.delete(sprite[0]);
 				kdpixisprites.delete(sprite[0]);
-				sprite[1].destroy();
+				if (sprite[1].destroy)
+					sprite[1].destroy();
 			} else sprite[1].visible = false;
 		}
 	}
@@ -3084,7 +3123,7 @@ function KDFunctionQuestScroll(amount) {
 	return false;
 }
 function KDFunctionCollectionScroll(amount) {
-	if (KinkyDungeonState == "Game" && KinkyDungeonDrawState == "Collection") {
+	if (KinkyDungeonState == "Game" && (KinkyDungeonDrawState == "Collection" || KinkyDungeonDrawState == "Bondage")) {
 		if (amount > 0) {
 			KDClickButton("collDOWN");
 		} else {
@@ -3615,7 +3654,7 @@ function KDCommitKeybindings() {
 		KinkyDungeonKeybindings.BulletTransparency,
 	];
 
-	KinkyDungeonKeyMap = [KinkyDungeonKeybindings.Map];
+	KinkyDungeonKeyMap = [KinkyDungeonKeybindings.Map, KinkyDungeonKeybindings.ZoomOut, KinkyDungeonKeybindings.ZoomIn];
 	KinkyDungeonKeyEnter = [KinkyDungeonKeybindings.Enter];
 	KinkyDungeonKeySpellPage = [KinkyDungeonKeybindings.SpellPage];
 	KinkyDungeonKeySwitchWeapon = [KinkyDungeonKeybindings.SwitchWeapon, KinkyDungeonKeybindings.SwitchWeaponOffhand, KinkyDungeonKeybindings.SwitchWeaponOffhandPrevious, KinkyDungeonKeybindings.SwitchWeaponOffhandPrevious2];
@@ -3628,6 +3667,16 @@ function KDCommitKeybindings() {
 
 let afterLoaded = false;
 
+/**
+ * Dummy function. You can modify this function as part of your mod like so:
+ * let _KDModsAfterGameStart = KDModsAfterGameStart;
+ * KDModsAfterGameStart = () => {
+ * [Your stuff here]
+ * _KDModsAfterGameStart();
+ * }
+ * It is declared with `let` intentionally to allow the above, without suggesting a type error
+ */
+let KDModsAfterGameStart = () => {};
 /**
  * Dummy function. You can modify this function as part of your mod like so:
  * let _KDModsAfterLoad = KDModsAfterLoad;
@@ -3671,6 +3720,10 @@ function KinkyDungeonStartNewGame(Load) {
 		KDCommitKeybindings();
 	}
 	if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/StoneDoor_Close.ogg");
+
+
+
+	KDModsAfterGameStart();
 }
 
 function KDUpdatePlugSettings(evalHardMode) {
@@ -3795,6 +3848,7 @@ function KinkyDungeonHandleClick() {
 				if (KinkyDungeonKeybindings) {
 					KDCommitKeybindings();
 				}
+				KDModsAfterGameStart();
 			}
 			return true;
 		} else if (MouseIn(1275, 750, 350, 64)) {
@@ -4414,7 +4468,9 @@ function KinkyDungeonGenerateSaveData() {
 	save.KDCurrentWorldSlot = KDCurrentWorldSlot;
 	save.KinkyDungeonPlayerEntity = KinkyDungeonPlayerEntity;
 
-
+	save.KDPersonalAlt = JSON.stringify(KDPersonalAlt);
+	save.KDPersistentNPCs = JSON.stringify(KDPersistentNPCs);
+	save.KDDeletedIDs = JSON.stringify(KDDeletedIDs);
 
 
 	save.stats = {
@@ -4521,6 +4577,7 @@ function KinkyDungeonLoadGame(String) {
 			KDGameData = JSON.parse(JSON.stringify(KDGameDataBase));
 			if (saveData.KDGameData != undefined) KDGameData = Object.assign({}, saveData.KDGameData);
 
+
 			InitFacilities();
 
 			KDEventData = JSON.parse(JSON.stringify(KDEventDataBase));
@@ -4546,8 +4603,6 @@ function KinkyDungeonLoadGame(String) {
 			KinkyDungeonEasyMode = KinkyDungeonStatsChoice.get("norescueMode") ? 2 : (KinkyDungeonStatsChoice.get("easyMode") ? 1 : 0);
 			KinkyDungeonProgressionMode = KinkyDungeonStatsChoice.get("escapekey") ? "Key" : KinkyDungeonStatsChoice.get("escaperandom") ? "Random" : KinkyDungeonStatsChoice.get("escapeselect") ? "Select" : "Key";
 
-			saveData.KDPersonalAlt = JSON.stringify(KDPersonalAlt);
-			saveData.KDPersistentNPCs = JSON.stringify(KDPersistentNPCs);
 
 			if (saveData.faction != undefined) KinkyDungeonFactionRelations = saveData.faction;
 			KDInitFactions();
@@ -4563,6 +4618,7 @@ function KinkyDungeonLoadGame(String) {
 			KDUnlockPerk();
 
 			KDInitInventory();
+
 			for (let item of saveData.inventory) {
 				if (item.type == Restraint) {
 					let restraint = KinkyDungeonGetRestraintByName(item.name);
@@ -4604,6 +4660,7 @@ function KinkyDungeonLoadGame(String) {
 
 			if (saveData.KDWorldMap) KDWorldMap = JSON.parse(JSON.stringify(saveData.KDWorldMap));
 			if (saveData.KDPersistentNPCs) KDPersistentNPCs = JSON.parse(saveData.KDPersistentNPCs);
+			if (saveData.KDDeletedIDs) KDDeletedIDs = JSON.parse(saveData.KDDeletedIDs);
 			if (saveData.KDPersonalAlt) KDPersonalAlt = JSON.parse(saveData.KDPersonalAlt);
 
 			if (saveData.KinkyDungeonPlayerEntity) KinkyDungeonPlayerEntity = saveData.KinkyDungeonPlayerEntity;
@@ -4676,6 +4733,7 @@ function KinkyDungeonLoadGame(String) {
 			}
 			KinkyDungeonFloaters = [];
 			KDFixNeeds();
+			KDSortCollection();
 			KinkyDungeonAdvanceTime(0, true, true);
 			return true;
 		}
@@ -4994,4 +5052,21 @@ function downloadFile(filename, text) {
 
 	// Clean up the object URL after download
 	URL.revokeObjectURL(url);
+}
+
+function KDChangeZoom(change) {
+	KDZoomIndex += change;
+	if (KDZoomIndex < 0) KDZoomIndex = 0;
+	else if (KDZoomIndex > KDZoomLevels.length - 1) KDZoomIndex = KDZoomLevels.length - 1;
+
+	KinkyDungeonUpdateLightGrid = true;
+	KDRedrawFog = 2;
+	setTimeout(() => {KinkyDungeonAdvanceTime(0);}, 100);
+
+	localStorage.setItem('zoomLvl', KDZoomIndex + "");
+
+
+	KinkyDungeonSendActionMessage(10, TextGet("ZoomSet").replace("PCNT",
+		"" + Math.round(100*(72 + KDZoomLevels[KDZoomIndex] * 12)/72)
+	), "#ffffff", 1);
 }
