@@ -5,6 +5,9 @@
  */
 let KDModelCosplay: {[_: string]: KinkyDungeonDress} = {
 	"Fuuka" : [{"Item":"ElfEars","Group":"ElfEars","Color":"#ffffff","Lost":false}],
+	Nara: [
+		{"Item":"SuccubusTail","Group":"SuccubusTail","Color":"#ffffff","Lost":false,"Filters":{"SuccubusTail":{"gamma":0.7666666666666666,"saturation":0,"contrast":0.7666666666666666,"brightness":4.9,"red":1.3,"green":0.5166666666666666,"blue":1.4833333333333334,"alpha":0.65},"SuccubusTailLight":{"gamma":1.0166666666666666,"saturation":0.016666666666666666,"contrast":1,"brightness":2.166666666666667,"red":0.3666666666666667,"green":0.3833333333333333,"blue":1.4833333333333334,"alpha":0.65}}},
+		{"Item":"ElfEarsLong","Group":"ElfEarsLong","Color":"#ffffff","Lost":false,"Filters":{"ElfLongBack":{"gamma":1,"saturation":0,"contrast":0.72,"brightness":1,"red":1.55,"green":1.1833333333333333,"blue":1.0833333333333335,"alpha":1},"ElfLongFront":{"gamma":1,"saturation":0,"contrast":0.72,"brightness":1,"red":1.55,"green":1.1833333333333333,"blue":1.0833333333333335,"alpha":1}}}],
 	"Elf1": [
 		{
 			Item: "ElfEarsLong", Color: "#ffffff", Lost: false
@@ -21,6 +24,9 @@ let KDModelCosplay: {[_: string]: KinkyDungeonDress} = {
 			{"EarringRight":{"gamma":1,"saturation":1,"contrast":1,"brightness":1.3,"red":1,"green":1,"blue":1,"alpha":1},"EarringLeft":{"gamma":1,"saturation":1,"contrast":0.65,"brightness":1.7000000000000002,"red":0.55,"green":0.55,"blue":2.033333333333333,"alpha":1.75}}
 		},
 	],
+
+	Hilda: [{"Item":"ElfEarsLong","Group":"ElfEarsLong","Color":"#ffffff","Lost":false},{"Item":"SuccubusHorn","Group":"SuccubusHorn","Color":"#ffffff","Lost":false,"Filters":{"SuccubusHornRight":{"gamma":1,"saturation":0,"contrast":2.48,"brightness":1,"red":0.7647058823529411,"green":0.8235294117647058,"blue":0.8235294117647058,"alpha":1},"SuccubusHornLeft":{"gamma":1,"saturation":0,"contrast":2.48,"brightness":1,"red":0.7647058823529411,"green":0.8235294117647058,"blue":0.8235294117647058,"alpha":1},"SuccubusHornLight":{"gamma":1,"saturation":0,"contrast":1,"brightness":1,"red":1.2156862745098038,"green":0.11764705882352941,"blue":1.8823529411764706,"alpha":1}}}],
+
 	"Elf3": [
 		{
 			Item: "ElfEarsLong", Color: "#ffffff", Lost: false

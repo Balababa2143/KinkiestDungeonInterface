@@ -482,7 +482,7 @@ AddModel({
 	Folder: "Dress",
 	Parent: "Dress",
 	TopLevel: true,
-	Categories: ["Underwear"],
+	Categories: ["Underwear", "Panties"],
 	Layers: ToLayerMap([
 		{ Name: "LaceCrotchPanel", Layer: "Panties", Pri: 30,
 			//swaplayerpose: {Kneel: "PantiesLower", KneelClosed: "PantiesLower"},
@@ -514,7 +514,7 @@ AddModel({
 	Folder: "Dress",
 	Parent: "LacePanties",
 	TopLevel: false,
-	Categories: ["Underwear"],
+	Categories: ["Underwear", "Panties"],
 	Layers: ToLayerMap([
 		{ Name: "LaceCrotchPanel", Layer: "CrotchPanelMid", Pri: 30,
 			//swaplayerpose: {Kneel: "CrotchPanelLower", KneelClosed: "CrotchPanelLower"},
@@ -578,10 +578,10 @@ AddModel({
 
 
 AddModel({
-	Name: "DressSkirtSplit",
+	Name: "DressSkirtSplitNoBelt",
 	Folder: "Dress",
-	Parent: "Dress",
-	TopLevel: true,
+	Parent: "DressSkirtSplit",
+	TopLevel: false,
 	Categories: ["Skirts"],
 	AddPoseConditional: {
 		EncaseTorsoLower: ["Skirt"]
@@ -597,13 +597,18 @@ AddModel({
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["TorsoLower"],
 			Invariant: true,
 		},
-		{ Name: "SkirtSplit", Layer: "Skirt", Pri: 14,
+		{ Name: "SkirtSplit", Layer: "Skirt", Pri: 13,
 			Poses: ToMap([...LEGPOSES]), NoOverride: true,
 			//swaplayerpose: {Kneel: "SkirtLower", KneelClosed: "SkirtLower"},
 			MorphPoses: {Hogtie: "Closed", Closed: "Closed", Kneel: "Kneel", KneelClosed: "Kneel"},
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["TorsoLower"],
 			InheritColor: "Skirt",
 			Invariant: true,
+			EraseInvariant: true,
+			EraseSprite: "EraseSkirtSplit",
+			ErasePoses: ["Spread", "Closed", "Hogtie"],
+			EraseLayers: {WrappingLegsOver: true},
+			EraseZBonus: 100,
 		},
 		{ Name: "SkirtSplitOver", Layer: "SkirtOver", Pri: 17,
 			Poses: ToMap([...KNEELPOSES]),
@@ -616,6 +621,26 @@ AddModel({
 	])
 });
 
+AddModel({
+	Name: "DressSkirtSplit",
+	Folder: "Dress",
+	Parent: "Dress",
+	TopLevel: true,
+	Categories: ["Skirts"],
+	AddPoseConditional: {
+		EncaseTorsoLower: ["Skirt"]
+	},
+	Layers: ToLayerMap([
+		...GetModelLayers("DressSkirtSplitNoBelt"),
+		{ Name: "SkirtSplitBelt", Layer: "Skirt", Pri: 12.95,
+			Poses: ToMap([...LEGPOSES]), NoOverride: true,
+			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["TorsoLower"],
+			InheritColor: "Skirt",
+			TieToLayer: "SkirtSplit",
+			Invariant: true,
+		},
+	])
+});
 
 AddModel({
 	Name: "BlouseCollar",
@@ -812,6 +837,11 @@ AddModel({
 			HideWhenOverridden: true,
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["ArmRight"],
 		},
+		{ Name: "BlouseShoulderRight", Layer: "UpSleeveRight", Pri: 40,
+			HideWhenOverridden: true,
+			InheritColor: "SleeveRight",
+			Poses: ToMap([...SHOULDERPOSES]),
+		},
 	])
 });
 
@@ -976,7 +1006,7 @@ AddModel({
 			Invariant: true,
 		},
 		{ Name: "Band", Layer: "Skirt", Pri: 13.1,
-			TieToLayer: "Skirt",
+			TieToLayer: "MageSkirt",
 			NoOverride: true,
 			Poses: ToMap([...LEGPOSES]),
 			//HideWhenOverridden: true,
@@ -989,7 +1019,7 @@ AddModel({
 		{ Name: "MageSkirtOver", Layer: "SkirtOver", Pri: 9,
 			Poses: ToMap([...KNEELPOSES]),
 			//RequirePoses: ToMap(["CrotchStrap"]),
-			TieToLayer: "Skirt", NoOverride: true,
+			TieToLayer: "MageSkirt", NoOverride: true,
 			InheritColor: "Skirt",
 			AppendPose: ToMapDupe(["CrotchStrap"]),
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["TorsoLower"],

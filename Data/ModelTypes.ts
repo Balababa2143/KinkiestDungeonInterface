@@ -65,7 +65,7 @@ interface Model extends Namable {
     /** Removes the model if these poses are present*/
     RemovePoses?: string[],
     /** Optional categories for a model to appear in wardrobe*/
-    Categories?: string[],
+    Categories: string[],
     /** Optional, this appears as a top level item*/
     TopLevel?: boolean,
     /** Optional, this appears under a top level item*/
@@ -84,6 +84,8 @@ interface Model extends Namable {
     DefaultColor?: string[],
 	/** Color definition */
 	Filters?: Record<string, LayerFilter>,
+	/** Color definition */
+	Properties?: Record<string, LayerProperties>,
 	/** Hardcoded Lock Type */
 	LockType?: string,
 	/** Hardcoded body filters */
@@ -111,6 +113,13 @@ interface ModelLayer extends Namable {
 	SwapPriorityPose?: Record<string, number>,
     /** One of these layers is required*/
     Poses?: Record<string, boolean>,
+	/** Only displace in these poses */
+	DisplacementPoses?: string[],
+
+	/** No displacement map in these poses */
+	DisplacementPosesExclude?: string[],
+	/** No erase map in these poses */
+	ErasePosesExclude?: string[],
 	/** Adds a displacement map for rope squish and such. If the same sprite is in use it wont be duped*/
 	DisplacementSprite?: string,
 	/** Which layers to apply displacement to */
@@ -119,6 +128,7 @@ interface ModelLayer extends Namable {
 	DisplacementMorph?: Record<string, string>,
 	/** Amount of displacement */
 	DisplaceAmount?: number,
+	DisplaceZBonus?: number,
 	/** Prevents displacement maps from applying to this item */
 	NoDisplace?: boolean,
 
@@ -130,17 +140,26 @@ interface ModelLayer extends Namable {
 
 	/** Adds a Erase map for heel deletion and such. If the same sprite is in use it wont be duped*/
 	EraseSprite?: string,
+	/** Only erase in these poses */
+	ErasePoses?: string[],
 	/** Which layers to apply Erase to */
 	EraseLayers?: Record<string, boolean>,
 	/** MorphPoses but Erase */
 	EraseMorph?: Record<string, string>,
 	/** Amount of Erase */
 	EraseAmount?: number,
+	EraseZBonus?: number,
 	/** Prevents Erase maps from applying to this item */
 	NoErase?: boolean,
 	/** Invariant displacement */
 	EraseInvariant?: boolean,
 
+	/** Hide this item if the specified pose isnt present
+	 * 0 - Condition
+	 * 1 - Pose to filter off of
+	 * 2 - Cancel property
+	*/
+	HidePoseConditional?: string[][],
     /** These layers are ALL REQUIRED to make it appear*/
     RequirePoses?: Record<string, boolean>,
     /** This layer is hidden in this pose*/
@@ -212,6 +231,26 @@ type LayerFilter = {
     alpha: number;
 }
 
+type LayerProperties = {
+    LayerBonus?: number,
+    XOffset?: number,
+    YOffset?: number,
+    XPivot?: number,
+    YPivot?: number,
+    Rotation?: number,
+    XScale?: number,
+    YScale?: number,
+    Protected?: number,
+    SuppressDynamic?: number,
+    HideOverridden?: number,
+    NoOverride?: number,
+    ExtraHidePoses?: string[],
+    ExtraRequirePoses?: string[],
+    ExtraHidePrefixPose?: string[],
+    ExtraHidePrefixPoseSuffix?: string[],
+}
+
 interface Namable {
     Name: string,
 }
+

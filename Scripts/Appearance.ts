@@ -6,6 +6,7 @@ let CharacterAppearancePreviousEmoticon = null;
 function CharacterAppearanceSetDefault(C: Character): void {
 	C.Appearance = [];
 	C.Pose = [];
+	C.Palette = "";
 }
 
 /**
@@ -13,7 +14,7 @@ function CharacterAppearanceSetDefault(C: Character): void {
  */
 function CharacterAppearanceNaked(C: Character): void {
 	for (let A = C.Appearance.length - 1; A >= 0; A--)
-		if (!C.Appearance[A].Model?.Protected)
+		if (C.Appearance[A].Model && !KDModelIsProtected(C.Appearance[A].Model))
 			C.Appearance.splice(A, 1);
 }
 
@@ -36,13 +37,17 @@ function CharacterAppearanceSetItem(C: Character, Group: string, ItemAsset: any,
  * @param C - The character whose appearance should be serialised
  * @returns A serialised version of the character's current appearance
  */
-function CharacterAppearanceStringify(C: Character): string {
-	return AppearanceItemStringify(C.Appearance);
+function CharacterAppearanceStringify(C: Character, metadata : KDOutfitMetadata): string {
+	return JSON.stringify({
+		metadata: metadata,
+		appearance: AppearanceItemStringify(C.Appearance),
+	});
 }
 
 function AppearanceItemStringify(Item: any[]): string {
 	for (let r of Item) {
 		if (r.Model?.Filters) r.Filters = r.Model.Filters;
+		if (r.Model?.Properties) r.Properties = r.Model.Properties;
 	}
 	return JSON.stringify(Item, (key, value) => {
 		if (key === "Asset") {
@@ -61,35 +66,43 @@ function AppearanceItemStringify(Item: any[]): string {
  * @param backup - The serialised appearance to restore
  * @param clothesOnly - The serialised appearance to restore
  */
-function CharacterAppearanceRestore(C: Character, backup: string, clothesOnly: boolean = false): void {
-	let newAppearance = AppearanceItemParse(backup);
+function CharacterAppearanceRestore(C: Character, backup: string, clothesOnly: boolean = false, noProtected: boolean = false): void {
+	let parsed = JSON.parse(LZString.decompressFromBase64(backup) || backup);
+	let newAppearance = AppearanceItemParse(parsed?.metadata ? parsed.appearance : backup);
 	if (!clothesOnly) {
 		C.Appearance = newAppearance;
 		return;
 	}
 	let finalAppearance = [];
 	for (let item of newAppearance) {
-		if (!item.Model.Protected) {
+		if (noProtected || !KDModelIsProtected(item.Model)) {
 			finalAppearance.push(item);
 		}
 	}
-	for (let item of C.Appearance) {
-		if (item.Model.Protected) {
-			finalAppearance.push(item);
+	if (!noProtected)
+		for (let item of C.Appearance) {
+			if (KDModelIsProtected(item.Model)) {
+				finalAppearance.push(item);
+			}
 		}
-	}
 	C.Appearance = finalAppearance;
 }
 
 function AppearanceItemParse(stringified: string): any[] {
-	let ret = JSON.parse(stringified, (key, value) => {
+	let ret: any[] = JSON.parse(stringified, (key, value) => {
 		if (key === "Model" && ModelDefs[value]) {
 			return JSON.parse(JSON.stringify(ModelDefs[value]));
 		}
 		return value;
 	});
+
+	ret = ret.filter((elem) => {
+		return elem.Model != undefined && ModelDefs[elem.Model.Name] != undefined;
+	});
+
 	for (let r of ret) {
 		if (r.Filters && r.Model && r.Model.Name) r.Model.Filters = r.Filters;
+		if (r.Properties && r.Model && r.Model.Name) r.Model.Properties = r.Properties;
 	}
 	return ret;
 }

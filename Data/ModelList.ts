@@ -104,12 +104,12 @@ AddModel({
 AddModel({
 	Name: "CatsuitLowerLeotard",
 	TopLevel: true,
-	Categories: ["Suits", "Underwear"],
+	Categories: ["Suits", "Underwear", "Panties"],
 	Folder: "Catsuit",
 	Parent: "Catsuit",
 	Layers: ToLayerMap([
-		{ Name: "TorsoLowerLeotard", Layer: "TorsoLower", Pri: 1,
-			InheritColor: "TorsoLower",
+		{ Name: "TorsoLowerLeotard", Layer: "Bodysuit", Pri: -20,
+			InheritColor: "Latex",
 		},
 	])
 });
@@ -390,7 +390,7 @@ AddModel({
 AddModel({
 	Name: "TransparentCatsuitLowerLeotard",
 	TopLevel: true,
-	Categories: ["Suits", "Underwear"],
+	Categories: ["Suits", "Underwear", "Panties"],
 	Folder: "Catsuit",
 	Parent: "Catsuit",
 	Filters: {
@@ -398,8 +398,8 @@ AddModel({
 		TorsoLower: {"gamma":1,"saturation":1,"contrast":1,"brightness":1,"red":1,"green":1,"blue":1,"alpha":0.5333333333333333},
 	},
 	Layers: ToLayerMap([
-		{ Name: "TorsoLowerLeotard", Layer: "TorsoLower", Pri: 1,
-			InheritColor: "TorsoLower",
+		{ Name: "TorsoLowerLeotard", Layer: "Bodysuit", Pri: -20,
+			InheritColor: "Latex",
 			//MorphPoses: {Closed: "Closed", Spread: "Spread", Hogtie: "Closed"},
 		},
 	])
@@ -509,10 +509,13 @@ AddModel({
 	Parent: "PlateArmor",
 	Categories: ["Armor"],
 	Layers: ToLayerMap([
-		{ Name: "Pauldrons", Layer: "Shoulders", Pri: 8,
+		{ Name: "Pauldrons", Layer: "Shoulders", Pri: 80,
 			Poses: ToMapSubtract([...ARMPOSES], [...HIDEARMPOSES, "Up"], "Hogtie"),
 			MorphPoses: {Yoked: "Yoked", Hogtie: "Hogtie", Wristtie: "Free", Boxtie: "Free", Front: "Free", Crossed: "Free"},
 			HideWhenOverridden: true,
+			HidePoseConditional: [
+				["DynamicArmor", "ArmArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -530,6 +533,9 @@ AddModel({
 			DisplacementSprite: "Breastplate",
 			DisplaceAmount: 20,
 			DisplaceLayers: ToMap(["Breastplate"]),
+			HidePoseConditional: [
+				["DynamicArmor", "ChestArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -543,13 +549,18 @@ AddModel({
 	Categories: ["Shoes"],
 	Layers: ToLayerMap([
 		{ Name: "BootLeft", Layer: "ShoeLeft", Pri: 25,
-			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie"]),
-			GlobalDefaultOverride: ToMap(["KneelClosed"]),
+			Poses: ToMap([...LEGPOSES]),
+			GlobalDefaultOverride: ToMap(["KneelClosed", "Hogtie"]),
 			HideWhenOverridden: true,
 			NoDisplace: true,
+			DisplacementPosesExclude: ["Hogtie"],
 			DisplacementSprite: "Boots",
 			DisplaceAmount: 10,
 			DisplaceLayers: ToMap(["Boots"]),
+			DisplaceZBonus: 100,
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "BootRight", Layer: "ShoeRight", Pri: 25,
 			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie", "Kneel", "KneelClosed"]),
@@ -557,8 +568,12 @@ AddModel({
 			NoDisplace: true,
 
 			DisplacementSprite: "BalletCuffs",
+			DisplaceZBonus: 10000,
 			DisplaceAmount: 20,
 			DisplaceLayers: ToMap(["BalletHeelsCuffs"]),
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "BootRightKneel", Layer: "ShoeRightKneel", Pri: 25,
 			Poses: ToMap(["Kneel"]),
@@ -566,12 +581,18 @@ AddModel({
 			HideWhenOverridden: true,
 			InheritColor: "BootRight",
 			Invariant: true,
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
-		{ Name: "BootLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 25,
+		{ Name: "FootBootLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 25,
 			Poses: ToMap(["Hogtie"]),
 			HideWhenOverridden: true,
 			InheritColor: "BootLeft",
 			Invariant: true,
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -588,6 +609,9 @@ AddModel({
 			SwapLayerPose: {Front: "ForeGloveLeft", Crossed: "CrossGloveLeft"},
 			HideWhenOverridden: true,
 			GlobalDefaultOverride: ToMap(["Front", "Crossed"]),
+			HidePoseConditional: [
+				["DynamicArmor", "GlovesArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -604,6 +628,9 @@ AddModel({
 			SwapLayerPose: {Front: "ForeGloveRight", Crossed: "CrossGloveRight"},
 			HideWhenOverridden: true,
 			GlobalDefaultOverride: ToMap(["Front", "Crossed"]),
+			HidePoseConditional: [
+				["DynamicArmor", "GlovesArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -644,6 +671,9 @@ AddModel({
 			Poses: ToMap([...ARMPOSES, "Hogtie"]),
 			MorphPoses: {Hogtie: "Hogtie"},
 			Invariant: true,
+			HidePoseConditional: [
+				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "ShirtChest", Layer: "ShirtChest", Pri: 5,
 			Poses: ToMap([...ARMPOSES, "Hogtie"]),
@@ -652,6 +682,9 @@ AddModel({
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["TorsoUpper"],
 			Invariant: true,
 			NoOverride: true,
+			HidePoseConditional: [
+				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -668,6 +701,9 @@ AddModel({
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["TorsoUpper"],
 			Invariant: true,
 			NoOverride: true,
+			HidePoseConditional: [
+				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -685,6 +721,9 @@ AddModel({
 			Invariant: true,
 			TieToLayer: "Skirt2",
 			InheritColor: "Belt",
+			HidePoseConditional: [
+				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "SkirtBeltDeco", Layer: "OverSkirt", Pri: 15.2,
 			Poses: ToMap([...LEGPOSES]),
@@ -692,6 +731,9 @@ AddModel({
 			Invariant: true,
 			TieToLayer: "Skirt2",
 			InheritColor: "Insignia",
+			HidePoseConditional: [
+				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "SkirtBeltRivets", Layer: "OverSkirt", Pri: 15.2,
 			Poses: ToMap([...LEGPOSES]),
@@ -699,12 +741,18 @@ AddModel({
 			Invariant: true,
 			TieToLayer: "Skirt2",
 			InheritColor: "Rivets",
+			HidePoseConditional: [
+				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "Skirt2", Layer: "OverSkirt", Pri: 15,
 			Poses: ToMap([...LEGPOSES]),
 			MorphPoses: {Hogtie: "Hogtie", Kneel: "Kneel", KneelClosed: "Kneel"},
 			Invariant: true,
 			InheritColor: "Skirt",
+			HidePoseConditional: [
+				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -857,6 +905,7 @@ AddModel({
 			DisplacementSprite: "BootsShort",
 			DisplaceAmount: 30,
 			DisplaceLayers: ToMap(["Boots"]),
+			DisplaceZBonus: 100,
 		},
 		{ Name: "ShoeRight", Layer: "ShoeRight", Pri: 1,
 			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie", "Kneel", "KneelClosed"]),
@@ -1059,6 +1108,8 @@ AddModel({
 	Name: "StockingLeft",
 	Folder: "Maid",
 	Parent: "Stockings",
+	Categories: ["Socks"],
+	TopLevel: false,
 	Layers: ToLayerMap([
 		{ Name: "SockLeft", Layer: "StockingLeft", Pri: 1,
 			Poses: ToMap([...LEGPOSES]),
@@ -1075,6 +1126,8 @@ AddModel({
 	Name: "StockingRight",
 	Folder: "Maid",
 	Parent: "Stockings",
+	Categories: ["Socks"],
+	TopLevel: false,
 	Layers: ToLayerMap([
 		{ Name: "SockRight", Layer: "StockingRight", Pri: 1,
 			Poses: ToMap([...LEGPOSES]),
@@ -1095,6 +1148,8 @@ AddModel({
 	Name: "MaidSockLeft",
 	Folder: "Maid",
 	Parent: "MaidSocks",
+	Categories: ["Socks"],
+	TopLevel: false,
 	Layers: ToLayerMap([
 		...GetModelLayers("StockingLeft"),
 		{ Name: "StripeSockLeft", Layer: "StockingLeft", Pri: 1.1,
@@ -1108,6 +1163,8 @@ AddModel({
 	Name: "MaidSockRight",
 	Folder: "Maid",
 	Parent: "MaidSocks",
+	Categories: ["Socks"],
+	TopLevel: false,
 	Layers: ToLayerMap([
 
 		...GetModelLayers("StockingRight"),
@@ -1128,7 +1185,7 @@ AddModel({
 	Layers: ToLayerMap([
 		{ Name: "ShoeLeft", Layer: "ShoeLeft", Pri: 1,
 			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie"]),
-			GlobalDefaultOverride: ToMap(["KneelClosed"]),
+			//GlobalDefaultOverride: ToMap(["KneelClosed"]),
 			HideWhenOverridden: true,
 		},
 		{ Name: "ShoeRight", Layer: "ShoeRight", Pri: 1,
@@ -1401,8 +1458,8 @@ AddModel({
 	Categories: ["Shoes"],
 	Layers: ToLayerMap([
 		{ Name: "ShoeLeft", Layer: "ShoeLeft", Pri: 1,
-			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie"]),
-			GlobalDefaultOverride: ToMap(["KneelClosed"]),
+			Poses: ToMap([...LEGPOSES]),
+			GlobalDefaultOverride: ToMap(["KneelClosed", "Hogtie"]),
 			HideWhenOverridden: true,
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 			AppendPose: ToMapDupe(["RopesAnkle"]),
@@ -1420,7 +1477,7 @@ AddModel({
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 			HideWhenOverridden: true,
 		},
-		{ Name: "ShoeLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 1,
+		{ Name: "FootShoeLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 1,
 			Poses: ToMap(["Hogtie"]),
 			Invariant: true,
 			InheritColor: "ShoeLeft",
@@ -1962,13 +2019,13 @@ AddModel({
 			DisplacementInvariant: true,
 			HideWhenOverridden: true,
 		},
-		{ Name: "RibbonBack", Layer: "BeltBack", Pri: 30,
+		{ Name: "RibbonBack", Layer: "BeltBack", Pri: -30,
 			Poses: ToMap(["Wristtie", "Boxtie"]),
 			Invariant: true,
 			HidePoses: ToMap(["HideBigProps"]),
 			MorphPoses: {Kneel: "Kneel", KneelClosed: "Kneel", UprightHogtie: "Boxtie", SuspendedHogtie: "Boxtie", Hogtie: "Hogtie"},
 		},
-		{ Name: "RibbonFarBack", Layer: "BeltFarBack", Pri: 30,
+		{ Name: "RibbonFarBack", Layer: "BeltFarBack", Pri: -30,
 			Sprite: "RibbonBack",
 			Poses: ToMapSubtract([...ARMPOSES], ["Wristtie", "Boxtie"]),
 			Invariant: true,

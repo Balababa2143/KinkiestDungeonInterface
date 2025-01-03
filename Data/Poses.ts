@@ -28,7 +28,7 @@ let SPREADPOSES = ["Spread", "Kneel"];
 let SPREADCLOSEDPOSES = ["Hogtie"];
 /** Expressions */
 
-let EYETYPES = ["Neutral", "Surprised", "Dazed", "Closed", "Angry"];
+let EYETYPES = ["Neutral", "Surprised", "Dazed", "Closed", "Angry", "Sly", "Heart"];
 let EYEPOSES = EYETYPES.map((pose) => {return "Eyes" + pose;});
 let EYE2POSES = EYETYPES.map((pose) => {return "Eyes2" + pose;});
 let BROWTYPES = ["Neutral", "Angry", "Annoyed", "Sad", "Surprised"];
@@ -53,18 +53,17 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		{
 			Layer: "Head",
 			rotation: -30,
-			rotation_x_anchor: 1190/MODELWIDTH,
-			rotation_y_anchor: 690/MODELHEIGHT,
-			offset_x: 1190/MODELWIDTH,
-			offset_y: 690/MODELHEIGHT,
-		},
-		{
+			rotation_x_anchor: 1190,
+			rotation_y_anchor: 690,
+			offset_x: 1190,
+			offset_y: 690,
+		},{
 			Layer: "BG",
 			rotation: -90,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: .5,
-			offset_y: .4,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.68*MODELWIDTH,
+			offset_y: 0.6*MODELHEIGHT,
 		}
 		]
 	},
@@ -79,10 +78,10 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		{
 			Layer: "BG",
 			rotation: 125,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: 0.641,
-			offset_y: 0.273,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.641*MODELWIDTH,
+			offset_y: 0.273*MODELHEIGHT,
 		}
 		]
 	},
@@ -100,18 +99,18 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		{
 			Layer: "Head",
 			rotation: -30,
-			rotation_x_anchor: 1190/MODELWIDTH,
-			rotation_y_anchor: 690/MODELHEIGHT,
-			offset_x: 1190/MODELWIDTH,
-			offset_y: 690/MODELHEIGHT,
+			rotation_x_anchor: 1190,
+			rotation_y_anchor: 690,
+			offset_x: 1190,
+			offset_y: 690,
 		},
 		{
 			Layer: "BG",
 			rotation: -90,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: .5,
-			offset_y: .4,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.641*MODELWIDTH,
+			offset_y: 0.6*MODELHEIGHT,
 		}
 		]
 	},
@@ -128,18 +127,17 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		{
 			Layer: "Head",
 			rotation: -30,
-			rotation_x_anchor: 1190/MODELWIDTH,
-			rotation_y_anchor: 690/MODELHEIGHT,
-			offset_x: 1190/MODELWIDTH,
-			offset_y: 690/MODELHEIGHT,
-		},
-		{
+			rotation_x_anchor: 1190,
+			rotation_y_anchor: 690,
+			offset_x: 1190,
+			offset_y: 690,
+		},{
 			Layer: "BG",
 			rotation: -90,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: .5,
-			offset_y: .5,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.82*MODELWIDTH,
+			offset_y: 0.6*MODELHEIGHT,
 		}
 		]
 	},
@@ -156,10 +154,10 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		mods: [{
 			Layer: "Head",
 			rotation: 30,
-			rotation_x_anchor: 1190/MODELWIDTH,
-			rotation_y_anchor: 690/MODELHEIGHT,
-			offset_x: 1190/MODELWIDTH,
-			offset_y: 690/MODELHEIGHT,
+			rotation_x_anchor: 1190,
+			rotation_y_anchor: 690,
+			offset_x: 1190,
+			offset_y: 690,
 		},{
 			Layer: "BG",
 			rotation: 90,
@@ -167,10 +165,10 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 			//rotation_y_anchor: .5,
 			//offset_x: 0.641,
 			//offset_y: 0.273,
-			rotation_x_anchor: .5,
-			rotation_y_anchor: .5,
-			offset_x: 0.641,
-			offset_y: 0.273,
+			rotation_x_anchor: .5*MODELWIDTH,
+			rotation_y_anchor: .5*MODELHEIGHT,
+			offset_x: 0.641*MODELWIDTH,
+			offset_y: 0.273*MODELHEIGHT,
 		}
 		],
 	},
@@ -185,7 +183,7 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 			{
 				Layer: "BG",
 				offset_x: 0,
-				offset_y: -.15,
+				offset_y: -.3*MODELHEIGHT,
 			},
 		]
 	},
@@ -197,8 +195,8 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		mods: [
 			{
 				Layer: "BG",
-				offset_x: 0,
-				offset_y: -.3,
+				offset_x: 0*MODELWIDTH,
+				offset_y: -.15*MODELHEIGHT,
 			},
 		]
 	},
@@ -213,17 +211,17 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		pri_offsety: 1,
 		mods: [{
 			Layer: "BG",
-			offset_x: 0,
-			offset_y: -.15,
+			offset_x: 0*MODELWIDTH,
+			offset_y: -.15*MODELHEIGHT,
 		},
 
 		{
 			Layer: "Tail",
 			rotation: -75,
-			rotation_x_anchor: 1300/MODELWIDTH,
-			rotation_y_anchor: 1600/MODELHEIGHT,
-			offset_x: 1300/MODELWIDTH,
-			offset_y: 1600/MODELHEIGHT,
+			rotation_x_anchor: 1300,
+			rotation_y_anchor: 1600,
+			offset_x: 1300,
+			offset_y: 1600,
 		},
 	],
 	},
@@ -235,30 +233,30 @@ let PoseProperties: {[_: string]: PoseProperty} = {
 		mods: [{
 			Layer: "ShoeLeft",
 			rotation: -5.84,
-			rotation_x_anchor: 915/MODELWIDTH,
-			rotation_y_anchor: 2160/MODELHEIGHT,
-			offset_x: 915/MODELWIDTH,
-			offset_y: 2160/MODELHEIGHT,
+			rotation_x_anchor: 915,
+			rotation_y_anchor: 2160,
+			offset_x: 915,
+			offset_y: 2160,
 		},{
 			Layer: "StockingLeftKneel",
 			rotation: -5.84,
-			rotation_x_anchor: 915/MODELWIDTH,
-			rotation_y_anchor: 2160/MODELHEIGHT,
-			offset_x: 915/MODELWIDTH,
-			offset_y: 2160/MODELHEIGHT,
+			rotation_x_anchor: 915,
+			rotation_y_anchor: 2160,
+			offset_x: 915,
+			offset_y: 2160,
 		},{
 			Layer: "BG",
-			offset_x: 0,
-			offset_y: -.15,
+			offset_x: 0*MODELWIDTH,
+			offset_y: -.15*MODELHEIGHT,
 		},
 
 		{
 			Layer: "Tail",
 			rotation: -75,
-			rotation_x_anchor: 1300/MODELWIDTH,
-			rotation_y_anchor: 1600/MODELHEIGHT,
-			offset_x: 1300/MODELWIDTH,
-			offset_y: 1600/MODELHEIGHT,
+			rotation_x_anchor: 1300,
+			rotation_y_anchor: 1600,
+			offset_x: 1300,
+			offset_y: 1600,
 		},],
 	},
 	Front: {
@@ -320,18 +318,25 @@ function ModelGetPoseMods(Poses: {[_: string]: boolean}): {[_: string]: PoseMod[
 	return mods;
 }
 
+function CheckPoseOrTags(C: Character, tag: string, tags: Map<string, boolean> = null, tagsOnly: boolean = false) {
+	if (C == KinkyDungeonPlayer || tags) {
+		if (tags ? tags.get(tag) : KinkyDungeonPlayerTags.get(tag)) return true;
+	} else if (NPCTags.get(C)) {
+		if (NPCTags.get(C).get(tag)) return true;
+	}
+	if (!tagsOnly) {
+		if (KDCurrentModels.get(C)?.Poses[tag]) {
+			return true;
+		}
+		if (KDCurrentModels.get(C)?.TempPoses && KDCurrentModels.get(C)?.TempPoses[tag]) {
+			return true;
+		}
+	}
 
-function CheckPoseOrTags(C: Character, tag: string) {
-	if (C == KinkyDungeonPlayer) {
-		if (KinkyDungeonPlayerTags.get(tag)) return true;
-	}
-	if (KDCurrentModels.get(C)?.Poses[tag]) {
-		return true;
-	}
 	return false;
 }
 
-function KDGetAvailablePosesLegs(C: Character): string[] {
+function KDGetAvailablePosesLegs(C: Character, tags: Map<string, boolean> = null, tagsOnly: boolean = false): string[] {
 	let poses: Record<string, boolean> = {};
 	for (let p of LEGPOSES) {
 		poses[p] = true;
@@ -340,26 +345,26 @@ function KDGetAvailablePosesLegs(C: Character): string[] {
 	let closed = false;
 	let spread = false;
 	// Logic for the player
-	if (["FeetLinked", "Legbinders", "LegBind", "Hobbleskirts"].some((tag) => {return CheckPoseOrTags(C, tag);})) {
+	if (["FeetLinked", "Legbinders", "LegBind", "Hobbleskirts"].some((tag) => {return CheckPoseOrTags(C, tag, tags, tagsOnly);})) {
 		delete poses.Spread;
 		delete poses.Kneel;
 		closed = true;
-	} else if (CheckPoseOrTags(C, "ForceKneel")) {
+	} else if (CheckPoseOrTags(C, "ForceKneel", tags, tagsOnly)) {
 		delete poses.Spread;
 		delete poses.Closed;
 	}
-	if (!closed && CheckPoseOrTags(C, "FeetSpreader")) {
+	if (!closed && CheckPoseOrTags(C, "FeetSpreader", tags, tagsOnly)) {
 		delete poses.Closed;
 		spread = true;
 	}
-	if (CheckPoseOrTags(C, "Hogties") || CheckPoseOrTags(C, "ForceHogtie")) {
+	if (CheckPoseOrTags(C, "Hogties", tags, tagsOnly) || CheckPoseOrTags(C, "ForceHogtie", tags, tagsOnly)) {
 		for (let p of STANDPOSES) {
 			delete poses[p];
 		}
 		for (let p of KNEELPOSES) {
 			delete poses[p];
 		}
-	} else if (CheckPoseOrTags(C, "ForceKneel")) {
+	} else if (CheckPoseOrTags(C, "ForceKneel", tags, tagsOnly)) {
 		for (let p of STANDPOSES) {
 			delete poses[p];
 		}
@@ -375,27 +380,27 @@ function KDGetAvailablePosesLegs(C: Character): string[] {
 		}
 	}
 
-	if (CheckPoseOrTags(C, "BlockHogtie")) {
+	if (CheckPoseOrTags(C, "BlockHogtie", tags, tagsOnly)) {
 		for (let p of HOGTIEPOSES) {
 			delete poses[p];
 		}
 	}
-	if (CheckPoseOrTags(C, "BlockKneel")) {
+	if (CheckPoseOrTags(C, "BlockKneel", tags, tagsOnly)) {
 		for (let p of KNEELPOSES) {
 			delete poses[p];
 		}
 	}
-	if (CheckPoseOrTags(C, "DiscourageHogtie") && Object.keys(poses).length > Object.keys(HOGTIEPOSES).length) {
+	if (CheckPoseOrTags(C, "DiscourageHogtie", tags, tagsOnly) && Object.keys(poses).length > Object.keys(HOGTIEPOSES).length) {
 		for (let p of HOGTIEPOSES) {
 			delete poses[p];
 		}
 	}
-	if (CheckPoseOrTags(C, "DiscourageKneel") && Object.keys(poses).length > Object.keys(KNEELPOSES).length) {
+	if (CheckPoseOrTags(C, "DiscourageKneel", tags, tagsOnly) && Object.keys(poses).length > Object.keys(KNEELPOSES).length) {
 		for (let p of KNEELPOSES) {
 			delete poses[p];
 		}
 	}
-	if (CheckPoseOrTags(C, "DiscourageStand") && Object.keys(poses).length > Object.keys(STANDPOSES).length) {
+	if (CheckPoseOrTags(C, "DiscourageStand", tags, tagsOnly) && Object.keys(poses).length > Object.keys(STANDPOSES).length) {
 		for (let p of STANDPOSES) {
 			delete poses[p];
 		}
@@ -403,9 +408,9 @@ function KDGetAvailablePosesLegs(C: Character): string[] {
 
 
 	if (Object.keys(poses).length == 0) {
-		if (CheckPoseOrTags(C, "DefaultStand")) {
+		if (CheckPoseOrTags(C, "DefaultStand", tags, tagsOnly)) {
 			poses = {Closed: true};
-		} else if (CheckPoseOrTags(C, "DefaultKneel")) {
+		} else if (CheckPoseOrTags(C, "DefaultKneel", tags, tagsOnly)) {
 			poses = {Kneel: true};
 		} else {
 			poses = {Hogtie: true};
@@ -420,26 +425,26 @@ function KDGetAvailablePosesLegs(C: Character): string[] {
 }
 
 
-function KDGetAvailablePosesArms(C: Character): string[] {
+function KDGetAvailablePosesArms(C: Character, tags: Map<string, boolean> = undefined): string[] {
 	let poses: Record<string, boolean> = {};
 	for (let p of ARMPOSES) {
 		poses[p] = true;
 	}
 
 	// TODO make this extensible!!!!
-	if (CheckPoseOrTags(C, "Yokes")) {
+	if (CheckPoseOrTags(C, "Yokes", tags)) {
 		poses = {Yoked: true};
-	} else if (CheckPoseOrTags(C, "Armbinders")) {
+	} else if (CheckPoseOrTags(C, "Armbinders", tags)) {
 		poses = {Wristtie: true};
-	} else if (CheckPoseOrTags(C, "Boxbinders")) {
+	} else if (CheckPoseOrTags(C, "Boxbinders", tags)) {
 		poses = {Boxtie: true};
-	} else if (CheckPoseOrTags(C, "Straitjackets") || CheckPoseOrTags(C, "Crossties")) {
+	} else if (CheckPoseOrTags(C, "Straitjackets", tags) || CheckPoseOrTags(C, "Crossties", tags)) {
 		poses = {Crossed: true};
-	} else if (CheckPoseOrTags(C, "Boxties")) {
+	} else if (CheckPoseOrTags(C, "Boxties", tags)) {
 		poses = {Boxtie: true};
-	} else if (CheckPoseOrTags(C, "Wristties")) {
+	} else if (CheckPoseOrTags(C, "Wristties", tags)) {
 		poses = {Wristtie: true};
-	} else if (CheckPoseOrTags(C, "Petsuits") || CheckPoseOrTags(C, "Fiddles")) {
+	} else if (CheckPoseOrTags(C, "Petsuits", tags) || CheckPoseOrTags(C, "Fiddles", tags)) {
 		poses = {Front: true};
 	}
 	if (KinkyDungeonIsArmsBoundC(C, false, false)) {
@@ -518,28 +523,40 @@ function RefreshTempPoses(Character: Character, Restraints: boolean, Buffs: bool
 		}
 	}*/
 
-	if (Buffs && Character == KinkyDungeonPlayer) {
-		for (let buff of Object.values(KinkyDungeonPlayerBuffs)) {
-			if (buff.pose && buff.duration >= 0) {
-				KDCurrentModels.get(Character).TempPoses[buff.pose] = true;
+	if (Buffs) {
+		if (Character == KinkyDungeonPlayer) {
+			for (let buff of Object.values(KinkyDungeonPlayerBuffs)) {
+				if (buff.pose && buff.duration >= 0) {
+					KDCurrentModels.get(Character).TempPoses[buff.pose] = true;
+				}
 			}
+		} else {
+			let entity = KDGetCharacterEntity(Character);
+			if (entity?.buffs)
+				for (let buff of Object.values(entity.buffs)) {
+					if (buff.pose && buff.duration >= 0) {
+						KDCurrentModels.get(Character).TempPoses[buff.pose] = true;
+					}
+				}
 		}
+
 	}
 
-	if (Restraints && Character == KinkyDungeonPlayer)
-		for (let rest of KinkyDungeonAllRestraintDynamic()) {
-			let inv = rest.item;
-			if (KDRestraint(inv).addPose)
+	if (Restraints) {
+		for (let inv of KDGetRestraintsForID(KDGetCharacterID(Character))) {
+			if (KDRestraint(inv)?.addPose)
 				for (let tag of KDRestraint(inv).addPose) {
 					if (!KDCurrentModels.get(Character).TempPoses[tag]) KDCurrentModels.get(Character).TempPoses[tag] = true;
 				}
-			if (KDRestraint(inv).addPoseIfTopLevel && KinkyDungeonGetRestraintItem(KDRestraint(inv).Group) == inv)
+			if (KDRestraint(inv)?.addPoseIfTopLevel && KinkyDungeonGetRestraintItem(KDRestraint(inv).Group) == inv)
 				for (let tag of KDRestraint(inv).addPoseIfTopLevel) {
 					if (!KDCurrentModels.get(Character).TempPoses[tag]) KDCurrentModels.get(Character).TempPoses[tag] = true;
 				}
 
 
 		}
+	}
+
 
 
 	KDRefreshPoseOptions(Character);
@@ -578,6 +595,11 @@ function KDRefreshPoseOptions(Character: Character) {
 		KDCurrentModels.get(Character).TempPoses.NippleToysOption = true;
 		KDCurrentModels.get(Character).Poses.NippleToysOption = true;
 	}
+	if (KDToggles.DynamicArmor && KinkyDungeonState == "Game") {
+		KDCurrentModels.get(Character).TempPoses.DynamicArmor = true;
+		KDCurrentModels.get(Character).Poses.DynamicArmor = true;
+	}
+
 	if (KDToggles.ChastityBraOption) {
 		KDCurrentModels.get(Character).TempPoses.ChastityBraOption = true;
 		KDCurrentModels.get(Character).Poses.ChastityBraOption = true;
@@ -605,6 +627,9 @@ function KDRefreshPoseOptionsMC(MC: ModelContainer) {
 	}
 	if (KDToggles.NippleToysOption) {
 		MC.Poses.NippleToysOption = true;
+	}
+	if (KDToggles.DynamicArmor && KinkyDungeonState == "Game") {
+		MC.Poses.DynamicArmor = true;
 	}
 	if (KDToggles.ChastityBraOption) {
 		MC.Poses.ChastityBraOption = true;

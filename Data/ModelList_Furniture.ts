@@ -25,6 +25,54 @@ AddModel({
 });
 
 AddModel({
+	Name: "FutureBox",
+	Folder: "FutureBox",
+	TopLevel: true,
+	Group: "Devices",
+	Restraint: true,
+	Categories: ["Restraints","Furniture", "Cages"],
+	AddPose: ["Enclosed", "UprightHogtie", "KneelDown"],
+	Layers: ToLayerMap([
+		{ Name: "Rim", Layer: "FurnitureFront", Pri: 20,
+			Invariant: true,
+			HidePoses: ToMap(["Sprite"]),
+		},
+		{ Name: "Display", Layer: "FurnitureFront", Pri: 20.1,
+			Invariant: true,
+			TieToLayer: "Rim",
+		},
+		{ Name: "Lock", Layer: "FurnitureFront", Pri: 20.2,
+			Invariant: true,
+			TieToLayer: "Rim",
+		},
+		{ Name: "Door", Layer: "FurnitureFront", Pri: 20.2,
+			Invariant: true,
+			Poses: ToMap(["Menu"]),
+		},
+		{ Name: "DoorWindow", Layer: "FurnitureFront", Pri: 20.1,
+			Invariant: true,
+			TieToLayer: "Door",
+		},
+		{ Name: "DoorNumeral", Layer: "FurnitureFront", Pri: 20.3,
+			Invariant: true,
+			TieToLayer: "Door",
+		},
+		{ Name: "BackFade", Layer: "FurnitureBack", Pri: -19.9,
+			Invariant: true,
+			TieToLayer: "Back",
+		},
+		{ Name: "Back", Layer: "FurnitureBack", Pri: -20,
+			Invariant: true,
+			EraseSprite: "FutureBox",
+			EraseLayers: ToMap(["All"]),
+			EraseAmount: 100,
+			EraseInvariant: true,
+			HidePoses: ToMap(["Sprite"]),
+		},
+	])
+});
+
+AddModel({
 	Name: "Sarcophagus",
 	Folder: "Furniture",
 	TopLevel: true,
@@ -48,6 +96,7 @@ AddModel({
 		},
 	])
 });
+
 AddModel({
 	Name: "Bed",
 	Folder: "Furniture",
@@ -65,6 +114,36 @@ AddModel({
 });
 
 
+AddModel({
+	Name: "BondageBed",
+	Folder: "Furniture",
+	TopLevel: true,
+	Group: "Devices",
+	Restraint: true,
+	Categories: ["Restraints","Furniture", "Display"],
+	AddPose: ["Display", "LiftKneel", "HandsBehind"],
+	Layers: ToLayerMap([
+		...GetModelLayers("Bed"),
+
+		{ Name: "BedStraps", Layer: "FurnitureLinked", Pri: 20,
+			Invariant: true,
+			TieToLayer: "Bed",
+			HidePoses: {Hogtie: true},
+		},
+		{ Name: "BedStrapsHogtie", Layer: "FurnitureLinked", Pri: 20,
+			Invariant: true,
+			TieToLayer: "Bed",
+			Poses: {Hogtie: true},
+			MorphPoses: {Boxtie: "Boxtie", Front: "Boxtie", Crossed: "Boxtie",
+				UprightHogtie: "", SuspendedHogtie: ""},
+			DisplacementSprite: "BedStrapsHogtie",
+			DisplaceLayers: ToMap(["Ribbon1"]),
+			DisplacementMorph: {Boxtie: "Boxtie", Front: "Boxtie", Crossed: "Boxtie"},
+			DisplaceAmount: 100,
+			DisplacementInvariant: true,
+		},
+	])
+});
 
 AddModel({
 	Name: "LatexCube",
@@ -152,9 +231,11 @@ AddModel({
 	Layers: ToLayerMap([
 		{ Name: "OneBarFront", Layer: "Torso", Pri: -50,
 			Poses: ToMap(["Closed", "Spread"]),
+			AppendPose: {Ballet: "Heels"},
 		},
 		{ Name: "OneBarBack", Layer: "FurnitureBack", Pri: 50,
 			Poses: ToMap(["Closed", "Spread"]),
+			AppendPose: {Ballet: "Heels"},
 		},
 	])
 });

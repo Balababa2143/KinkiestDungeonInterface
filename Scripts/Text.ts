@@ -47,7 +47,7 @@ class TextCache {
 	private path: string;
 	private warn: string;
 	private language: string;
-	cache: any;
+	cache: Record<string, string>;
 	translationcache: any;
 	private rebuildListeners: any[];
 	private loaded: boolean;
@@ -158,6 +158,14 @@ class TextCache {
 		this.language = TranslationLanguage;
 		const lang = (TranslationLanguage || "").trim().toUpperCase();
 		if (lang !== "RU") {lines.forEach((line) => (this.cache[line[0]] = line[1]));}
+
+		let newRecord: [string, string][] = [];
+		for (let pair of PostTranslationRecord) {
+			if (this.translationcache[pair[1]]) {
+				this.cache[pair[0]] = this.translationcache[pair[1]] || pair[1];
+			} else newRecord.push(pair);
+		}
+		PostTranslationRecord = newRecord;
 		this.loaded = true;
 	}
 
@@ -204,8 +212,15 @@ class TextCache {
 		this.language = TranslationLanguage;
 		const lang = (TranslationLanguage || "").trim().toUpperCase();
 		let [translationsStringLineCache, translationsLineStringCache] = TranslationStringCachePreBuild(translations, "");
+
+
 		if (lang === "RU") {
 			lines.forEach((line, numberl) => (this.cache[line[0]] = this.buildTranslationsRU(line[1], lines, translations, numberl, translationsStringLineCache)));
+
+			for (let entry of translationsStringLineCache.entries()) {
+				if (!this.cache[entry[0]] && entry[1] % 2 == 0) // even only
+					this.translationcache[entry[0]] = translationsLineStringCache.get(entry[1] + 1);
+			}
 			return [];
 		}
 

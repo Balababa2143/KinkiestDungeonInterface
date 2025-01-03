@@ -75,6 +75,9 @@ AddModel({
 	TopLevel: false,
 	Restraint: true,
 	Categories: ["Restraints", "ChastityBra", "Metal", "SciFi"],
+	Filters: {
+		Display: {"gamma":1,"saturation":1,"contrast":1.6500000000000001,"brightness":0.8,"red":1,"green":1,"blue":1,"alpha":1},
+	},
 	Layers: ToLayerMap([
 		{ Name: "BraProto", Layer: "BindChestLower", Pri: 14.2-100,
 			Invariant: true,
@@ -118,6 +121,9 @@ AddModel({
 	TopLevel: true,
 	Restraint: true,
 	Categories: ["Restraints", "ChastityBra", "Metal", "SciFi"],
+	Filters: {
+		Display: {"gamma":1,"saturation":1,"contrast":1.6500000000000001,"brightness":0.8,"red":1,"green":1,"blue":1,"alpha":1},
+	},
 	Layers: ToLayerMap([
 		{ Name: "BraCyber", Layer: "BindChestLower", Pri: 15.1,
 			PrependLayerPrefix: {ChastityBraOption: "Option_"},
@@ -257,6 +263,9 @@ AddModel({
 	AddPoseIf: {
 		ChastityOption2: ["CrotchStrap"],
 	},
+	Filters: {
+		Display: {"gamma":1,"saturation":1,"contrast":1.6500000000000001,"brightness":0.8,"red":1,"green":1,"blue":1,"alpha":1},
+	},
 	Layers: ToLayerMap([
 		{ Name: "Cyber", Layer: "ChastityBelt", Pri: -40,
 			//swaplayerpose: {Kneel: "ChastityBeltLower", KneelClosed: "ChastityBeltLower"},
@@ -306,6 +315,30 @@ AddModel({
 });
 AddModel(GetModelFashionVersion("CyberBelt", true));
 
+
+AddModel({
+	Name: "CyberPanties",
+	Folder: "Chastity",
+	Parent: "CyberBelt",
+	TopLevel: true,
+	Categories: ["Underwear", "Panties", "Metal", "SciFi"],
+	Layers: ToLayerMap([
+		{ Name: "CyberPanties", Layer: "Panties", Pri: -10,
+			Invariant: true,
+			InheritColor: "Metal",
+			MorphPoses: {Closed: "Closed", "Hogtie": "Closed"},
+		},
+		{ Name: "CyberPantiesLining", Layer: "Panties", Pri: -10.1,
+			Invariant: true,
+			DisplacementInvariant: true,
+			NoOverride: true,
+			TieToLayer: "CyberPanties",
+			InheritColor: "Lining",
+			MorphPoses: {Closed: "Closed", "Hogtie": "Closed"},
+		},
+	])
+});
+
 AddModel({
 	Name: "ProtoBelt",
 	Folder: "Chastity",
@@ -316,6 +349,9 @@ AddModel({
 	AddPose: ["ChastityBelt"],
 	AddPoseIf: {
 		ChastityOption2: ["CrotchStrap"],
+	},
+	Filters: {
+		Display: {"gamma":1,"saturation":1,"contrast":1.6500000000000001,"brightness":0.8,"red":1,"green":1,"blue":1,"alpha":1},
 	},
 	//AddPose: ["CrotchStrap"],
 	Layers: ToLayerMap([
