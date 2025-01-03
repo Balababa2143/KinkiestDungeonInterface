@@ -30,4 +30,6 @@
 !/style.css
 
 *.wav
-
+# npm
+node_modules
+package-lock.json
