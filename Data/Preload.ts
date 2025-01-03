@@ -132,11 +132,23 @@ let KDButtonFont = KDFontName;
 let KDButtonFontListIndex = 0;
 let KDButtonFontList = Array.from(KDFonts.keys());
 
+let KDOptimizeDisplacementMapInfo: Record<string, {xPad: number, yPad: number}> = {
+	'DisplacementMaps/CorsetSquish.png': {
+		xPad: 0,
+		yPad: 1000,
+	}
+};
+
 let DisplacementMaps = [
+'SlimeLeftClosed.png',
+'SlimeRightClosed.png',
 'HideBoxtieHand.png',
+'BedStrapsHogtie.png',
 'FutureBox.png',
 'TapeTopRight.png',
 'TapeTopRightBoxtie.png',
+'TightUpperSquish.png',
+'LightMaidRightArmErase.png',
 'TapeTopRightCrossed.png',
 'TapeTopRightWristtie.png',
 'Thigh1SquishClosed.png',
@@ -284,6 +296,8 @@ let DisplacementMaps = [
 'Heels2Spread.png',
 'HeelsRightErase.png',
 'HeelsRightEraseClosed.png',
+'HeelsRightErase2.png',
+'HeelsRightErase2Closed.png',
 'JacketArmsBoxtie.png',
 'JacketArmsCrossed.png',
 'JacketArmsWristtie.png',
@@ -357,6 +371,13 @@ let DisplacementMaps = [
 'SlimeThighsKneelClosed.png',
 'SlimeThighsClosed.png',
 'SlimeThighsHogtie.png',
+'EraseSkirtSplit.png',
+'GuardLeftYoked.png',
+'GuardRightYoked.png',
+'GuardLeftFree.png',
+'GuardRightFree.png',
+'GuardLeftFront.png',
+'GuardRightFront.png',
 ];
 
 // Scale factor for displacement and erase maps
@@ -385,6 +406,9 @@ function incrementProgress(amount) {
 		lastProgress = progress;
 	};
 }
+
+let buildSuff = "";//"?build=" + TextGet("KDVersionStr");
+
 async function LoadTextureAtlas(list, scale_mode, preload = false) {
 	PIXI.BaseTexture.defaultOptions.scaleMode = scale_mode;
 
@@ -392,32 +416,39 @@ async function LoadTextureAtlas(list, scale_mode, preload = false) {
 		console.log("Found atlas: " + dataFile);
 		let amount = 100;
 		KDLoadingMax += amount;
+
 	}
 	for (let dataFile of list) {
-		let amount = 100;
-		let result = preload ? await PIXI.Assets.backgroundLoad(dataFile).then((value) => {
+		let result = preload ? await PIXI.Assets.backgroundLoad(dataFile+ buildSuff).then((value) => {
 
+			let amount = 100;
 			//console.log(value)
 			CurrentLoading = "Loaded " + dataFile;
 			//console.log(dataFile);
 			KDLoadingDone += amount;
 
 		}, () => {
+
+			let amount = 100;
 			CurrentLoading = "Error Loading " + dataFile;
 			KDLoadingDone += amount;
 		})
-		 : await PIXI.Assets.load(dataFile).then((value) => {
+		 : await PIXI.Assets.load(dataFile + buildSuff).then((value) => {
 			for (let s of Object.values(value.linkedSheets)) {
 				for (let t of Object.keys((s as any).textures)) {
 					KDTex(t, scale_mode == PIXI.SCALE_MODES.NEAREST);
 				}
 			}
 
+			let amount = 100;
 			//console.log(value)
 			CurrentLoading = "Loaded " + dataFile;
 			//console.log(dataFile);
 			KDLoadingDone += amount;
+			//console.log(amount)
 		 }, () => {
+
+			let amount = 100;
 			CurrentLoading = "Error Loading " + dataFile;
 			KDLoadingDone += amount;
 		});
@@ -436,22 +467,24 @@ async function LoadTextureAtlas(list, scale_mode, preload = false) {
 
 async function PreloadDisplacement(list) {
 	for (let dataFile of list) {
-		console.log("Found d_map: " + dataFile);
+		//console.log("Found d_map: " + dataFile);
 		let amount = 1;
 		KDLoadingMax += amount;
 	}
 	for (let dataFile of list) {
 		let amount = 1;
-		let texture = PIXI.Texture.fromURL(dataFile, {
+		let texture = PIXI.Texture.fromURL(dataFile + buildSuff, {
 			resourceOptions: {
 				scale: DisplacementScale,
 			}
 		});
 		texture.then((value) => {
-			console.log(value)
+			//console.log(value)
 			CurrentLoading = "Loaded " + dataFile;
 			//console.log(dataFile);
 			KDTex(dataFile, false);
+
+
 			KDLoadingDone += amount;
 		}, () => {
 			CurrentLoading = "Error Loading " + dataFile;
@@ -487,7 +520,7 @@ async function load() {
 				const font_name = new FontFace(font.alias, `url(${url_to_font_name})`);
 				document.fonts.add(font_name);
 				// Work that does not require `font_name` to be loaded…
-				await font_name.load()
+				font_name.load();
 				// Work that requires `font_name` to be loaded…
 
 				//await PIXI.Assets.load( {
@@ -503,14 +536,27 @@ async function load() {
 
 
 	PIXI.BaseTexture.defaultOptions.mipmap = PIXI.MIPMAP_MODES.ON;
-	PIXI.BaseTexture.defaultOptions.anisotropicLevel = 0;
+	//PIXI.BaseTexture.defaultOptions.anisotropicLevel = 0;
+
+	PIXI.Assets.load("Logo.png");
+
+	//KDLoadingMax = 100;
 	await LoadTextureAtlas(nearestList, KDToggles.NearestNeighbor ? PIXI.SCALE_MODES.NEAREST : PIXI.SCALE_MODES.LINEAR);
 	await LoadTextureAtlas(linearList, PIXI.SCALE_MODES.LINEAR);
 	await PreloadDisplacement(displacementList);
+	// Load everything twice... for good measure
+
+	setTimeout(() => {
+		LoadTextureAtlas(nearestList, KDToggles.NearestNeighbor ? PIXI.SCALE_MODES.NEAREST : PIXI.SCALE_MODES.LINEAR);
+		LoadTextureAtlas(linearList, PIXI.SCALE_MODES.LINEAR);
+	}, 700);
+
 	PIXI.BaseTexture.defaultOptions.scaleMode = PIXI.SCALE_MODES.LINEAR;
 
 }
+
 load();
+
 
 (() => {
 	let extensions = PIXI.extensions;

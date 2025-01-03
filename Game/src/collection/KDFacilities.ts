@@ -17,6 +17,8 @@ interface FacilitiesData {
 	Servants_CuddleLounge: number[],
 	Prisoners_CuddleLounge: number[],
 	Servants_Management: number[],
+	Servants_Warden: number[],
+	Warden_TightenedCount: number,
 };
 
 let FacilitiesDataBase : FacilitiesData = {
@@ -31,11 +33,14 @@ let FacilitiesDataBase : FacilitiesData = {
 	RecyclerInput_Leather: 0,
 	RecyclerInput_Rune: 0,
 
+	Warden_TightenedCount: 0,
+
 	Servants_Recycler: [],
 	Prisoners_Recycler: [],
 	Servants_CuddleLounge: [],
 	Prisoners_CuddleLounge: [],
 	Servants_Management: [],
+	Servants_Warden: [],
 };
 
 function InitFacilities() {
@@ -67,6 +72,9 @@ function KDValidateAllFacilities() {
 		}
 	}
 
+	// Create the warden chest if it's not there
+	KDGetContainer("WardenChest", undefined, undefined, true, KDWardenChestFilters);
+
 }
 
 function KDUpdateFacilities(delta: number) {
@@ -96,6 +104,8 @@ function KinkyDungeonDrawFacilities(xOffset = -125) {
 
 function KDValidateServant(value: KDCollectionEntry, facility: string, type: string): boolean {
 	type = KDFacilityCollectionDataTypeMap[type] || "";
+
+	if (!value) return false;
 
 	if (value.status != type) return false;
 	if (value.escaped) return false;
@@ -272,7 +282,8 @@ function KDDrawServantPrisonerList(facility: string, x: number, y: number, width
 					KDCurrentFacilityTarget = facility;
 					KDCurrentFacilityCollectionType = ["Servants", "Prisoners"];
 					KinkyDungeonDrawState = "Collection";
-					KinkyDungeonCheckClothesLoss = true;
+					if (KDNPCChar.get(servant))
+						KDRefreshCharacter.set(KDNPCChar.get(servant), true);
 					KDCollectionTab = "";
 					KDCollectionSelected = servant;
 					KDFacilityCollectionCallback = setCallback;
@@ -295,7 +306,8 @@ function KDDrawServantPrisonerList(facility: string, x: number, y: number, width
 					KDCurrentFacilityTarget = facility;
 					KDCurrentFacilityCollectionType = ["Servants", "Prisoners"];
 					KinkyDungeonDrawState = "Collection";
-					KinkyDungeonCheckClothesLoss = true;
+					if (KDNPCChar.get(prisoner))
+						KDRefreshCharacter.set(KDNPCChar.get(prisoner), true);
 					KDCollectionTab = "";
 					KDCollectionSelected = prisoner;
 					KDFacilityCollectionCallback = setCallback;

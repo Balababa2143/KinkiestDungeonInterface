@@ -23,12 +23,14 @@ let KDLeashablePersonalities = {
 
 let KDLeashReason : {[_: string]: (entity: entity) => boolean} = {
 	ShadowTether: (entity) => {
-		if (!(entity.leash.entity && KinkyDungeonFindID(entity.leash.entity)?.Enemy?.tags?.shadow)) return false;
-		if (entity.leash.entity && KinkyDungeonFindID(entity.leash.entity) && KinkyDungeonIsDisabled(KinkyDungeonFindID(entity.leash.entity))) return false;
+		if (!(entity.leash.entity && KinkyDungeonFindID(entity.leash.entity)?.Enemy?.tags?.shadow))
+			return false;
+		if (entity.leash.entity && KinkyDungeonFindID(entity.leash.entity)
+			&& KinkyDungeonIsDisabled(KinkyDungeonFindID(entity.leash.entity))) return false;
 		if (entity.player) {
 			return KinkyDungeonPlayerTags.get("Shadow");
 		} else {
-			return KDBoundEffects(entity) > 1;
+			return KDBoundEffects(entity) > 1 && !KDIsImprisoned(entity);
 		}
 	},
 	PlayerLeash: (entity) => {
@@ -36,13 +38,15 @@ let KDLeashReason : {[_: string]: (entity: entity) => boolean} = {
 		if (entity
 			// Condition 1: the target is willing
 			&& !(KDWillingLeash(entity))
+			// Condition 1.5: the target is made willing
+			&& !(KDCanApplyBondage(entity, KDPlayer()))
 			// Condition 2: the player has the Brat Handler skill and target is wearing a leash item
 			&& !(KDHasSpell("LeashSkill") && KDGetNPCRestraints(entity.id) && Object.values(KDGetNPCRestraints(entity.id))
 				.some((rest) => {return KDRestraint(rest)?.leash;}))
 			)
 			return false;
 		if (KDPlayerIsDisabled() || KinkyDungeonIsHandsBound(true, true, 0.5)) return false;
-		return true;
+		return  !KDIsImprisoned(entity);
 	},
 	Default: (entity) => {
 		if (entity.leash && entity.leash.reason == "Default") {
@@ -56,10 +60,10 @@ let KDLeashReason : {[_: string]: (entity: entity) => boolean} = {
 		}
 		if (entity.player) {
 			if (KinkyDungeonPlayerTags.get("Leashable"))
-				return true;
+				return !KDIsImprisoned(entity);
 			else return false;
 		}
-		return true;
+		return !KDIsImprisoned(entity);
 	},
 	WolfgirlLeash: (entity) => {
 		if (entity.leash && entity.leash.reason == "WolfgirlLeash") {
@@ -87,13 +91,22 @@ let KDLeashReason : {[_: string]: (entity: entity) => boolean} = {
 	},
 };
 
-function KDGetLeashedToCount(entity: entity) {
+function KDGetLeashedToCount(entity: entity): number {
 	let n = 0;
 	for (let en of KDMapData.Entities.filter((en) => {return en.leash?.entity;})) {
 		if (en.leash.entity == entity.id) n++;
 	}
 	if (KDPlayer().leash?.entity == entity.id) n++;
 	return n;
+}
+
+function KDGetLeashedTo(entity: entity): entity[] {
+	let ret: entity[] = [];
+	for (let en of KDMapData.Entities.filter((en) => {return en.leash?.entity;})) {
+		if (en.leash.entity == entity.id) ret.push(en);
+	}
+	if (KDPlayer().leash?.entity == entity.id) ret.push(KDPlayer());
+	return ret;
 }
 
 function KDGetTetherLength(entity: entity): number {
@@ -191,7 +204,7 @@ function KinkyDungeonDrawTethers(CamX: number, CamY: number) {
 	}
 
 	let drawTether = (entity: entity) => {
-		if (entity.leash && (KDCanSeeEnemy(entity) || KinkyDungeonVisionGet(entity.leash.x, entity.leash.y) > 0.5)) {
+		if (entity.leash && (KinkyDungeonVisionGet(entity.x, entity.y) > 0.5 || KinkyDungeonVisionGet(entity.leash.x, entity.leash.y) > 0.5)) {
 			let xx = canvasOffsetX + (entity.visual_x - CamX)*KinkyDungeonGridSizeDisplay;
 			let yy = canvasOffsetY + (entity.visual_y - CamY)*KinkyDungeonGridSizeDisplay;
 			let txx = canvasOffsetX + (entity.leash.x - CamX)*KinkyDungeonGridSizeDisplay;
@@ -302,7 +315,7 @@ function KinkyDungeonUpdateTether(Msg: boolean, Entity: entity, xTo?: number, yT
 		}
 		for (let i = 0; i < 10; i++) {
 			// Distance is in pathing units
-			let pathToTether = KinkyDungeonFindPath(Entity.x, Entity.y, leash.x, leash.y, false, !Entity.player, false, KinkyDungeonMovableTilesSmartEnemy);
+			let pathToTether = KinkyDungeonFindPath(Entity.x, Entity.y, leash.x, leash.y, KDIDHasFlag(Entity.id, "blocked"), !Entity.player, false, KinkyDungeonMovableTilesSmartEnemy);
 			let playerDist = pathToTether?.length;
 			// Fallback
 			if (!pathToTether) playerDist = KDistChebyshev(Entity.x-leash.x, Entity.y-leash.y);
@@ -317,6 +330,7 @@ function KinkyDungeonUpdateTether(Msg: boolean, Entity: entity, xTo?: number, yT
 					slot = pathToTether[0];
 					if (slot && KinkyDungeonEntityAt(slot.x, slot.y) && KDIsImmobile(KinkyDungeonEntityAt(slot.x, slot.y), true)) {
 						slot = null;
+						KDSetIDFlag(Entity.id, "blocked", 3);
 					}
 				}
 
@@ -324,8 +338,11 @@ function KinkyDungeonUpdateTether(Msg: boolean, Entity: entity, xTo?: number, yT
 					let mindist = playerDist;
 					for (let X = Entity.x-1; X <= Entity.x+1; X++) {
 						for (let Y = Entity.y-1; Y <= Entity.y+1; Y++) {
-							if ((X !=  Entity.x || Y != Entity.y) && KinkyDungeonMovableTilesEnemy.includes(KinkyDungeonMapGet(X, Y)) && KDistEuclidean(X-leash.x, Y-leash.y) < mindist
-							&& !(KinkyDungeonEntityAt(X-leash.x, Y-leash.y) && KDIsImmobile(KinkyDungeonEntityAt(X-leash.x, Y-leash.y), true))) {
+							if ((X !=  Entity.x || Y != Entity.y)
+								&& KinkyDungeonMovableTilesEnemy.includes(KinkyDungeonMapGet(X, Y))
+								&& KDistEuclidean(X-leash.x, Y-leash.y) < mindist
+								&& !(KinkyDungeonEntityAt(X-leash.x, Y-leash.y)
+								&& KDIsImmobile(KinkyDungeonEntityAt(X-leash.x, Y-leash.y), true))) {
 								mindist = KDistEuclidean(X-leash.x, Y-leash.y);
 								slot = {x:X, y:Y};
 							}
@@ -345,7 +362,10 @@ function KinkyDungeonUpdateTether(Msg: boolean, Entity: entity, xTo?: number, yT
 						let mindist2 = playerDist;
 						for (let X = enemy.x-1; X <= enemy.x+1; X++) {
 							for (let Y = enemy.y-1; Y <= enemy.y+1; Y++) {
-								if ((X !=  enemy.x || Y != enemy.y) && !KinkyDungeonEntityAt(X, Y) && KinkyDungeonMovableTilesEnemy.includes(KinkyDungeonMapGet(X, Y)) && KDistEuclidean(X-Entity.x, Y-Entity.y) < mindist2) {
+								if ((X !=  enemy.x || Y != enemy.y)
+									&& !KinkyDungeonEntityAt(X, Y)
+									&& KinkyDungeonMovableTilesEnemy.includes(KinkyDungeonMapGet(X, Y))
+									&& KDistEuclidean(X-Entity.x, Y-Entity.y) < mindist2) {
 									mindist2 = KDistEuclidean(X-Entity.x, Y-Entity.y);
 									slot2 = {x:X, y:Y};
 								}
@@ -397,7 +417,7 @@ function KinkyDungeonUpdateTether(Msg: boolean, Entity: entity, xTo?: number, yT
 
 
 function KDWillingLeash(entity: entity): boolean {
-	return KDGetPersonality(entity) != undefined
-				&& KDLeashablePersonalities[KDGetPersonality(entity)]
-				&& KDLeashablePersonalities[KDGetPersonality(entity)](entity, KDPlayer());
+	return entity?.personality != undefined
+				&& KDLeashablePersonalities[entity.personality]
+				&& KDLeashablePersonalities[entity.personality](entity, KDPlayer());
 }

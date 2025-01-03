@@ -4,6 +4,13 @@ let StruggleAnimation = false;
 let RenderCharacterQueue = new Map();
 let RenderCharacterLock = new Map();
 
+let KDFilterCacheToDestroy: PIXIFilter[] = [];
+let KDRenderTexToDestroy: PIXITexture[] = [];
+let KDMeshToDestroy: PIXIMesh[] = [];
+let KDSpritesToCull: PIXISprite[] = [];
+
+let KDCulling = true;
+
 /**
  * Returns a table with the priorities for each layer based on order of the array
  */
@@ -39,6 +46,7 @@ interface ContainerInfo {
 	readonly Mesh: PIXIMesh;
 	readonly RenderTexture: PIXIRenderTexture;
 	readonly Matrix: PIXIArray;
+	Zoom: number;
 }
 
 class ModelContainer {
@@ -100,7 +108,7 @@ class ModelContainer {
 		// Hunts down the proper color
 		if (Model?.Layers) {
 			for (let l of Object.values(Model.Layers)) {
-				if (l.ImportColorFromGroup) {
+				if (l.ImportColorFromGroup && !(Model.Filters && Model.Filters[l.Name])) {
 					let copiedFrom = [...this.Models.values()].find((model) => {
 						return model.Group == l.ImportColorFromGroup[0] && model.Filters && model.Filters[l.ImportColorFromGroup[1]]
 					});
@@ -109,7 +117,7 @@ class ModelContainer {
 						Model.Filters[l.InheritColor || l.Name] = JSON.parse(JSON.stringify(copiedFrom.Filters[l.ImportColorFromGroup[1]]));
 					}
 				}
-				if (l.ImportColorFromCategory) {
+				if (l.ImportColorFromCategory && !(Model.Filters && Model.Filters[l.Name])) {
 					let copiedFrom = [...this.Models.values()].find((model) => {
 						return model.Categories.includes(l.ImportColorFromCategory[0]) && model.Filters && model.Filters[l.ImportColorFromCategory[1]]
 					});
@@ -178,7 +186,9 @@ function GetModelWithExtraLayers(NewModel: string, BaseModel: string, Layers: Mo
 	return null;
 }
 
-function GetModelRestraintVersion(BaseModel: string, Parent: boolean): Model {
+function GetModelRestraintVersion(BaseModel: string, Parent: boolean,
+	extraAddPoses?: string[],
+	removeRemovePoses?: string[]): Model {
 	if (ModelDefs[BaseModel]) {
 		let model: Model = JSON.parse(JSON.stringify(ModelDefs[BaseModel]));
 		model.Name = model.Name + "Restraint";
@@ -188,6 +198,15 @@ function GetModelRestraintVersion(BaseModel: string, Parent: boolean): Model {
 		if (!model.Categories) model.Categories = [];
 		model.Categories.push("Restraints");
 		model.Restraint = true;
+		if (extraAddPoses) {
+			// This bit of javascript gives me a headache
+			model.AddPose = [...(model.AddPose || []), ...extraAddPoses];
+		}
+		if (removeRemovePoses) {
+			if (model.RemovePoses) {
+				model.RemovePoses = model.RemovePoses.filter((rp) => {return !removeRemovePoses.includes(rp);})
+			}
+		}
 		return model;
 	}
 	return null;
@@ -244,6 +263,8 @@ function DisposeCharacter(C: Character, resort: boolean = true, deleteSpecial: b
 		let id = KDNPCChar_ID.get(C);
 		KDNPCChar.delete(id);
 		if (deleteSpecial || !KDPersistentNPCs[id + ""] || !KDPersistentNPCs[id + ""].special) {
+			if (KDPersistentNPCs[id + ""]?.Name && KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name] == id)
+				delete KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name]
 			delete KDPersistentNPCs[id + ""];
 			delete KDGameData.NPCRestraints[id + ""];
 			KDDeletedIDs[id + ""] = 1;
@@ -275,6 +296,8 @@ function DisposeEntity(id: number, resort: boolean = true, deleteSpecial = false
 	}
 	KDNPCChar.delete(id);
 	if (deleteSpecial || !KDPersistentNPCs[id + ""] || !KDPersistentNPCs[id + ""].special) {
+		if (KDPersistentNPCs[id + ""]?.Name && KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name] == id)
+			delete KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name]
 		delete KDPersistentNPCs[id + ""];
 		delete KDGameData.NPCRestraints[id + ""];
 		KDDeletedIDs[id + ""] = 1;
@@ -377,14 +400,27 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 		}
 
 	if (MC.Containers.get(containerID) && !MC.Update.has(containerID) && MC.Refresh.has(containerID)) {
+
+		let data = {
+			Character: Character,
+			containerID: containerID,
+			ContainerInfo: MC.Containers.get(containerID),
+			zIndex: zIndex,
+			x: X,
+			y: Y,
+			Blend: Blend,
+			StartMods: StartMods,
+		};
+		KinkyDungeonSendEvent("beforeMeshDestroy", data);
 		MC.Update.delete(containerID);
 		MC.Refresh.delete(containerID);
 		//console.log("Refreshed!")
 		// Refresh the container!
 		DrawCanvas.removeChild(MC.Containers.get(containerID).Mesh);
 		MC.Containers.get(containerID).Container.destroy();
-		MC.Containers.get(containerID).Mesh.destroy();
-		MC.Containers.get(containerID).RenderTexture.destroy(true);
+		//MC.Containers.get(containerID).Mesh.destroy();
+		KDMeshToDestroy.push(MC.Containers.get(containerID).Mesh);
+		KDRenderTexToDestroy.push(MC.Containers.get(containerID).RenderTexture);
 		MC.Containers.delete(containerID);
 		MC.ContainersDrawn.delete(containerID);
 		refreshfilters = true;
@@ -392,11 +428,12 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 			KDGlobalFilterCacheRefresh = false;
 			for (let fc of KDAdjustmentFilterCache.values()) {
 				for (let f of fc) {
-					f.destroy();
+					KDFilterCacheToDestroy.push(f);
 				}
 			}
 			KDAdjustmentFilterCache.clear();
 		}
+
 	}
 	let created = false;
 	if (!MC.Containers.get(containerID)) {
@@ -410,6 +447,7 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 			RenderTexture: RT,
 			SpriteList: new Map(),
 			Matrix: Object.assign([], Mesh.geometry.getBuffer('aVertexPosition').data),
+			Zoom: Zoom,
 		};
 
 		//Container.Container.scale.x = 1;
@@ -425,7 +463,17 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 		Container.Container.sortableChildren = true;
 		//Container.Container.cacheAsBitmap = true;
 		if (zIndex) Container.Mesh.zIndex = zIndex;
-		Container.Container.filterArea = new PIXI.Rectangle(0,0,MODELWIDTH*MODEL_SCALE,MODELHEIGHT*MODEL_SCALE);
+		let data = {
+			Character: Character,
+			ContainerInfo: Container,
+			zIndex: zIndex,
+			x: X,
+			y: Y,
+			Blend: Blend,
+			StartMods: StartMods,
+		};
+		KinkyDungeonSendEvent("meshCreate", data);
+		//Container.Container.filterArea = new PIXI.Rectangle(0,0,MODELWIDTH*MODEL_SCALE,MODELHEIGHT*MODEL_SCALE);
 	}
 
 	// Actual loop for drawing the models on the character
@@ -434,7 +482,7 @@ function DrawCharacter(C: Character, X: number, Y: number, Zoom: number, IsHeigh
 		let flippedPoses = DrawModelProcessPoses(MC, extraPoses);
 
 		if (PIXI.BaseTexture.defaultOptions.scaleMode != Blend) PIXI.BaseTexture.defaultOptions.scaleMode = Blend;
-		let modified = DrawCharacterModels(MC, X + Zoom * MODEL_SCALE * MODELHEIGHT * 0.25, Y + Zoom * MODEL_SCALE * MODELHEIGHT/2, (Zoom * MODEL_SCALE) || MODEL_SCALE, StartMods,
+		let modified = DrawCharacterModels(containerID, MC, X + Zoom * MODEL_SCALE * MODELHEIGHT * 0.25, Y + Zoom * MODEL_SCALE * MODELHEIGHT/2, (Zoom * MODEL_SCALE) || MODEL_SCALE, StartMods,
 			MC.Containers.get(containerID), refreshfilters, flip);
 		let oldBlend = PIXI.BaseTexture.defaultOptions.scaleMode;
 		MC.Mods.set(containerID, StartMods);
@@ -580,7 +628,7 @@ function KDLayerPropName(l: ModelLayer, Poses: Record<string, boolean>): string 
 /**
  * Setup sprites from the modelcontainer
  */
-function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, ContainerContainer, refreshfilters: boolean, flip: boolean) : boolean {
+function DrawCharacterModels(containerID: string, MC: ModelContainer, X, Y, Zoom, StartMods, ContainerContainer, refreshfilters: boolean, flip: boolean) : boolean {
 	// We create a list of models to be added
 	let Models = new Map(MC.Models.entries());
 	let modified = false;
@@ -604,11 +652,29 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 			}
 		}
 	}
+
+
 	for (let m of Models.values()) {
+
+
 		for (let l of Object.values(m.Layers)) {
+
+
+			let prop: LayerProperties = null;
+			if (m.Properties) {
+				prop = m.Properties[l.InheritColor || l.Name];
+				if (!prop && m.Properties[KDLayerPropName(l, MC.Poses)]) {
+					prop = m.Properties[KDLayerPropName(l, MC.Poses)];
+				} else if (prop) {
+					Object.assign(prop, m.Properties[KDLayerPropName(l, MC.Poses)]);
+				}
+			}
+
 			let pri = LayerPri(MC, l, m, StartMods);
 			if (!l.DontAlwaysOverride && LayerIsHidden(MC, l, m, StartMods)) continue;
-			if (!l.NoOverride) {
+
+
+			if (!l.NoOverride && !(prop?.NoOverride != undefined && prop.NoOverride == 1)) {
 				let layer = LayerLayer(MC, l, m, StartMods);
 				MC.HighestPriority[layer] = Math.max(MC.HighestPriority[layer] || -500, pri || -500);
 			}
@@ -660,9 +726,9 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 
 	// Create the layer extra filter matrix
 	let ExtraFilters: Record<string, LayerFilter[]> = {};
-	let DisplaceFilters: Record<string, {sprite: any, id: string, hash: string, amount: number, zIndex?: number}[]> = {};
+	let DisplaceFilters: Record<string, {sprite: any, id: string, spriteName?: string, hash: string, amount: number, zIndex?: number}[]> = {};
 	let DisplaceFiltersInUse = {};
-	let EraseFilters: Record<string, {sprite: any, id: string, hash: string, amount: number, zIndex?: number}[]> = {};
+	let EraseFilters: Record<string, {sprite: any, id: string, spriteName?: string, hash: string, amount: number, zIndex?: number}[]> = {};
 	let EraseFiltersInUse = {};
 	for (let m of Models.values()) {
 		for (let l of Object.values(m.Layers)) {
@@ -684,7 +750,12 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 
 			let lyr = KDLayerPropName(l, MC.Poses);
 			// Apply displacement
-			if (l.DisplaceLayers && (!l.DisplacementPoses || l.DisplacementPoses.some((pose) => {return MC.Poses[pose];}))) {
+			if (l.DisplaceLayers
+				&& (!l.DisplacementPoses
+					|| l.DisplacementPoses.some((pose) => {return MC.Poses[pose];}))
+				&& (!l.DisplacementPosesExclude
+					|| l.DisplacementPosesExclude.every((pose) => {return !MC.Poses[pose];}))
+				) {
 				let transform = new Transform();
 
 				let layer = LayerLayer(MC, l, m, mods);
@@ -729,13 +800,6 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 						(Properties.Rotation * Math.PI / 180) || 0
 					);
 				}
-				let ox = transform.ox;
-				let oy = transform.oy;
-				let ax = transform.ax;
-				let ay = transform.ay;
-				let sx = transform.sx;
-				let sy = transform.sy;
-				let rot = transform.rot;
 
 				for (let ll of Object.entries(l.DisplaceLayers)) {
 					let id = ModelLayerStringCustom(m, l, MC.Poses, l.DisplacementSprite, "DisplacementMaps", false, l.DisplacementInvariant, l.DisplacementMorph, l.NoAppendDisplacement);
@@ -757,12 +821,43 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 
 					for (let dg of Object.keys(LayerGroups[ll[0]])) {
 						if (!DisplaceFilters[dg]) DisplaceFilters[dg] = [];
+
+						let tt = transform;
+						if (KDOptimizeDisplacementMapInfo[id]) {
+							tt = new Transform(
+								tt.ox,
+								tt.oy,
+								tt.ax,
+								tt.ay,
+								tt.sx,
+								tt.sy,
+								tt.rot,
+							).recursiveTransform(
+								KDOptimizeDisplacementMapInfo[id].xPad || 0,
+								KDOptimizeDisplacementMapInfo[id].yPad || 0,
+								0,
+								0,
+								1,
+								1,
+								0
+							);
+						}
+
+						let ox = tt.ox;
+						let oy = tt.oy;
+						let ax = tt.ax;
+						let ay = tt.ay;
+						let sx = tt.sx;
+						let sy = tt.sy;
+						let rot = tt.rot;
+
 						DisplaceFilters[dg].push(
 							{
 								amount: (l.DisplaceAmount || 50) * Zoom,
 								hash: id + m.Name + "," + l.Name,
 								zIndex: zzz,
 								id: id,
+								spriteName: l.DisplacementSprite,
 								sprite: KDDraw(
 									ContainerContainer.Container,
 									ContainerContainer.SpriteList,
@@ -776,6 +871,7 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 										scalex: sx != 1 ? sx : undefined,
 										scaley: sy != 1 ? sy : undefined,
 										alpha: 0.0,
+										cullable: KDCulling,
 									}, false,
 									ContainerContainer.SpritesDrawn,
 									Zoom
@@ -787,7 +883,12 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 				}
 			}
 			// Apply erase
-			if (l.EraseLayers && (!l.ErasePoses || l.ErasePoses.some((pose) => {return MC.Poses[pose];}))) {
+			if (l.EraseLayers
+				&& (!l.ErasePoses
+					|| l.ErasePoses.some((pose) => {return MC.Poses[pose];}))
+				&& (!l.ErasePosesExclude
+					|| l.ErasePosesExclude.every((pose) => {return !MC.Poses[pose];}))
+			) {
 				let transform = new Transform();
 
 				let layer = LayerLayer(MC, l, m, mods);
@@ -832,13 +933,6 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 					);
 				}
 
-				let ox = transform.ox;
-				let oy = transform.oy;
-				let ax = transform.ax;
-				let ay = transform.ay;
-				let sx = transform.sx;
-				let sy = transform.sy;
-				let rot = transform.rot;
 
 				for (let ll of Object.entries(l.EraseLayers)) {
 					let id = ModelLayerStringCustom(m, l, MC.Poses, l.EraseSprite, "DisplacementMaps", false, l.EraseInvariant, l.EraseMorph, l.NoAppendErase);
@@ -860,11 +954,43 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 
 					for (let dg of Object.keys(LayerGroups[ll[0]])) {
 						if (!EraseFilters[dg]) EraseFilters[dg] = [];
+
+						let tt = transform;
+						if (KDOptimizeDisplacementMapInfo[id]) {
+							tt = new Transform(
+								tt.ox,
+								tt.oy,
+								tt.ax,
+								tt.ay,
+								tt.sx,
+								tt.sy,
+								tt.rot,
+							).recursiveTransform(
+								KDOptimizeDisplacementMapInfo[id].xPad || 0,
+								KDOptimizeDisplacementMapInfo[id].yPad || 0,
+								0,
+								0,
+								1,
+								1,
+								0
+							);
+						}
+
+						let ox = tt.ox;
+						let oy = tt.oy;
+						let ax = tt.ax;
+						let ay = tt.ay;
+						let sx = tt.sx;
+						let sy = tt.sy;
+						let rot = tt.rot;
+
+
 						EraseFilters[dg].push(
 							{
 								amount: (l.EraseAmount || 50) * Zoom,
 								hash: id + m.Name + "," + l.Name,
 								id: id,
+								spriteName: l.EraseSprite,
 								zIndex: zzz,
 								sprite: KDDraw(
 									ContainerContainer.Container,
@@ -879,6 +1005,7 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 										scalex: sx != 1 ? sx : undefined,
 										scaley: sy != 1 ? sy : undefined,
 										alpha: 0.0,
+										cullable: KDCulling,
 									}, false,
 									ContainerContainer.SpritesDrawn,
 									Zoom
@@ -913,6 +1040,7 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 								0, {
 									zIndex: 1000000,
 									alpha: 0.0,
+									cullable: KDCulling,
 								}, false,
 								ContainerContainer.SpritesDrawn,
 								Zoom
@@ -989,20 +1117,13 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 				let sy = transform.sy;
 				let rot = transform.rot;
 
-				let fh = m.Filters ? (m.Filters[l.InheritColor || l.Name] ? FilterHash(m.Filters[l.InheritColor || l.Name]) : "") : "";
-				/*if (refreshfilters) {
-					if (KDAdjustmentFilterCache.get(fh)) {
-						for (let f of KDAdjustmentFilterCache.get(fh)) {
-							f.destroy();
-						}
-					}
-					KDAdjustmentFilterCache.delete(fh);
-				}*/
+				let fh = containerID + (m.Filters ? (m.Filters[l.InheritColor || l.Name] ? FilterHash(m.Filters[l.InheritColor || l.Name]) : "") : "");
+
 				let filter = m.Filters ? (m.Filters[l.InheritColor || l.Name] ?
 					(KDAdjustmentFilterCache.get(fh) || [adjustFilter(m.Filters[l.InheritColor || l.Name])])
 					: undefined) : undefined;
 				if (filter && !KDAdjustmentFilterCache.get(fh)) {
-					KDAdjustmentFilterCache.set(FilterHash(m.Filters[l.InheritColor || l.Name]), filter);
+					KDAdjustmentFilterCache.set(containerID + FilterHash(m.Filters[l.InheritColor || l.Name]), filter);
 				}
 
 				let extrafilter: PIXIFilter[] = [];
@@ -1010,15 +1131,15 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 				// Add extrafilters
 				if (ExtraFilters[origlayer]) {
 					for (let ef of ExtraFilters[origlayer]) {
-						let efh = FilterHash(ef)
+						let efh = containerID + FilterHash(ef)
 						if (refreshfilters) {
-							KDAdjustmentFilterCache.delete(FilterHash(ef));
+							KDAdjustmentFilterCache.delete(containerID + FilterHash(ef));
 						}
 						f = new PIXI.filters.AdjustmentFilter(ef);
 						f.multisample = 0;
 						let efilter = (KDAdjustmentFilterCache.get(efh) || [f]);
 						if (efilter && !KDAdjustmentFilterCache.get(efh)) {
-							KDAdjustmentFilterCache.set(FilterHash(ef), efilter);
+							KDAdjustmentFilterCache.set(containerID + FilterHash(ef), efilter);
 						}
 						extrafilter.push(...efilter);
 					}
@@ -1026,8 +1147,9 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 				// Add erase filters BEFORE displacement
 				if (!l.NoErase && EraseFilters[origlayer]) {
 					for (let ef of EraseFilters[origlayer]) {
-						if (ef.zIndex != undefined && ef.zIndex <= zz) continue;
-						let efh = "disp_" + ef.hash;
+						if (ef.spriteName != undefined && ef.spriteName == l.EraseSprite) continue;
+						if (ef.zIndex != undefined && ef.zIndex - (l.EraseZBonus || 0) <= zz + 0.01) continue;
+						let efh = containerID + "ers_" + ef.hash;
 						let dsprite = ef.sprite;
 						if (refreshfilters) {
 							KDAdjustmentFilterCache.delete(efh);
@@ -1047,14 +1169,15 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 				// Add displacement filters
 				if (!l.NoDisplace && DisplaceFilters[origlayer]) {
 					for (let ef of DisplaceFilters[origlayer]) {
-						if (ef.zIndex != undefined && ef.zIndex <= zz) continue;
-						let efh = "disp_" + ef.hash;
+						if (ef.spriteName != undefined && ef.spriteName == l.DisplacementSprite) continue;
+						if (ef.zIndex != undefined && ef.zIndex - (l.DisplaceZBonus || 0) <= zz + 0.01) continue;
+						let efh = containerID + "disp_" + ef.hash;
 						let dsprite = ef.sprite;
 						if (refreshfilters) {
 							KDAdjustmentFilterCache.delete(efh);
 						}
 						KDTex(dsprite.name, false); // try to preload it
-						f = new PIXI.DisplacementFilter(
+						f = new DisplaceFilter(
 							dsprite,
 							ef.amount,
 						);
@@ -1088,6 +1211,7 @@ function DrawCharacterModels(MC: ModelContainer, X, Y, Zoom, StartMods, Containe
 						scalex: sx != 1 ? sx : undefined,
 						scaley: sy != 1 ? sy : undefined,
 						filters: filters,
+						cullable: KDCulling,
 					}, false,
 					ContainerContainer.SpritesDrawn,
 					Zoom
@@ -1117,7 +1241,18 @@ const KDAdjustmentFilterCache: Map<string, PIXIFilter[]> = new Map();
  */
 function ModelDrawLayer(MC: ModelContainer, Model: Model, Layer: ModelLayer, Poses: Record<string, boolean>): boolean {
 	// Hide if not highest
-	if (Layer.HideWhenOverridden) {
+	let prop: LayerProperties = null;
+	if (Model.Properties) {
+		prop = Model.Properties[Layer.InheritColor || Layer.Name];
+		if (!prop && Model.Properties[KDLayerPropName(Layer, Poses)]) {
+			prop = Model.Properties[KDLayerPropName(Layer, Poses)];
+		} else if (prop) {
+			Object.assign(prop, Model.Properties[KDLayerPropName(Layer, Poses)]);
+		}
+	}
+
+	if ((Layer.HideWhenOverridden && !(prop?.HideOverridden != undefined && prop?.HideOverridden == 0))
+		|| (prop?.HideOverridden == 1)) {
 		if (Layer.HideOverrideLayerMulti && !Layer.ForceSingleOverride) {
 			for (let hideGroup of Layer.HideOverrideLayerMulti) {
 				for (let LL of Object.keys(LayerGroups[hideGroup])) {
@@ -1140,7 +1275,7 @@ function ModelDrawLayer(MC: ModelContainer, Model: Model, Layer: ModelLayer, Pos
 		}
 	}
 	if (Model.Properties) {
-		let prop = Model.Properties[Layer.InheritColor || Layer.Name];
+		prop = Model.Properties[Layer.InheritColor || Layer.Name];
 		if (!prop && Model.Properties[KDLayerPropName(Layer, Poses)]) {
 			prop = Model.Properties[KDLayerPropName(Layer, Poses)];
 		} else if (prop) {
@@ -1251,7 +1386,7 @@ function ModelLayerHidden(drawLayers: {[_: string]: boolean}, MC: ModelContainer
 }
 
 function ModelLayerString(Model: Model, Layer: ModelLayer, Poses: {[_: string]: boolean}): string {
-	return `Models/${Layer.Folder || Model.Folder}/${LayerSprite(Layer, Poses)}.png`;
+	return `${Poses.Back ? "ModelsBack" : "Models"}/${Layer.Folder || Model.Folder}/${LayerSprite(Layer, Poses)}.png`;
 }
 function ModelLayerStringCustom(Model: Model, Layer: ModelLayer, Poses: {[_: string]: boolean}, Sprite: string, Path: string = "Models", useModelFolder: boolean = true, forceInvariant: boolean = false, forceMorph?: Record<string, string>, noAppend: boolean = false): string {
 	if (useModelFolder)
@@ -1349,6 +1484,11 @@ function GetTrimmedAppearance(C: Character) {
 				poses[pose] = true;
 			}
 		}
+		if (A.Model && A.Model.Categories) {
+			for (let pose of A.Model.Categories) {
+				poses[pose] = true;
+			}
+		}
 	}
 	for (let A of appearance) {
 		if (A.Model && A.Model.AddPoseConditional) {
@@ -1424,6 +1564,11 @@ function UpdateModels(C: Character, Xray?: string[]) {
 				poses[pose] = true;
 			}
 		}
+		if (A.Model && A.Model.Categories) {
+			for (let pose of A.Model.Categories) {
+				poses[pose] = true;
+			}
+		}
 	}
 	for (let A of appearance) {
 		if (A.Model && A.Model.AddPoseConditional) {
@@ -1474,6 +1619,11 @@ function UpdateModels(C: Character, Xray?: string[]) {
 				MC.Poses[pose] = true;
 			}
 		}
+		if (m.Categories) {
+			for (let pose of m.Categories) {
+				MC.Poses[pose] = true;
+			}
+		}
 	}
 
 	KDRefreshPoseOptionsMC(MC);
@@ -1501,15 +1651,16 @@ function KDGetColorableLayers(Model: Model, Properties: boolean): string[] {
 	let ret = [];
 	for (let layer of Object.values(Model.Layers)) {
 		if ((!layer.NoColorize || Properties) && !layer.InheritColor) {
-			if (Properties && (layer.Poses || layer.MorphPoses)) {
+			if (Properties && (layer.Poses || layer.MorphPoses || layer.GlobalDefaultOverride)) {
 				let poses: Record<string, boolean> = {};
 				if (layer.Poses)
 					for (let pose of Object.keys(layer.Poses)) {
 						poses[pose] = true;
 					}
 				if (layer.MorphPoses)
-					for (let pose of Object.values(layer.MorphPoses)) {
-						poses[pose] = true;
+					for (let pose of Object.entries(layer.MorphPoses)) {
+						poses[pose[0]] = true;
+						poses[pose[1]] = true;
 					}
 				for (let key of Object.keys(poses)) {
 					ret.push(layer.Name + key);
@@ -1517,15 +1668,16 @@ function KDGetColorableLayers(Model: Model, Properties: boolean): string[] {
 			}
 			ret.push(layer.Name);
 		} else if (layer.InheritColor && !ret.includes(layer.InheritColor)) {
-			if (Properties && (layer.Poses || layer.MorphPoses)) {
+			if (Properties && (layer.Poses || layer.MorphPoses || layer.GlobalDefaultOverride)) {
 				let poses: Record<string, boolean> = {};
 				if (layer.Poses)
 					for (let pose of Object.keys(layer.Poses)) {
 						poses[pose] = true;
 					}
 				if (layer.MorphPoses)
-					for (let pose of Object.values(layer.MorphPoses)) {
-						poses[pose] = true;
+					for (let pose of Object.entries(layer.MorphPoses)) {
+						poses[pose[0]] = true;
+						poses[pose[1]] = true;
 					}
 				for (let key of Object.keys(poses)) {
 					ret.push(layer.InheritColor + key);
@@ -1698,6 +1850,11 @@ function DrawModelProcessPoses(MC: ModelContainer, extraPoses: string[]) {
 				MC.Poses[pose] = true;
 			}
 		}
+		if (m.Categories) {
+			for (let pose of m.Categories) {
+				MC.Poses[pose] = true;
+			}
+		}
 	}
 
 	if (MC.XRayFilters) {
@@ -1732,25 +1889,28 @@ function DrawModelProcessPoses(MC: ModelContainer, extraPoses: string[]) {
 }
 
 function RenderModelContainer(MC: ModelContainer, C: Character, containerID: string) {
-	if (KDToggles.AsyncRendering && KinkyDungeonDrawState == "Game" && KinkyDungeonState == "Game") {
+	// Rendering is never actually async
+	/*if (KDToggles.AsyncRendering && KinkyDungeonDrawState == "Game" && KinkyDungeonState == "Game") {
 		if (!RenderCharacterQueue.get(C)) RenderCharacterQueue.set(C, []);
 		RenderCharacterQueue.get(C).push(async function() {
 			RenderCharacterLock.set(C, true);
 			PIXIapp.renderer.render(MC.Containers.get(containerID).Container, {
 				clear: true,
 				renderTexture: MC.Containers.get(containerID).RenderTexture,
+				blit: true,
 			});
 			RenderCharacterLock.delete(C);
 			MC.ForceUpdate.add(containerID);
 		});
-	} else {
-		PIXIapp.renderer.render(MC.Containers.get(containerID).Container, {
-			blit: true,
-			clear: true,
-			renderTexture: MC.Containers.get(containerID).RenderTexture,
-		});
-		MC.ForceUpdate.add(containerID);
-	}
+	} else {*/
+	PIXIapp.renderer.render(MC.Containers.get(containerID).Container, {
+		//blit: true,
+		clear: true,
+		renderTexture: MC.Containers.get(containerID).RenderTexture,
+		blit: true,
+	});
+	MC.ForceUpdate.add(containerID);
+	//}
 }
 
 function KDCullModelContainerContainer(MC: ModelContainer, containerID: string) {
@@ -1767,7 +1927,7 @@ function KDCullModelContainerContainer(MC: ModelContainer, containerID: string) 
 				sprite[1].parent.removeChild(sprite[1]);
 				Container.SpriteList.delete(sprite[0]);
 				modified = true;
-				sprite[1].destroy();
+				KDSpritesToCull.push(sprite[1]);
 			} else sprite[1].visible = false;
 		}
 	}
@@ -1820,10 +1980,10 @@ class Transform {
         let _sx = this.sx * sx;
         let _sy = this.sy * sy;
 
-        let _ox = -(sx*ax*Math.cos(rot)
-            - sy*ay*Math.sin(rot));
-        let _oy = -(sx*ax*Math.sin(rot)
-            + sy*ay*Math.cos(rot));
+        let _ox = -(_sx*ax*Math.cos(rot)
+            - _sy*ay*Math.sin(rot));
+        let _oy = -(_sx*ax*Math.sin(rot)
+            + _sy*ay*Math.cos(rot));
 
         // Transform to parent coordinates
         let __ox2 = this.sx*(ox) + _ox;
@@ -1851,4 +2011,37 @@ class Transform {
 			transform.sy,
 			transform.rot, )
 	}
+}
+
+function KDModelIsProtected(m: Model): boolean {
+	if (m) {
+		// Check if at least one layer is
+		if (m.Properties) {
+			if (Object.values(m.Properties).some(
+				(l) => {
+					return l.Protected > 0;
+				}
+			)) return true;
+		}
+		// Check base model property
+		if (m.Protected) {
+			if (m.Properties) {
+				if (Object.values(m.Properties).some(
+					(l) => {
+						return l.Protected < 0;
+					}
+				)) return false;
+			}
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function KDContainerClear(Container: ContainerInfo) {
+	Container.Mesh.destroy();
+	Container.Container.destroy();
+	Container.RenderTexture.destroy();
 }

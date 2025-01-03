@@ -1,5 +1,30 @@
 
+let KDCustomExp : Record<number, KDExpressionType>= {
+};
+
 let KDExpressions: Record<string, KDExpression> = {
+	"Custom": {
+		priority: 10000,
+		criteria: (C, flags) => {
+			if (KDNPCChar_ID.get(C) && KDCustomExp[KDNPCChar_ID.get(C)]) {
+				return true;
+			}
+			return false;
+		},
+		expression: (C, flags) => {
+			if (KDNPCChar_ID.get(C) && KDCustomExp[KDNPCChar_ID.get(C)]) {
+				return KDCustomExp[KDNPCChar_ID.get(C)];
+			}
+			return {
+				EyesPose: "",
+				Eyes2Pose: "",
+				BrowsPose: "",
+				Brows2Pose: "",
+				BlushPose: "",
+				MouthPose: "",
+			};
+		},
+	},
 	"RestrainedImmediate": {
 		priority: 7,
 		criteria: (C, flags) => {
@@ -57,6 +82,28 @@ let KDExpressions: Record<string, KDExpression> = {
 			};
 		},
 	},
+
+	"OrgAfterglow": {
+		priority: 10,
+		criteria: (C, flags) => {
+			if (flags.get("OrgAfterglow")) {
+				return true;
+			}
+			return false;
+		},
+		expression: (C, flags) => {
+			return {
+				EyesPose: (C == KinkyDungeonPlayer && KinkyDungeonStatStamina < KinkyDungeonStatStaminaMax * 0.5) ? "EyesSly" : "EyesHeart",
+				Eyes2Pose: (C == KinkyDungeonPlayer && KinkyDungeonStatStamina < KinkyDungeonStatStaminaMax * 0.5) ? "Eyes2Sly" : "Eyes2Heart",
+				BrowsPose: "",
+				Brows2Pose: "",
+				BlushPose: "BlushHigh",
+				MouthPose: C == KinkyDungeonPlayer ?
+					(KinkyDungeonGoddessRep.Passion - KinkyDungeonGoddessRep.Frustration > 25 ? "MouthSmile" : (KinkyDungeonGoddessRep.Passion - KinkyDungeonGoddessRep.Frustration > -25 ? "MouthEmbarrassed" : "MouthPout"))
+					: "MouthEmbarrassed",
+			};
+		},
+	},
 	"OrgSuccess": {
 		priority: 14,
 		criteria: (C, flags) => {
@@ -67,8 +114,8 @@ let KDExpressions: Record<string, KDExpression> = {
 		},
 		expression: (C, flags) => {
 			return {
-				EyesPose: "EyesSurprised",
-				Eyes2Pose: "Eyes2Closed",
+				EyesPose: "EyesHeart",
+				Eyes2Pose: "Eyes2Heart",
 				BrowsPose: "BrowsSurprised",
 				Brows2Pose: "Brows2Surprised",
 				BlushPose: "BlushExtreme",
@@ -86,8 +133,8 @@ let KDExpressions: Record<string, KDExpression> = {
 		},
 		expression: (C, flags) => {
 			return {
-				EyesPose: "EyesAngry",
-				Eyes2Pose: "Eyes2Closed",
+				EyesPose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 15) ? "EyesHeart" : "EyesAngry",
+				Eyes2Pose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 15) ? "Eyes2Heart" : "EyesAngry",
 				BrowsPose: "BrowsAnnoyed",
 				Brows2Pose: "Brows2Annoyed",
 				BlushPose: "BlushExtreme",
@@ -314,7 +361,7 @@ let KDExpressions: Record<string, KDExpression> = {
 		},
 		expression: (C, flags) => {
 			return {
-				EyesPose: "EyesSurprised",
+				EyesPose: "EyesDazed",
 				Eyes2Pose: "Eyes2Closed",
 				BrowsPose: "BrowsAngry",
 				Brows2Pose: "Brows2Angry",
@@ -339,7 +386,7 @@ let KDExpressions: Record<string, KDExpression> = {
 				BrowsPose: "BrowsSad",
 				Brows2Pose: "Brows2Sad",
 				BlushPose: "BlushExtreme",
-				MouthPose: "MouthSmile",
+				MouthPose: KinkyDungeonGoddessRep.Ghost > 0 ? "MouthSmile" : "MouthEmbarrassed",
 			};
 		},
 	},
@@ -353,12 +400,12 @@ let KDExpressions: Record<string, KDExpression> = {
 		},
 		expression: (C, flags) => {
 			return {
-				EyesPose: flags.get("VibeContinued") ? "EyesDazed" : "EyesNeutral",
-				Eyes2Pose: "Eyes2Closed",
+				EyesPose: flags.get("VibeContinued") ? "EyesDazed" : "EyesSly",
+				Eyes2Pose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 15) ? "Eyes2Sly" : "Eyes2Closed",
 				BrowsPose: "BrowsNeutral",
 				Brows2Pose: "Brows2Neutral",
 				BlushPose: "BlushHigh",
-				MouthPose: "MouthSmile",
+				MouthPose: KinkyDungeonGoddessRep.Ghost > 0 ? "MouthSmile" : "MouthPout",
 			};
 		},
 	},
@@ -372,7 +419,8 @@ let KDExpressions: Record<string, KDExpression> = {
 		},
 		expression: (C, flags) => {
 			return {
-				EyesPose: flags.get("VibeContinued") ? "EyesDazed" : "EyesNeutral",
+				EyesPose: flags.get("VibeContinued") ?
+					((C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 15) ? "EyesSly" : "EyesDazed") : "EyesNeutral",
 				Eyes2Pose: "Eyes2Closed",
 				BrowsPose: "BrowsSad",
 				Brows2Pose: "Brows2Sad",
@@ -460,8 +508,8 @@ let KDExpressions: Record<string, KDExpression> = {
 		},
 		expression: (C, flags) => {
 			return {
-				EyesPose: (KinkyDungeonStatStamina < KinkyDungeonStatStaminaMax * 0.25) ? "EyesClosed" : "EyesDazed",
-				Eyes2Pose: "Eyes2Dazed",
+				EyesPose: (C == KinkyDungeonPlayer && KinkyDungeonStatStamina < KinkyDungeonStatStaminaMax * 0.25) ? "EyesClosed" : "EyesDazed",
+				Eyes2Pose: (C == KinkyDungeonPlayer && KinkyDungeonStatStamina < KinkyDungeonStatStaminaMax * 0.25) ? "Eyes2Closed" : "Eyes2Dazed",
 				BrowsPose: "",
 				Brows2Pose: "",
 				BlushPose: "",
@@ -479,8 +527,8 @@ let KDExpressions: Record<string, KDExpression> = {
 		},
 		expression: (C, flags) => {
 			return {
-				EyesPose: "EyesDazed",
-				Eyes2Pose: "Eyes2Dazed",
+				EyesPose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 15) ? "EyesSly" : "EyesDazed",
+				Eyes2Pose: (C == KinkyDungeonPlayer && KinkyDungeonGoddessRep.Ghost > 15) ? "Eyes2Sly" : "Eyes2Dazed",
 				BrowsPose: "",
 				Brows2Pose: "",
 				BlushPose: "",
@@ -645,6 +693,8 @@ let KDExpressions: Record<string, KDExpression> = {
 			};
 		},
 	},
+
+
 	"PassionateBlush1": {
 		stackable: true,
 		priority: 2.3,

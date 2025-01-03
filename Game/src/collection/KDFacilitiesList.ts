@@ -12,7 +12,8 @@ interface Facility {
 	maxPrisoners: () => number,
 	maxServants: () => number,
 	events?: KinkyDungeonEvent[],
-	defaultData: Record<string, any>
+	defaultData: Record<string, any>,
+	servantPrisonerCallback?: (number) => boolean,
 };
 
 let KDFacilityTypes: Record<string, Facility> = {
@@ -36,7 +37,12 @@ let KDFacilityTypes: Record<string, Facility> = {
 				18, "left", 111
 			);
 		},
+		servantPrisonerCallback: (id) => {
+			KinkyDungeonSetFlag("manageEfficiencyLoss", -1, 1);
+			return true;
+		}
 	},
+
 	CuddleLounge: {
 		priority: -50,
 		update: (delta) => {
@@ -77,6 +83,28 @@ let KDFacilityTypes: Record<string, Facility> = {
 		maxPrisoners: () => {return 8;},
 		maxServants: () => {return 8;},
 		defaultData: {},
+	},
+	Warden: {
+		priority: 0,
+		update: (delta) => {
+			KDUpdateWarden(delta);
+			return false;
+		},
+		draw: (x, y, width) => {
+			return KDDrawWarden(x, y, width);
+		},
+		prereq: () => {return true;},
+		goldCost: () => {return 0;},
+		maxPrisoners: () => {return 0;},
+		maxServants: () => {return 1;},
+		defaultData: {},
+		ping: (XXQuik: number, YYQuik: number, quikCurrentCol: number, quikSpacing: number, quikSize: number) => {
+			let facility = "Warden";
+			DrawTextFitKD((KDGameData.FacilitiesData["Servants_" + facility]?.length || 0) + "",
+				XXQuik + quikCurrentCol * quikSpacing, YYQuik + 9, quikSize * 0.8, "#ffffff", KDTextGray0,
+				18, "left", 111
+			);
+		},
 	},
 	Recycler: {
 		priority: 30,

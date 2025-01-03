@@ -3,9 +3,9 @@
 let KinkyDungeonInputQueue: {type: string, data: any}[] = [];
 
 /**
- *
- * Delegate to KDProcessInputs */
-function KDProcessInput(type, data): string {
+ * Delegate to KDProcessInputs
+ */
+function KDProcessInput(type: string, data: any): string {
 	let Result = null;
 	let loose = null;
 	let msg = "";
@@ -36,8 +36,7 @@ function KDProcessInput(type, data): string {
 			let sp = data.spell ? data.spell : KinkyDungeonFindSpell(data.spellname, true);
 			if (!data.spell) data.spell = sp;
 			if (sp) {
-				/** @type {{result: string, data: any}} */
-				let res = KinkyDungeonCastSpell(data.tx, data.ty, sp, data.enemy, data.player, data.bullet, undefined, data);
+				let res: { result: string, data: any } = KinkyDungeonCastSpell(data.tx, data.ty, sp, data.enemy, data.player, data.bullet, undefined, data);
 				if (res.result == "Cast" && sp.sfx) {
 					KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/" + sp.sfx + ".ogg");
 				}
@@ -105,6 +104,11 @@ function KDProcessInput(type, data): string {
 			//KinkyDungeonTargetTile = null;
 			//KinkyDungeonTargetTileLocation = null;
 			break;
+
+		case "quickRestraint":
+			KinkyDungeonAttemptQuickRestraint(data.item);
+			break;
+
 		case "switchWeapon": {
 			if (data?.pref != undefined) KDWeaponSwitchPref = data.pref;
 			KDDelayedActionPrune(["Action", "SwitchWeapon"]);
@@ -135,7 +139,7 @@ function KDProcessInput(type, data): string {
 					KDGameData.SlowMoveTurns = time - 1;
 			}
 			KinkyDungeonSendActionMessage(2, TextGet("KinkyDungeonEquipWeapon").replace("WEAPONNAME", KDGetItemNameString(data.weapon)), "white", 5);
-			if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Equip.ogg");
+			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Equip.ogg");
 
 			// Reequip offhand if able
 			if (KDGameData.OffhandOld && !KDGameData.Offhand
@@ -157,14 +161,14 @@ function KDProcessInput(type, data): string {
 			}
 			KinkyDungeonGetPlayerWeaponDamage(KinkyDungeonCanUseWeapon());
 			KinkyDungeonSendActionMessage(2, TextGet("KinkyDungeonUnEquipWeapon").replace("WEAPONNAME", KDGetItemNameString(data.weapon)), "white", 5);
-			if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Equip.ogg");
+			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Equip.ogg");
 			break;
 		case "dress":
 			KDDelayedActionPrune(["Action", "Dress"]);
 			KinkyDungeonSetDress(data.dress, data.outfit);
 			KDGameData.SlowMoveTurns = 5;
 			KinkyDungeonSleepTime = CommonTime() + 200;
-			if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Equip.ogg");
+			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Equip.ogg");
 			break;
 		case "drop": {
 			KDDropItemInv(data.item);
@@ -199,7 +203,8 @@ function KDProcessInput(type, data): string {
 						if (KDDebugLink) {
 							linkable = KDCanAddRestraint(KDRestraint(newItem), true, "", false, currentItem, true, true);
 						} else {
-							linkable = KDCurrentItemLinkable(currentItem, newItem);
+							linkable = KDCanAddRestraint(KDRestraint(newItem), false, "", false, currentItem, true, true);
+							//KDCurrentItemLinkable(currentItem, newItem);
 						}
 						if (linkable) {
 							equipped = false;
@@ -219,7 +224,7 @@ function KDProcessInput(type, data): string {
 					KinkyDungeonGetRestraintByName(data.name)), false, data.events, data.faction, KDDebugLink,
 				data.curse, undefined, undefined, data.inventoryVariant);
 			if (success) {
-				if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Unlock.ogg");
+				if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Unlock.ogg");
 				loose = KinkyDungeonInventoryGetLoose(data.name);
 				if (loose) {
 					if (!(loose.quantity > 1)) {
@@ -232,18 +237,22 @@ function KDProcessInput(type, data): string {
 
 				KDStunTurns(KinkyDungeonGetRestraintByName(data.name)?.protection ? 4 : 2, true);
 
-				msg = "KinkyDungeonSelfBondage";
-				if (KDRestraint(loose).Group == "ItemVulvaPiercings" || KDRestraint(loose).Group == "ItemVulva" || KDRestraint(loose).Group == "ItemButt") {
-					if (KinkyDungeonIsChaste(false)) {
-						msg = "KinkyDungeonSelfBondagePlug";
+				let customEq = KDRestraint(loose).customEquip || "";
+				msg = "KinkyDungeonSelfBondage" + customEq;
+				if (!customEq) {
+					if (KDRestraint(loose).Group == "ItemVulvaPiercings" || KDRestraint(loose).Group == "ItemVulva" || KDRestraint(loose).Group == "ItemButt") {
+						if (KinkyDungeonIsChaste(false)) {
+							msg = "KinkyDungeonSelfBondagePlug";
+						}
+					} else if (KDRestraint(loose).Group == "Item") {
+						if (KinkyDungeonIsChaste(true)) {
+							msg = "KinkyDungeonSelfBondageNipple";
+						}
+					} else if (KDRestraint(loose).enchanted) {
+						msg = "KinkyDungeonSelfBondageEnchanted";
 					}
-				} else if (KDRestraint(loose).Group == "Item") {
-					if (KinkyDungeonIsChaste(true)) {
-						msg = "KinkyDungeonSelfBondageNipple";
-					}
-				} else if (KDRestraint(loose).enchanted) {
-					msg = "KinkyDungeonSelfBondageEnchanted";
 				}
+
 				KinkyDungeonSendTextMessage(10, TextGet(msg).replace("RestraintName", TextGet("Restraint" + KDRestraint(loose).name)), "yellow", 1);
 
 				return msg;
@@ -277,6 +286,7 @@ function KDProcessInput(type, data): string {
 			KinkyDungeonMakeNoise(Math.ceil(10 - 8 * Math.min(1, gagTotal * gagTotal)), KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y, false, true);
 			KinkyDungeonSendTextMessage(10, TextGet("KDShoutHelp" + Math.min(3, Math.floor(gagTotal *3.3))), "yellow", 1);
 			KinkyDungeonSetFlag("CallForHelp", 12);
+			KinkyDungeonSetFlag("GuardCalled", 0);
 			break;
 		}
 
@@ -412,7 +422,7 @@ function KDProcessInput(type, data): string {
 				let spell = KinkyDungeonFindSpell("CommandWord", true);
 				let miscast = KinkyDungeonMiscastChance;
 				let gagTotal = KinkyDungeonGagTotal();
-				if (KinkyDungeoCheckComponents(KinkyDungeonFindSpell("CommandWord"), KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y).length > 0) {
+				if (KinkyDungeoCheckComponents(KinkyDungeonFindSpell("CommandWord"), KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y).failed.length > 0) {
 					miscast = miscast + Math.max(0, 1 - miscast) * Math.min(1, !KDSpellIgnoreComp(spell) ? gagTotal : 0);
 				}
 				if (KDRandom() > miscast) {
@@ -454,7 +464,7 @@ function KDProcessInput(type, data): string {
 			KinkyDungeonShopIndex = data.shopIndex;
 			KinkyDungeonPayShrine(data.type);
 			KinkyDungeonAggroAction('shrine', {});
-			if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
+			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
 			break;
 		case "shrineUse": {
 			KDDelayedActionPrune(["Action", "World"]);
@@ -484,13 +494,13 @@ function KDProcessInput(type, data): string {
 					KinkyDungeonAggroAction('shrine', {x: parseInt(x), y:parseInt(y)});
 					KDGameData.AlreadyOpened.push({x: parseInt(x), y: parseInt(y)});
 					KinkyDungeonUpdateStats(0);
-					if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
+					if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
 				} else {
 					if (KinkyDungeonShrineTypeRemove.includes(type))
 						KinkyDungeonSendActionMessage(9, TextGet("KDNoRestraints"), "#ff5555", 1, true);
 					else
 						KinkyDungeonSendActionMessage(9, TextGet("KinkyDungeonPayShrineFail"), "#ff5555", 1, true);
-					if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Damage.ogg");
+					if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Damage.ogg");
 				}
 				KinkyDungeonAdvanceTime(1, true);
 				KinkyDungeonMultiplayerUpdate(KinkyDungeonNextDataSendTimeDelay);
@@ -578,7 +588,7 @@ function KDProcessInput(type, data): string {
 			KinkyDungeonChangeMana(KinkyDungeonStatManaMax * 0.5, false, 0, false, true);
 			KDSendStatus('goddess', data.type, 'shrineDrink');
 			KinkyDungeonAggroAction('shrine', {});
-			if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
+			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
 
 			KinkyDungeonAdvanceTime(1, true);
 
@@ -616,7 +626,7 @@ function KDProcessInput(type, data): string {
 			KinkyDungeonChangeConsumable(KinkyDungeonFindConsumable("PotionMana"), 1);
 			KDSendStatus('goddess', data.type, 'shrineBottle');
 			KinkyDungeonAggroAction('shrine', {});
-			if (KDToggles.Sound) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/PotionDrink.ogg");
+			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/PotionDrink.ogg");
 
 			KDMapData.PoolUses += 1;
 			KinkyDungeonSendEvent("afterShrineBottle", {x: data.x, y: data.y, tile: data.tile});
@@ -886,7 +896,7 @@ function KDProcessInput(type, data): string {
 				KinkyDungeonConsumableChoices[data.I] = data.name;
 			} else if (KDWeapon({name: data.name})) {
 				KinkyDungeonWeaponChoices[data.I] = data.name;
-			} else {
+			} else if (KDRestraint({name: data.name})) {
 				KinkyDungeonArmorChoices[data.I] = data.name;
 			}
 			/*
@@ -939,7 +949,7 @@ function KDProcessInput(type, data): string {
 		}
 		case "select": {
 			if (data.enemy && KDAllied(data.enemy)) {
-				if (data.enemy.buffs?.AllySelect?.duration > 0) data.enemy.buffs.AllySelect.duration = 0;
+				if (data.enemy.buffs?.AllySelect?.duration > 0) KinkyDungeonExpireBuff(data.enemy, "AllySelect")
 				else KinkyDungeonApplyBuffToEntity(data.enemy, {
 					id: "AllySelect",
 					aura: "#ffffff",
@@ -953,7 +963,7 @@ function KDProcessInput(type, data): string {
 		}
 		case "selectOnly": {
 			for (let e of KDMapData.Entities) {
-				if (e.id != data.enemy?.id && e.buffs?.AllySelect) e.buffs.AllySelect.duration = 0;
+				if (e.id != data.enemy?.id && e.buffs?.AllySelect) KinkyDungeonExpireBuff(e, "AllySelect")
 				else if (e.id == data.enemy?.id) KinkyDungeonApplyBuffToEntity(e, {
 					id: "AllySelect",
 					aura: "#ffffff",
@@ -972,7 +982,7 @@ function KDProcessInput(type, data): string {
 				let enemy = KinkyDungeonFindID(data.enemy.id);
 				if (!enemy && KDGameData.Party) enemy = KDGameData.Party.find((entity) => {return entity.id == data.enemy.id;});
 				if (enemy) {
-					if (enemy.buffs?.AllySelect) enemy.buffs.AllySelect.duration = 0;
+					if (enemy.buffs?.AllySelect) KinkyDungeonExpireBuff(enemy, "AllySelect")
 					KinkyDungeonSetEnemyFlag(enemy, "NoFollow", -1);
 					KDRemoveFromParty(enemy, false);
 					KinkyDungeonSendTextMessage(10, TextGet("KDOrderRemove").replace("ENMY", TextGet("Name" + enemy.Enemy.name)), "#ffffff", 1);
@@ -1033,7 +1043,7 @@ function KDProcessInput(type, data): string {
 							}
 						}
 						KinkyDungeonSetMaxStats();
-						if (KDToggles.Sound && KinkyDungeonIsPlayer()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
+						if (KDSoundEnabled() && KinkyDungeonIsPlayer()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
 						KinkyDungeonCurrentPage = KinkyDungeonSpellIndex(spell.name);
 						if (KinkyDungeonStatsChoice.has("Disorganized")) {
 							KinkyDungeonAdvanceTime(1);
@@ -1198,14 +1208,17 @@ function KDProcessInput(type, data): string {
 		case "recycle":
 			break;
 		case "tightenNPCRestraint":
-			KDNPCRefreshBondage(data.npc);
+			KDNPCRefreshBondage(data.npc, data.player, false, false);
 			break;
 		case "releaseNPC":
 			if (data?.selection) {
 				for (let v of Object.keys(data.selection)) {
 					if (KDCanRelease(parseInt(v))) {
+						KDFreeNPCRestraints(parseInt(v), data.player);
+
 						let type = KinkyDungeonGetEnemyByName(KDGameData.Collection[v + ""].type);
 						let rep = -0.05*KDGetEnemyTypeRep(type, KDGameData.Collection[v + ""].Faction);
+						if ((KDGetModifiedOpinionID(parseInt(v)) > 0)) rep = -rep; // Positive if they are happy!
 						KinkyDungeonChangeFactionRep(KDGameData.Collection[v + ""].Faction, rep);
 						DisposeEntity(parseInt(v), false, false,
 							KDIsNPCPersistent(parseInt(v))
@@ -1220,10 +1233,23 @@ function KDProcessInput(type, data): string {
 			}
 			KDSortCollection();
 			break;
+		case "removeGuest":
+			if (data?.selection) {
+				for (let v of Object.keys(data.selection)) {
+					if (KDCanRemoveGuest(parseInt(v))) {
+						delete KDGameData.Collection[parseInt(v) + ""];
+					}
+				}
+			}
+			KDSortCollection();
+			break;
 		case "ransomNPC":
 			if (data?.selection) {
 				for (let v of Object.keys(data.selection)) {
 					if (KDCanRansom(parseInt(v))) {
+						KDFreeNPCRestraints(parseInt(v), data.player);
+
+
 						let type = KinkyDungeonGetEnemyByName(KDGameData.Collection[v + ""].type);
 						let rep = -2*KDGetEnemyTypeRep(type, KDGameData.Collection[v + ""].Faction);
 						KinkyDungeonChangeFactionRep(KDGameData.Collection[v + ""].Faction, rep);
@@ -1241,23 +1267,9 @@ function KDProcessInput(type, data): string {
 			KDSortCollection();
 			break;
 		case "freeNPCRestraint": {
-			if (KDGameData.NPCRestraints) {
-
-				let restraints = KDGameData.NPCRestraints[data.npc + ''];
-				if (restraints) {
-					for (let inv of Object.entries(restraints)) {
-						KDInputSetNPCRestraint({
-							slot: inv[0],
-							id: -1,
-							restraint: "",
-							restraintid: -1,
-							lock: "",
-							npc: data.npc
-						});
-					}
-				}
-			}
-			KinkyDungeonCheckClothesLoss = true;
+			KDFreeNPCRestraints(data.npc, data.player);
+			if (KDNPCChar.get(data.npc))
+				KDRefreshCharacter.set(KDNPCChar.get(data.npc), true);
 			break;
 		}
 		case "addNPCRestraint":
@@ -1268,25 +1280,32 @@ function KDProcessInput(type, data): string {
 				lock: "White",
 				npc: number
 			 */
-			KDInputSetNPCRestraint(data);
+
+
+			let res = KDInputSetNPCRestraint(data);
 
 			let enemy = KDGetGlobalEntity(data.npc);
 
-			KinkyDungeonSendTextMessage(10,
-				TextGet("KDTieUpEnemy" + (!data.restraint ? "Negative" : ""))
-					.replace("RSTR", KDGetItemNameString(data.restraint))//TextGet("Restraint" + KDRestraint(item)?.name))
-					.replace("ENNME", TextGet("Name" + enemy?.Enemy.name))
-					.replace("AMNT", "" + Math.round(100 * enemy?.boundLevel / enemy?.Enemy.maxhp)),
-				"#ffffff", 1);
+			let packed = enemy ? KDUnPackEnemy(enemy) : false;
+			if (enemy && (!data.restraint || enemy.boundLevel > 0))
+				KinkyDungeonSendTextMessage(10,
+					TextGet("KDTieUpEnemy" + (!data.restraint ? "Negative" : ""))
+						.replace("RSTR", KDGetItemNameString(data.restraint))//TextGet("Restraint" + KDRestraint(item)?.name))
+						.replace("ENNME", TextGet("Name" + enemy?.Enemy.name))
+						.replace("AMNT", "" + Math.round(100 * enemy?.boundLevel / enemy?.Enemy.maxhp)),
+					"#ffffff", 1);
 
-			if (data.time) {
+			if (data.time && res) {
 				KinkyDungeonAdvanceTime(1, true);
 			}
 			if (data.npc > 0) {
 				KDSetCollFlag(data.npc, "restrained", 1);
 				KDSetCollFlag(data.npc, "restrained_recently", 24);
 			}
-			KinkyDungeonCheckClothesLoss = true;
+			if (KDNPCChar.get(data.npc))
+				KDRefreshCharacter.set(KDNPCChar.get(data.npc), true);
+
+			if (packed) KDPackEnemy(enemy);
 		break;
 	}
 	if (data.GameData) {
@@ -1295,7 +1314,7 @@ function KDProcessInput(type, data): string {
 	return "";
 }
 
-function KDSendInput(type, data, frame?: boolean, noUpdate?: boolean): string {
+function KDSendInput(type: string, data: any, _frame?: boolean, noUpdate?: boolean, process = true): string {
 
 	if (!noUpdate) {
 		KDGameData.OrigEnergyLevel = KDGameData.AncientEnergyLevel;
@@ -1306,14 +1325,15 @@ function KDSendInput(type, data, frame?: boolean, noUpdate?: boolean): string {
 	}
 
 	KinkyDungeonInputQueue.push({type: type, data: data});
-	return KDProcessInputs(true);
+	if (process)
+		return KDProcessInputs(true);
+	else return "";
 }
 
 /**
  * Handles inputs once per frame
- * @returns {string}
  */
-function KDProcessInputs(ReturnResult) {
+function KDProcessInputs(ReturnResult?: boolean): string {
 	for (let i = 0; i < 3; i++) {
 		if (KinkyDungeonInputQueue.length > 0) {
 			let input = KinkyDungeonInputQueue.splice(0, 1)[0];
@@ -1327,20 +1347,45 @@ function KDProcessInputs(ReturnResult) {
 	return "";
 }
 
-function KDInteract(x, y) {
-	KinkyDungeonItemCheck(x, y, MiniGameKinkyDungeonLevel, true);
+function KDInteract(x: number, y: number, dist?: number) {
+	if (dist == undefined) dist = KDistChebyshev(x - KDPlayer().x, y - KDPlayer().y);
+	KinkyDungeonSendEvent("beforeInteract", {x:x, y: y});
+	if (dist < 1.5 && !KinkyDungeonEntityAt(x, y, false, undefined, undefined, false))
+		KinkyDungeonItemCheck(x, y, MiniGameKinkyDungeonLevel, true);
 	KDInteracting = false;
 	let tile = KinkyDungeonTilesGet(x + ',' + y);
 	if (tile?.Type) {
 		if (KDObjectInteract[tile.Type]) {
-			return KDObjectInteract[tile.Type](x, y);
-		} else if (KDObjectClick[tile.Type] && KDistChebyshev(x - KDPlayer().x, y - KDPlayer().y) < 1.5) {
-			return KDObjectClick[tile.Type](x, y);
+			let ret = KDObjectInteract[tile.Type](x, y, dist);
+			KinkyDungeonSendEvent("afterInteract", {x:x, y: y, type: "object", objtype: tile.Type});
+			return ret;
+		} else if (KDObjectClick[tile.Type] && dist < 1.5) {
+			let ret = KDObjectClick[tile.Type](x, y);
+			KinkyDungeonSendEvent("afterInteract", {x:x, y: y, type: "objectclick", objtype: tile.Type});
+			return ret;
 		}
 	}
 	let tiletype = KinkyDungeonMapGet(x, y);
 	if (KDTileInteract[tiletype]) {
-		return KDTileInteract[tiletype](x, y);
+		let ret = KDTileInteract[tiletype](x, y, dist);
+		KinkyDungeonSendEvent("afterInteract", {x:x, y: y, type: "tile", objtype: tiletype});
+		return ret;
 
 	}
+	let Enemy = KinkyDungeonEntityAt(x, y, false, undefined, undefined, false);
+	if (Enemy) {
+		if ((KDIsImprisoned(Enemy)
+			|| ((!KinkyDungeonAggressive(Enemy) || KDAllied(Enemy))
+			&& !(Enemy.playWithPlayer && KDCanDom(Enemy))))) {
+			let d = Enemy.Enemy.specialdialogue ? Enemy.Enemy.specialdialogue : "GenericAlly";
+			if (Enemy.specialdialogue) d = Enemy.specialdialogue; // Special dialogue override
+			if (d || ((!Enemy.lifetime || Enemy.lifetime > 9000) && !Enemy.Enemy.tags.notalk)) { // KDAllied(Enemy)
+
+				KDStartDialog(d, Enemy.Enemy.name, true, Enemy.personality, Enemy);
+				KinkyDungeonSendEvent("afterInteract", {x:x, y: y, type: "talk", entity: Enemy});
+				return;
+			}
+		}
+	}
+	KinkyDungeonSendEvent("afterInteractFail", {x:x, y: y});
 }

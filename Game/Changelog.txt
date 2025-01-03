@@ -29,6 +29,295 @@ TODO:
 - Aggro level
 
 TODO remove hogtie when released
+TODO Add Cuddle play type
+
+5.4.7
+
+
+5.4.6
+- Clear restraints from outfit when loading into wardrobe from title screen
+- Fix save game code missing in non roguelike mode
+- Changed layer of pantyhose to go under socks/stockings
+
+5.4.5
+- Show owned items in NPC shop interface
+- Add option to untie NPC
+
+5.4.4
+- Universal solvent now rescues Encased Adventurers (if you choose to use it for such)
+- Universal solvent now removes encased debuffs from NPCs and grants glue resist to NPC/player for 30 turns
+- Being hit by an Observer's beam now attracts the Shadow to your position
+- The shadow now properly applies a cursed item when she catches you
+- Calling a guard should now pick an eligible character on the map instead of spawning one
+- Enchant Rope now affects NPC restraints properly
+- Fixed a bug where entities other than player would benefit from rogue super crit/surprise bondage
+- fixed missing nurse bound sprite
+- Can no longer backtrack in boss rooms until you defeat the boss / are defeated
+
+5.4.3
+- No longer need to pass room escape method to backtrack
+- dragon girls and dragon queens can no longer spawn as bounties for the Bounty escape method
+
+5.4.2
+- Added 'spike' trap
+
+5.3.50
+- More sound effects
+- Giving Good Girl Gifts to NPCs will now temporarily increase their submissiveness
+- Field of Frost has been split into progressively bigger upcasts.
+
+5.3.49
+- Cursed item offer from enemies now includes a real curse
+- Added more enemy journal entries
+- Fixed the names of many spells not being defined
+
+5.3.48
+- MODDERS: Added "OverCorset", "UpperArmStrapsBack", TightSleeveLeft/Right, and "Apron" layer
+- Added heavy maid knight uniform
+
+5.3.47
+- Several weapons now have a special property dealing 50% additional damage when stamina is over 50%:
+- Hammer (and variants)
+- Axe (and variants)
+- Rock
+- Fixed an issue where leashed NPCs didnt follow player properly thru stairs
+- Battle Rhythm now uses the higher of original stamina cost or effective stamina cost
+- New weapon: Sledgehammer
+- Telekinesis must now go in the hotbar to be used, but can be toggled
+
+5.3.46
+- Require being in summit to deposit restraints to summit warden
+- Fix misleading message when NPCs try to escape even if they made no progress
+- Show sprint cost when sprint icon shows on map
+- Sprint cost now 20 base, 25 heeled, 15 hop, 20 hop (slowed), 25 hop (super slowed). Overall buff while bound, nerf while free
+- Added quick faccility assigning
+
+5.3.45
+- Summit warden now knows how to use generic bondage like rope
+- Add button to toggle big render of collection character
+- Small bugfixes
+
+5.3.44
+- Added Warden facility
+- Added chest container system
+- Regular chests will now have some lesser items in them
+- Fix bug where command spells (for controlling allies) would not deselect properly
+- Fix bug where truss em up sometimes wont work even with Reaching Authority
+- Fix bug where cuddle loungegoers would cluster around and gawk at a single cuddlee
+- Fix bug where cuddle loungegoers would take cuddlees out of the cuddle lounge
+
+5.3.43
+- Fix offhand bug
+- Fix instand trap explosions bug
+- Enemies can fire spells on you (innacurately) while blind
+- Conjured restraints cannot be tightened
+- Fix a crash when picking a lock on a map object
+- Fix CMD: Lock not being a command spell and Remove Slime being one
+- Fix enemies helping each other out of bondage
+
+5.3.42
+- MODDERS: KinkyDungeonRedKeys, BlueKeys, and Lockpicks are now inventory items instead of hardcoded variables!
+- Spells now apply bindings to enemies!
+- Bindings will be conjured, so you cannot spam them to pick them up
+- Also applies to handheld weapons like ropes.
+- New spell: Conjure Anti-Magic gag
+- Revised enemy struggle function to help normalize the amount of time it takes to escape
+- Can now equip offhand weapons without clicking the icon on the hotbar
+- Enemies can now use items they struggled out of in order to tie YOU
+
+5.3.41
+- Fix bug where runes hit twice
+- Fix bug where magic keys are consumed even if unlocked by different means
+
+5.3.40
+- Added in a LOT of new patron NPCs, thank you for your support
+- Added toggle for Game sound now off when minimized
+- Chased restraint value formula so that restraints aren't as valuable early on, but reduced the decay
+- Added tooltips to the collection binding bars
+- Attempted to fix issue where cosplay items persist between outfits
+- Fixed some pathing issues in crowded hallways
+
+5.3.39
+- Fix issue with trail warnings disappearing one turn before they are supposed to
+- Fixed heavy wep + kinetic mastery issue
+- Fixed issue w/ mana regen
+- Fixed inner power + kinetic slash + flame blade issue
+
+5.3.38-RC10
+- Fixed some bugs with bosses doing dialogue while part of the player faction
+- Living collars can now be disenchanted to delay their effects.
+
+5.3.38-RC9
+- MODDERS: Added mod.json format, see https://itch.io/t/4135169/mod-json
+
+5.3.38-RC8
+- Fixed issue where some battle rhythm effects were applying twice
+- Fixed issue where 1st floor was getting regenerated
+- Code refactoring
+
+5.3.38-RC7
+- Fixed issues where NPCs would hug the corner of the map after losing sight of you
+- High value enemies will now use their missiles in combat (watch out for friendly fire)
+
+5.3.38-RC6
+- Fix some issues with runes (aoe, cast time)
+- New Expert Tool tag: Protected. Put 1 here to make the layer protected.
+If a model has any protected layers then it will be treated like ears, etc.
+Converse: if you set it to -1 then it will make a protected model no longer protected.
+1 overrides -1.
+
+5.3.38-RC5
+- fixed monster rope hogtie crash
+- enemies can now path thru barricades and destructible doors
+- allow placing prisoners in doll stands (both collection and leashed)
+
+5.3.38-RC4
+- Fixed bug where the light maid knight socks had unintended holes and the toes would stick out
+- Fixed bug where the leather mask would cause a bald patch when using x rays
+
+5.3.38-RC3
+- Monster rope should now add hogtie properly (only applies to new monster ropes generated)
+- Fixed some bugs involving leashing and hostility
+- Fixed critical bug with enchanted items disappearing when dropped by enemy attack!!!
+
+5.3.38-RC2
+- Made dirt piles and giant mushrooms not block leashing NPCs
+- Added gag necklace
+
+5.3.38-RC1
+- Updated version number
+- Merged a great huge typescript refactor by ewhac. Several longstanding bugs got caught and fixed as a result
+- Allow linking armor under accessible restraints
+
+5.4-nightly8
+- Added modding parameter to allow custom msg for equipping and successfully removing restraints
+- fixed bug where assigning outfit to hotbar disappears the slot
+- fixed missing assets in coastal tileset
+- Increased arcane tome damage and clarified that they're not supposed to crit
+- Removed arcane crystal from wizard start, has arcane tome instead
+- added arcane crystal to wizard study chest, shadow chest, and wall loot in library
+
+5.4-nightly7b
+- Updated version number
+- Clarified cuddle lounge mechanics
+- b version: fixed a crash and a visual bug, hopefully
+
+5.4-nightly6
+- Changed worldgen to make sizing a bit more reasonable
+- Angel can help you with divine locks
+- Added Crystal lock
+- Added Ancient Worshippers
+- Made the simple color picker more accurate
+
+
+5.4-nightly5
+- Added directional wires (vertical, horizontal, endpoint)
+- fixed bug w/ opinion not updating on cuddle lounge pets when you revisit summit
+- fixed fighter break free ability
+- Changed rune graphics to be more consistent with the game
+
+5.4-nightly4
+- Fix issue with Commerce Goddes Rewards Program™ portals spawning on non-empty tiles
+- Fix issue with weird flashing dialogue options involving leashes
+- Fix issue with both tool multiplier and buff multiplier applying to edge bonus (such as hook, etc)
+- Fix issues with light maid knight socks poking through the bottom of shoes
+- Fixed issue with summons being added to collection if you add them to party
+
+5.4-nightly3
+- Fixed an issue where Rogue's problem solving triggered twice
+- Fixed (hopefully) an issue where audio crashed randomly
+- Fixed an issue where enemies send repeated soundwaves
+- Fixed an issue where dolls werent properly displaced when shoving the player into their space
+- Fixed some Light Maid Knight clipping and missing textures
+- Fixed some issues with struggle power calc
+
+
+5.4-nightly2
+- !!!MODDERS - IMPORTANT!!!
+- "kinkydungeonappearanceX" now contains an expanded object with metadata. Please update mods that handle the localstorage version of character
+- CharacterAppearanceStringify now encodes metadata into the provided string
+- CharacterAppearanceRestore can handle both old and new strigified characters
+- You will need to update any code that directly references a string created by CharacterAppearanceStringify instead of using CharacterAppearanceRestore
+- saveStat in the save files now has Palette field
+
+5.4-nightly2
+- Fixed bug where running out of WP didnt reduce struggle power
+- Bed trap now has straps ^^
+- Cuddle lounge now improves servant opinions a lot more
+- Cuddle lounge is less effective per prisoner the more prisoners in it
+
+5.4-nightly1
+- Added Absurdly Huge Maps perk
+- Reworked the maze algorithm so it can now handle empty tiles generated
+- Made cracks propagate into walls more
+- Made the pickaxe able to break some blocks depending on geometry
+
+5.3.37
+- Brawler should no longer give you full accuracy while arm + legbindered, but should always give full unarmed damage
+- Fixed a bug where keys vanish into oblivion
+- Distracted allies should be a little less unreliable
+
+5.3.36
+- MODDERS: Replaced KinkyDungeonCheckClothesLoss with KDRedrawCharacter, a map. The old variable still works as a generic way to do it to 'whatever gets rendered next'
+- Saves will now save your outfit as well, and restore it during saves. You can turn off both saving and loading of outfits
+- Added multiple save slots and mod config by Enraa
+- Added panties by Boxtie
+- Added CyberPanties
+- Added Gothic Skirt by Lumpychan
+- Added Bra and PantiesHigh by Boxtie
+- Added custom outfits for 3 of the custom patrons
+- Added a sneaky dealer npc
+- Made truss em up menu show different colors and helpful messages based on what the restraining conditions are
+- Fixed bug where cyber restraints could sometimes be impossible to unlock even with a keycard
+- Fixed bug where summit elevator could trap you in while still letting escapees out
+- Fixed bug where active soul crystals could not be vaulted around even though the vault upgrade says you can
+- Fixed issue where truss em up couldnt be opened even if you had quick-bind restraints that could be used with it.
+- Hopefully fixed issue where your party members would turn on you due to other ally's AoE
+- Fixed issue where caldera could have inaccessible regions and the player might even start in one
+
+5.3-Patch1
+- Added toggle to only bind self from quick inv (instead of targeting)
+
+5.3-RC10
+- You can now use quick inventory or hotbar to attempt to truss up targets
+  (or wear items by clicking yourself)
+- New upgrade: Reaching Authority
+- Added Spats and BrowsDai1 and 2
+- Releasing NPCs gives back items (so you dont have to free them manually first)
+- Old guardians leashing you to highsec now take you to doll processing Instead
+- Faction rep affects personal opinion less
+- Attacking enemies now reduces their opinion of you (it's personal)
+- Added the 'Robe of Chastity' in lesser gold chests
+- Flanking enemies now makes them vulnerable (instead of stunned)
+- Fixed a bug where removing one generic restraint item would remove all of them
+- Fixed bug where traps would spawn in places there were not supposed to be any
+- Fixed bug where the void would sometimes be an actual void and not a discount void (with demon squatters)
+- Fixed bug where prisoners you reclaim would not actually be reclaimed but rather cast into the ether (and are inaccessible as prisoners)
+
+
+5.3.35 RC8-RC9
+- Added filter field in collection
+- Fixed a bug where sensory mask was being applied infinitely
+- Autobind should now use raw materials as well for restraints
+- Resolved a bug where the binding dress in recycler couldnt be made but still took resources
+- Resolved a bug where enchanted armor got duplicated when it gets knocked off by enemies
+
+5.3.35 RC7
+- Fix sailor shirt exposing kneel pose midriff
+- Fix crash when leaving summit sometimes
+- Fix zooming not affecting many indicators
+- Ancient chastity bra clarified to only reduce damage from attacks (current behavior, no change)
+- Ancient chastity bra now blocks 20 damage up from 10
+- Fixed bug where you cant ransom most enemies
+- Time Stop now allows you to tie up enemies more easily during its duration
+- Time ghosts are slightly faster
+
+
+5.3.35 RC6
+- Added toggle for front plugs. May cause balance issues.
+
+5.3.35 RC5
+- Misc fixes
 
 5.3.35 RC4
 - Misc graphical fixes
@@ -684,7 +973,7 @@ Release F
 - Added explosive barrels to levels. Beat them down without igniting them to take their gunpowder.
 - Blink split into 3 spells for 1 spell point, each adding +1 range
 - Changed Secure Defense to give more block at 0 willpower but half at max willpower
-- New spells: Shield of (un)Clarity (Trainee only), Desire Burst (Trainee only), Liquid Metal, Raise Defense (Fighter only), Evasive Maneuvers (Rogue only), Break Free (Fighter only), Phase Dance, Double/Triple/Quadro/Total Accel, Spatial swap
+- New spells: Shield of (un)Clarity (Trainee only), Desire Burst (Trainee only), Liquid Metal, Raise Defense (Fighter only), Evasive Maneuvers (Rogue only), Break Free (Fighter only), Phase Dance, Double/Triple/Quad/Total Accel, Spatial swap
 - Inner power now applies before multipliers
 - Slime ball trail does 20 damage instead of 40
 - Added divine locks for enforcing Bound Crusaders!

@@ -104,12 +104,12 @@ AddModel({
 AddModel({
 	Name: "CatsuitLowerLeotard",
 	TopLevel: true,
-	Categories: ["Suits", "Underwear"],
+	Categories: ["Suits", "Underwear", "Panties"],
 	Folder: "Catsuit",
 	Parent: "Catsuit",
 	Layers: ToLayerMap([
-		{ Name: "TorsoLowerLeotard", Layer: "TorsoLower", Pri: 1,
-			InheritColor: "TorsoLower",
+		{ Name: "TorsoLowerLeotard", Layer: "Bodysuit", Pri: -20,
+			InheritColor: "Latex",
 		},
 	])
 });
@@ -390,7 +390,7 @@ AddModel({
 AddModel({
 	Name: "TransparentCatsuitLowerLeotard",
 	TopLevel: true,
-	Categories: ["Suits", "Underwear"],
+	Categories: ["Suits", "Underwear", "Panties"],
 	Folder: "Catsuit",
 	Parent: "Catsuit",
 	Filters: {
@@ -398,8 +398,8 @@ AddModel({
 		TorsoLower: {"gamma":1,"saturation":1,"contrast":1,"brightness":1,"red":1,"green":1,"blue":1,"alpha":0.5333333333333333},
 	},
 	Layers: ToLayerMap([
-		{ Name: "TorsoLowerLeotard", Layer: "TorsoLower", Pri: 1,
-			InheritColor: "TorsoLower",
+		{ Name: "TorsoLowerLeotard", Layer: "Bodysuit", Pri: -20,
+			InheritColor: "Latex",
 			//MorphPoses: {Closed: "Closed", Spread: "Spread", Hogtie: "Closed"},
 		},
 	])
@@ -509,7 +509,7 @@ AddModel({
 	Parent: "PlateArmor",
 	Categories: ["Armor"],
 	Layers: ToLayerMap([
-		{ Name: "Pauldrons", Layer: "Shoulders", Pri: 8,
+		{ Name: "Pauldrons", Layer: "Shoulders", Pri: 80,
 			Poses: ToMapSubtract([...ARMPOSES], [...HIDEARMPOSES, "Up"], "Hogtie"),
 			MorphPoses: {Yoked: "Yoked", Hogtie: "Hogtie", Wristtie: "Free", Boxtie: "Free", Front: "Free", Crossed: "Free"},
 			HideWhenOverridden: true,
@@ -549,10 +549,11 @@ AddModel({
 	Categories: ["Shoes"],
 	Layers: ToLayerMap([
 		{ Name: "BootLeft", Layer: "ShoeLeft", Pri: 25,
-			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie"]),
-			GlobalDefaultOverride: ToMap(["KneelClosed"]),
+			Poses: ToMap([...LEGPOSES]),
+			GlobalDefaultOverride: ToMap(["KneelClosed", "Hogtie"]),
 			HideWhenOverridden: true,
 			NoDisplace: true,
+			DisplacementPosesExclude: ["Hogtie"],
 			DisplacementSprite: "Boots",
 			DisplaceAmount: 10,
 			DisplaceLayers: ToMap(["Boots"]),
@@ -567,6 +568,7 @@ AddModel({
 			NoDisplace: true,
 
 			DisplacementSprite: "BalletCuffs",
+			DisplaceZBonus: 10000,
 			DisplaceAmount: 20,
 			DisplaceLayers: ToMap(["BalletHeelsCuffs"]),
 			HidePoseConditional: [
@@ -583,7 +585,7 @@ AddModel({
 				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
 			],
 		},
-		{ Name: "BootLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 25,
+		{ Name: "FootBootLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 25,
 			Poses: ToMap(["Hogtie"]),
 			HideWhenOverridden: true,
 			InheritColor: "BootLeft",
@@ -1456,8 +1458,8 @@ AddModel({
 	Categories: ["Shoes"],
 	Layers: ToLayerMap([
 		{ Name: "ShoeLeft", Layer: "ShoeLeft", Pri: 1,
-			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie"]),
-			GlobalDefaultOverride: ToMap(["KneelClosed"]),
+			Poses: ToMap([...LEGPOSES]),
+			GlobalDefaultOverride: ToMap(["KneelClosed", "Hogtie"]),
 			HideWhenOverridden: true,
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 			AppendPose: ToMapDupe(["RopesAnkle"]),
@@ -1475,7 +1477,7 @@ AddModel({
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 			HideWhenOverridden: true,
 		},
-		{ Name: "ShoeLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 1,
+		{ Name: "FootShoeLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 1,
 			Poses: ToMap(["Hogtie"]),
 			Invariant: true,
 			InheritColor: "ShoeLeft",
@@ -2017,13 +2019,13 @@ AddModel({
 			DisplacementInvariant: true,
 			HideWhenOverridden: true,
 		},
-		{ Name: "RibbonBack", Layer: "BeltBack", Pri: 30,
+		{ Name: "RibbonBack", Layer: "BeltBack", Pri: -30,
 			Poses: ToMap(["Wristtie", "Boxtie"]),
 			Invariant: true,
 			HidePoses: ToMap(["HideBigProps"]),
 			MorphPoses: {Kneel: "Kneel", KneelClosed: "Kneel", UprightHogtie: "Boxtie", SuspendedHogtie: "Boxtie", Hogtie: "Hogtie"},
 		},
-		{ Name: "RibbonFarBack", Layer: "BeltFarBack", Pri: 30,
+		{ Name: "RibbonFarBack", Layer: "BeltFarBack", Pri: -30,
 			Sprite: "RibbonBack",
 			Poses: ToMapSubtract([...ARMPOSES], ["Wristtie", "Boxtie"]),
 			Invariant: true,

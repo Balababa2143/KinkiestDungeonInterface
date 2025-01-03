@@ -29,6 +29,8 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 			KDAutoGenRestraintBlueprint("ChainBikini", "Armor", "", 1, {Metal: 150}),
 			KDAutoGenRestraintBlueprint("SteelArmor", "Armor", "", 1, {Metal: 300}),
 			KDAutoGenRestraintBlueprint("Swimsuit", "Armor", "", 1, {Latex: 250}),
+
+			KDAutoGenRestraintBlueprint("GagNecklace", "Armor", "", 1, {Latex: 15}),
 		]
 	},
 	Leather: {
@@ -43,6 +45,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 			KDAutoGenRestraintBlueprint("TrapMittens", "Leather", ""),
 			KDAutoGenRestraintBlueprint("TrapBoots", "Leather", ""),
 			KDAutoGenRestraintBlueprint("TrapGag", "Leather", ""),
+			KDAutoGenRestraintBlueprint("TrapBlindfold", "Leather", ""),
 			KDAutoGenRestraintBlueprint("PanelGag", "Leather", ""),
 			KDAutoGenRestraintBlueprint("PanelPlugGag", "Leather", ""),
 			KDAutoGenRestraintBlueprint("PanelPlugGagHarness", "Leather", ""),
@@ -56,14 +59,8 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 			KDAutoGenRestraintBlueprint("KittyPetSuit", "Leather", ""),
 			KDAutoGenRestraintBlueprint("KittySuit", "Leather", ""),
 
-			KDAutoGenRestraintBlueprint("AsylumJacket", "Dress", "", 2,
-				undefined, {Rope: 3}),
-			KDAutoGenRestraintBlueprint("TransportJacket", "Dress", "", 3,
-				undefined, {Rope: 3}),
-			KDAutoGenRestraintBlueprint("AsylumLegbinder", "Dress", "", 3,
-				undefined, {Rope: 3}),
-
-
+			KDAutoGenRestraintBlueprint("LeatherHood", "Leather", ""),
+			KDAutoGenRestraintBlueprint("LeatherMask", "Leather", ""),
 		]
 	},
 	Leather2: {
@@ -80,6 +77,12 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 			KDAutoGenRestraintBlueprint("HighsecMuzzle", "Leather", "", 1.5),
 			KDAutoGenRestraintBlueprint("HighsecLegbinder", "Leather", "", 1.5),
 
+			KDAutoGenRestraintBlueprint("AsylumJacket", "Dress", "", 1.5,
+				undefined, {Rope: 3}),
+			KDAutoGenRestraintBlueprint("TransportJacket", "Dress", "", 1.5,
+				undefined, {Rope: 3}),
+			KDAutoGenRestraintBlueprint("AsylumLegbinder", "Dress", "", 1.5,
+				undefined, {Rope: 3}),
 
 			KDAutoGenRestraintBlueprint("LeatherArmCuffs", "Leather", ""),
 			KDAutoGenRestraintBlueprint("LeatherLegCuffs", "Leather", ""),
@@ -180,33 +183,25 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 		name: "Metal",
 		prereq: () => {return true;},
 		items: [
-			KDAutoGenRestraintBlueprint("MagicBelt", "Leather", "", undefined, {
-				Metal: 30,
-				Rune: 1,
+
+
+			KDAutoGenRestraintBlueprint("TrapCuffs", "Metal", "", 1.2),
+			KDAutoGenRestraintBlueprint("ThumbCuffsNew", "Metal", "", 0.8),
+			KDAutoGenRestraintBlueprint("HighsecShackles", "Metal", "", 1.5),
+			KDAutoGenRestraintBlueprint("Irish8Cuffs", "Metal", ""),
+			KDAutoGenRestraintBlueprint("TrapLegirons", "Metal", ""),
+			KDAutoGenRestraintBlueprint("LegShackles", "Metal", ""),
+			KDAutoGenRestraintBlueprint("FeetShackles", "Metal", ""),
+			KDAutoGenRestraintBlueprint("AnkleIrish8Cuffs", "Metal", ""),
+			KDAutoGenRestraintBlueprint("ExpBoots", "Metal", ""),
+			KDAutoGenRestraintBlueprint("SteelArmCuffs", "Metal", ""),
+
+			KDAutoGenRestraintBlueprint("MithrilCollar", "Metal", "", 1, {
+				Metal: 10,
 			}),
-
-			KDAutoGenRestraintBlueprint("TrapCuffs", "Leather", "", 1.2),
-			KDAutoGenRestraintBlueprint("ThumbCuffsNew", "Leather", "", 0.8),
-			KDAutoGenRestraintBlueprint("HighsecShackles", "Leather", "", 1.5),
-			KDAutoGenRestraintBlueprint("Irish8Cuffs", "Leather", ""),
-			KDAutoGenRestraintBlueprint("TrapLegirons", "Leather", ""),
-			KDAutoGenRestraintBlueprint("LegShackles", "Leather", ""),
-			KDAutoGenRestraintBlueprint("FeetShackles", "Leather", ""),
-			KDAutoGenRestraintBlueprint("AnkleIrish8Cuffs", "Leather", ""),
-			KDAutoGenRestraintBlueprint("TrapBelt", "Leather", ""),
-			KDAutoGenRestraintBlueprint("TrapBeltProto", "Leather", "", 3),
-			KDAutoGenRestraintBlueprint("TrapBelt2", "Leather", ""),
-			KDAutoGenRestraintBlueprint("TrapBra", "Leather", ""),
-			KDAutoGenRestraintBlueprint("TrapBra2", "Leather", ""),
-			KDAutoGenRestraintBlueprint("PrisonBelt", "Leather", ""),
-			KDAutoGenRestraintBlueprint("PrisonBelt2", "Leather", ""),
-			KDAutoGenRestraintBlueprint("ExpBoots", "Leather", ""),
-			KDAutoGenRestraintBlueprint("SteelArmCuffs", "Leather", ""),
-
-			KDAutoGenRestraintBlueprint("MithrilCollar", "Leather", ""),
-			KDAutoGenRestraintBlueprint("MithrilArmCuffs", "Leather", ""),
-			KDAutoGenRestraintBlueprint("MithrilLegCuffs", "Leather", ""),
-			KDAutoGenRestraintBlueprint("MithrilAnkleCuffs", "Leather", ""),
+			KDAutoGenRestraintBlueprint("MithrilArmCuffs", "Metal", ""),
+			KDAutoGenRestraintBlueprint("MithrilLegCuffs", "Metal", ""),
+			KDAutoGenRestraintBlueprint("MithrilAnkleCuffs", "Metal", ""),
 
 		]
 	},
@@ -214,28 +209,55 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 		name: "Metal2",
 		prereq: () => {return true;},
 		items: [
+
+			KDAutoGenRestraintBlueprint("BlacksteelArmCuffs", "Metal", ""),
+			KDAutoGenRestraintBlueprint("BlacksteelLegCuffs", "Metal", ""),
+			KDAutoGenRestraintBlueprint("BlacksteelAnkleCuffs", "Metal", ""),
+			KDAutoGenRestraintBlueprint("BlacksteelMuzzleGag", "Metal", ""),
+
+
+			KDAutoGenRestraintBlueprint("ObsidianCollar", "Metal", "", 1, undefined,
+				{Rune: 1}, 10
+			),
+			KDAutoGenRestraintBlueprint("ObsidianArmCuffs", "Metal", "", 1, undefined,
+				{Rune: 1}, 10),
+			KDAutoGenRestraintBlueprint("ObsidianLegCuffs", "Metal", "", 1, undefined,
+				{Rune: 1}, 10),
+			KDAutoGenRestraintBlueprint("ObsidianAnkleCuffs", "Metal", "", 1, undefined,
+				{Rune: 1}, 10),
+
+
+			KDAutoGenRestraintBlueprint("SteelMuzzleGag", "Metal", ""),
+		]
+	},
+	Chastity: {
+		name: "Chastity",
+		prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode");},
+		items: [
+
+			KDAutoGenRestraintBlueprint("TrapBelt", "Leather", ""),
+			KDAutoGenRestraintBlueprint("TrapBeltProto", "Leather", "", 3),
+			KDAutoGenRestraintBlueprint("TrapBelt2", "Leather", ""),
+			KDAutoGenRestraintBlueprint("TrapBra", "Leather", ""),
+			KDAutoGenRestraintBlueprint("TrapBra2", "Leather", ""),
+			KDAutoGenRestraintBlueprint("PrisonBelt", "Leather", ""),
+			KDAutoGenRestraintBlueprint("PrisonBelt2", "Leather", ""),
+
+			KDAutoGenRestraintBlueprint("MagicBelt", "Leather", "", undefined, {
+				Metal: 30,
+				Rune: 1,
+			}),
+
 			KDAutoGenRestraintBlueprint("BlacksteelBelt", "Leather", ""),
 			KDAutoGenRestraintBlueprint("BlacksteelBra", "Leather", ""),
 
-			KDAutoGenRestraintBlueprint("BlacksteelArmCuffs", "Leather", ""),
-			KDAutoGenRestraintBlueprint("BlacksteelLegCuffs", "Leather", ""),
-			KDAutoGenRestraintBlueprint("BlacksteelAnkleCuffs", "Leather", ""),
-
-
-			KDAutoGenRestraintBlueprint("ObsidianCollar", "Leather", "", 1, undefined,
-				{Rune: 1}, 10
-			),
-			KDAutoGenRestraintBlueprint("ObsidianArmCuffs", "Leather", "", 1, undefined,
-				{Rune: 1}, 10),
-			KDAutoGenRestraintBlueprint("ObsidianLegCuffs", "Leather", "", 1, undefined,
-				{Rune: 1}, 10),
-			KDAutoGenRestraintBlueprint("ObsidianAnkleCuffs", "Leather", "", 1, undefined,
-				{Rune: 1}, 10),
-
-
-			KDAutoGenRestraintBlueprint("SteelMuzzleGag", "Leather", ""),
+			KDAutoGenRestraintBlueprint("CyberBelt", "Cyber", "", 2,
+				undefined, {Latex: 5}),
+			KDAutoGenRestraintBlueprint("CyberBra", "Cyber", "", 2,
+				undefined, {Latex: 5}),
 		]
 	},
+
 	Cyber: {
 		name: "Cyber",
 		prereq: () => {return true;},
@@ -254,10 +276,6 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 				undefined, undefined),
 			KDAutoGenRestraintBlueprint("CyberArmCuffs", "Cyber", "", 2,
 				undefined, undefined),
-			KDAutoGenRestraintBlueprint("CyberBelt", "Cyber", "", 2,
-				undefined, {Latex: 5}),
-			KDAutoGenRestraintBlueprint("CyberBra", "Cyber", "", 2,
-				undefined, {Latex: 5}),
 			KDAutoGenRestraintBlueprint("CyberLongMittens", "Cyber", "", 1.4,
 				undefined, {Latex: 4}),
 			KDAutoGenRestraintBlueprint("CyberMittens", "Cyber", "", 1.4,
@@ -300,8 +318,10 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 		name: "Dress",
 		prereq: () => {return true;},
 		items: [
+			KDAutoGenRestraintBlueprint("ObsidianLeash", "Dress", "", 1,
+				{Rope: 20, Rune: 1}, undefined, 20),
 			KDAutoGenRestraintBlueprint("BindingDress", "Dress", "", 1,
-				undefined, {Rope: 10}),
+				{Rope: 50, Latex: 10}),
 			KDAutoGenRestraintBlueprint("DressGag", "Dress", "", 1,
 				undefined, {Rope: 3}),
 			KDAutoGenRestraintBlueprint("DressMuzzle", "Dress", "", 1,
@@ -474,7 +494,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 	},
 	Toys: {
 		name: "Toys",
-		prereq: () => {return true;},
+		prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode");},
 		items: [
 			{
 				name: "TrapVibe",
@@ -486,7 +506,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 10,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode");},
 			},
 			{
 				name: "TrapVibeProto",
@@ -498,7 +518,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 10,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode");},
 			},
 			{
 				name: "MaidVibe",
@@ -510,7 +530,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 12,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode");},
 			},
 			{
 				name: "TrapPlug",
@@ -522,7 +542,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 10,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode") && !KinkyDungeonStatsChoice.get("arousalModePlugNoFront");},
 			},
 			{
 				name: "TrapPlug2",
@@ -534,7 +554,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 10,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode") && !KinkyDungeonStatsChoice.get("arousalModePlugNoFront");},
 			},
 			{
 				name: "TrapPlug3",
@@ -546,7 +566,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 10,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode") && !KinkyDungeonStatsChoice.get("arousalModePlugNoFront");},
 			},
 			{
 				name: "TrapPlug4",
@@ -558,7 +578,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 10,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode") && !KinkyDungeonStatsChoice.get("arousalModePlugNoFront");},
 			},
 			{
 				name: "TrapPlug5",
@@ -570,7 +590,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 10,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode") && !KinkyDungeonStatsChoice.get("arousalModePlugNoFront");},
 			},
 			{
 				name: "RearVibe1",
@@ -582,7 +602,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 					Latex: 10,
 					Rune: 1,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalModePlug");},
 			},
 			{
 				name: "SteelPlugF",
@@ -593,7 +613,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 				recyclecost: {
 					Metal: 4,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalMode") && !KinkyDungeonStatsChoice.get("arousalModePlugNoFront");},
 			},
 			{
 				name: "SteelPlugR",
@@ -604,7 +624,7 @@ let KDRecyclerCategories: Record<string, KDBlueprintCategory> = {
 				recyclecost: {
 					Metal: 4,
 				},
-				prereq: () => {return true;},
+				prereq: () => {return KinkyDungeonStatsChoice.get("arousalModePlug");},
 			},
 
 		]

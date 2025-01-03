@@ -10,11 +10,16 @@ interface RestraintGenericTypeSlot {
 	count: number,
 	restraint: string,
 	icon?: string,
+	variant?: string,
+	events?: KinkyDungeonEvent[],
+	powerbonus?: number,
+	inventoryVariant?: string,
 }
 
 
 
-let KDRestraintGenericTypes = {
+
+let KDRestraintGenericTypes: Record<string, RestraintGenericType> = {
 	"HempRope": {
 		raw: "RopeSnakeRaw",
 		items: [
@@ -243,3 +248,29 @@ let KDRestraintGenericTypes = {
 		],
 	},
 };
+
+let KDGenericRestraintRawCache: Record<string, {raw: string, count: number}> = {};
+let KDGenericRestraintRawOriginalCache: Record<string, {name: string, count: number}[]> = {};
+
+function KDRefreshRawCache() {
+	KDGenericRestraintRawCache = {};
+	for (let mat of Object.values(KDRestraintGenericTypes)) {
+		let raw = mat.raw;
+		if (!KDGenericRestraintRawOriginalCache[mat.raw] )
+			KDGenericRestraintRawOriginalCache[mat.raw] = [];
+		for (let item of mat.items) {
+			KDGenericRestraintRawCache[item.restraint] = {
+				count: item.count,
+				raw: raw,
+			};
+			KDGenericRestraintRawOriginalCache[mat.raw].push(
+				{
+					name: item.restraint,
+					count: item.count,
+				}
+			);
+		}
+	}
+}
+
+KDRefreshRawCache();

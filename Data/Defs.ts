@@ -96,6 +96,7 @@ let LAYERS_BASE = [
 	// Hair mid
 	"HairMid",
 
+	"ChestplateOver",
 
 	// Collar and collar accessories
 	"Collar",
@@ -105,6 +106,7 @@ let LAYERS_BASE = [
 
 	// This slot is for things like breastplates and things that go over
 	"WrappingChest",
+	"UpperArmStraps",
 
 	"WrapArms",
 
@@ -119,6 +121,7 @@ let LAYERS_BASE = [
 	"ChestDeco",
 	"ChestStraps",
 
+	"UpperArmStrapsBack",
 
 	// Chest is breasts, should only intersect on bottom and side edges, top is indeterminate
 	"Straps",
@@ -172,11 +175,18 @@ let LAYERS_BASE = [
 
 	// Certain pieces of armor go over the shirt
 	"BeltBondage",
+	"BeltCharmSide",
+	"BeltArmor",
 	"BeltCharm",
 	"BeltDeco",
 	"Belt",
 
+
+	"OverCorset",
+
 	"BaggyShirt",
+
+	"Apron",
 
 	// Skirts that dont follow shilhouette
 	"OverSkirtDeco",
@@ -360,6 +370,7 @@ let LAYERS_BASE = [
 	"WristLeft",
 	"MittenLeft",
 	"GloveLeft",
+	"TightSleeveLeft",
 	"HandLeft",
 	"ArmLeft",
 
@@ -430,6 +441,7 @@ let LAYERS_BASE = [
 	"WristRight",
 	"MittenRight",
 	"GloveRight",
+	"TightSleeveRight",
 	"HandRight",
 	"ArmRight",
 
@@ -475,6 +487,8 @@ let LayerGroups = {
 	]),
 	ButtSleeves: ToMap([
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -484,6 +498,9 @@ let LayerGroups = {
 	BustierPoses: ToMap([
 		"Bustier",
 		"Corset",
+		"OverCorset",
+
+		"Apron",
 		"CorsetLiner",
 		"HarnessLower",
 		"HarnessMid",
@@ -501,6 +518,8 @@ let LayerGroups = {
 	BustierPoses2: ToMap([
 		"Bustier",
 		"Corset",
+		"OverCorset",
+		"Apron",
 		"CorsetLiner",
 		"HarnessLower",
 		"HarnessMid",
@@ -742,6 +761,8 @@ let LayerGroups = {
 	"Arms": ToMap([
 		//"Shirt",
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -767,6 +788,8 @@ let LayerGroups = {
 		"Shirt",
 		"ShirtOver",
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -844,6 +867,8 @@ let LayerGroups = {
 		"Shirt",
 		"ShirtOver",
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -922,6 +947,8 @@ let LayerGroups = {
 		"Shirt",
 		"ShirtOver",
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -1171,6 +1198,8 @@ let LayerGroups = {
 		"Shirt",
 		"ShirtOver",
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -1246,6 +1275,15 @@ let LayerGroups = {
 		"SuitChest",
 		"BraChest",
 		"BindChestLower",
+		"Option_BindChestLower",
+	]),
+
+	"MaidArmPoofRight": ToMap([
+		"TorsoUpper",
+		"Torso",
+		"SleeveRight",
+		"ArmRight",
+		"GloveRight",
 	]),
 
 	"RibbonThighs": ToMap([
@@ -1369,6 +1407,8 @@ let LayerGroups = {
 		"GloveLeft",
 		"GloveRight",
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -1381,6 +1421,8 @@ let LayerGroups = {
 		"GloveLeft",
 		"GloveRight",
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -1429,6 +1471,8 @@ let LayerGroups = {
 		//"GloveLeft",
 		//"GloveRight",
 		"SleeveLeft",
+		"TightSleeveLeft",
+		"TightSleeveRight",
 		"SleeveDecoLeft",
 		"SleeveRight",
 		"SleeveDecoRight",
@@ -1508,9 +1552,13 @@ let LayerGroups = {
 	// This slot is for things like breastplates and things that go over
 	"WrappingChest",
 
+	"UpperArmStraps",
+	"UpperArmStrapsBack",
+
 	"Jacket",
 	"ChestDeco",
 	"Chestplate",
+	"ChestplateOver",
 	"WrapChest",
 
 	// Bondage
@@ -1547,9 +1595,14 @@ let LayerGroups = {
 	// Certain pieces of armor go over the shirt
 	"BeltBondage",
 	"BeltCharm",
+	"BeltCharmSide",
+	"BeltArmor",
 	"Belt",
 	"BeltDeco",
 	"BeltUnder",
+
+	"OverCorset",
+	"Apron",
 
 	"BaggyShirt",
 
@@ -1636,6 +1689,8 @@ let LayerGroups = {
 
 	"SleeveDecoLeft",
 	"SleeveLeft",
+	"TightSleeveLeft",
+	"TightSleeveRight",
 	"SuitChestOver",
 	"UpSleeveRight",
 
@@ -1653,6 +1708,25 @@ let LayerGroups = {
 	"SleeveRight",
 		]
 	),
+
+	WrappingLegsOver: {
+		"WrappingLegsOver2": true,
+		"LegbinderLegsOver2": true,
+		"WrappingLegsOver": true,
+		"LegbinderLegsOver": true,
+		"WrappingLegs": true,
+		"WrappingLegs2": true,
+	},
+	BindWristLeft: {
+		"BindWristLeft": true,
+		"BindForeWristLeft": true,
+		"BindCrossWristLeft": true,
+	},
+	BindWristRight: {
+		"BindWristRight": true,
+		"BindForeWristRight": true,
+		"BindCrossWristRight": true,
+	},
 	// Extra layer of unpeeling over the head if we are wearing a blindfold or harness gag
 	XrayFace: ToMap(
 		[

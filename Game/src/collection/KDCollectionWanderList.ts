@@ -27,7 +27,11 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 		maintain: (value, entity, delta) => {
 			if (entity) {
 				// Go to the dorm and despawn
-				let point = KDMapData.Labels?.ServantEntrance ? KDMapData.Labels.ServantEntrance[0] : {x: 1, y: 3};
+				let point = KDMapData.Labels?.ServantEntrance ? KDMapData.Labels.ServantEntrance[0] : null;
+				if (!point) {
+					delete entity.FacilityAction;
+					return;
+				}
 				if (KDistChebyshev(entity.x - point.x, entity.y - point.y) < 0.5) {
 					KDRemoveEntity(entity, false, false, true);
 					value.spawned = false;
@@ -71,7 +75,12 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 		maintain: (value, entity, delta) => {
 			if (entity) {
 				// Go to the dorm and despawn
-				let point = KDMapData.Labels?.LoungeEntrance ? KDMapData.Labels.LoungeEntrance[0] : {x: 1, y: 3};
+				let point = KDMapData.Labels?.LoungeEntrance ? KDMapData.Labels.LoungeEntrance[0] : null;
+
+				if (!point) {
+					delete entity.FacilityAction;
+					return;
+				}
 				if (KDistChebyshev(entity.x - point.x, entity.y - point.y) < 0.5) {
 					KDRemoveEntity(entity, false, false, true);
 					value.spawned = false;
@@ -98,14 +107,18 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 				let point = KinkyDungeonGetRandomEnemyPoint(true, false, undefined);
 				if (point) {
 					let e = DialogueCreateEnemy(point.x, point.y, value.type, value.id, true);
-					KDSetServantSpawnTemplate(e);
-					e.FacilityAction = "Management";
+					if (e) {
+						KDSetServantSpawnTemplate(e);
+						e.FacilityAction = "Management";
+					}
 				}
 			} else {
 				let point = KDMapData.Labels?.ServantEntrance ? KDMapData.Labels.ServantEntrance[0] : {x: 1, y: 3};
 				let e = DialogueCreateEnemy(point.x, point.y, value.type, value.id, true);
-				KDSetServantSpawnTemplate(e);
-				e.FacilityAction = "Management";
+				if (e) {
+					KDSetServantSpawnTemplate(e);
+					e.FacilityAction = "Management";
+				}
 			}
 			return null;
 		},
@@ -123,6 +136,44 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 		// If its not the same it is changed
 		onChangeFacility: (value, entity, fromFacility, toFacility) => {return toFacility == "Management" ? toFacility : "Return";},
 	},
+	Warden: {
+		spawnRoom: "Summit",
+		spawnCondition: (value) => {
+			// if they are already spawned they appear in a random place
+			let entity = KinkyDungeonFindID(value.id);
+			if (value.spawned && !entity) {
+				let point = KinkyDungeonGetRandomEnemyPoint(true, false, undefined);
+				if (point) {
+					let e = DialogueCreateEnemy(point.x, point.y, value.type, value.id, true);
+					if (e) {
+						KDSetServantSpawnTemplate(e);
+						e.FacilityAction = "Warden";
+					}
+				}
+			} else {
+				let point = KDMapData.Labels?.ServantEntrance ? KDMapData.Labels.ServantEntrance[0] : {x: 1, y: 3};
+				let e = DialogueCreateEnemy(point.x, point.y, value.type, value.id, true);
+				if (e) {
+					KDSetServantSpawnTemplate(e);
+					e.FacilityAction = "Warden";
+				}
+			}
+			return null;
+		},
+		// Set to spawned, dont need to do anything special
+		spawnConditionRemote: (value) => {
+			value.spawned = true;
+			return null;
+		},
+
+		// Maintenance condition
+		maintain: (value, entity, delta) => {
+			// They just kinda chill man
+		},
+
+		// If its not the same it is changed
+		onChangeFacility: (value, entity, fromFacility, toFacility) => {return toFacility == "Warden" ? toFacility : "Return";},
+	},
 
 
 	CuddleLounge: {
@@ -136,14 +187,19 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 					let point = KinkyDungeonGetRandomEnemyPoint(true, false, undefined,);
 					if (point) {
 						let e = DialogueCreateEnemy(point.x, point.y, value.type, value.id, true);
-						KDSetServantSpawnTemplate(e);
-						e.FacilityAction = "CuddleLounge";
+						if (e) {
+							KDSetServantSpawnTemplate(e);
+							e.FacilityAction = "CuddleLounge";
+						}
 					}
 				} else {
 					let point = KDMapData.Labels?.LoungeEntrance ? KDMapData.Labels.LoungeEntrance[0] : {x: 1, y: 3};
 					let e = DialogueCreateEnemy(point.x, point.y, value.type, value.id, true);
-					KDSetServantSpawnTemplate(e);
-					e.FacilityAction = "CuddleLounge";
+					if (e) {
+						KDSetServantSpawnTemplate(e);
+						e.FacilityAction = "CuddleLounge";
+					}
+
 				}
 			}
 
@@ -158,7 +214,7 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 
 		// Maintenance condition
 		maintain: (value, entity, delta) => {
-			let point = KDMapData.Labels?.Lounge ? KDMapData.Labels.Lounge[0] : {x: 5, y: 17};
+			let point = KDMapData.Labels?.Lounge ? KDMapData.Labels.Lounge[0] : null;
 			if (point) {
 				entity.AI = "looseguard";
 				entity.gxx = point.x;
@@ -183,11 +239,18 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 							&& !eligibleIDs.includes(e.id)
 							&& !presentIDs.includes(e.id)) {
 								if (!KDIDHasFlag(e.id, "cuddleTime")
-									&& KDistChebyshev(point.x - e.x, point.y - e.y) < 4.5) {
+									&& KDistChebyshev(point.x - e.x, point.y - e.y) > 4.5) {
 										presentIDs.push(e.id);
 										removeIDs.push(e.id);
 								}
 							}
+						else if (KDIsImprisoned(e)
+							&& presentIDs.includes(e.id)) {
+								if (!KDIDHasFlag(e.id, "cuddleTime")
+									&& KDistChebyshev(point.x - e.x, point.y - e.y) > 4.5) {
+										removeIDs.push(e.id);
+								}
+						}
 					}
 				}
 
@@ -195,13 +258,14 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 					// Play with prisoner
 					let prisonerID = removeIDs.length > 0 ?
 						removeIDs[0]
-						: presentIDs[Math.floor(KDRandom() * eligibleIDs.length)];
+						: presentIDs[Math.floor(KDRandom() * presentIDs.length)];
 					let prisoner = KinkyDungeonFindID(prisonerID);
 					if (prisoner) {
 						KDSetIDFlag(entity.id, "overrideMove", 18);
 						if (KDistChebyshev(entity.x - prisoner.x, entity.y - prisoner.y) < 1.5) {
 							// Despawn if not prisoner
-							if (!KDGameData.FacilitiesData["Prisoners_CuddleLounge"].includes(prisoner.id)) {
+							if (!KDGameData.FacilitiesData["Prisoners_CuddleLounge"].includes(prisoner.id)
+								|| prisonerID == removeIDs[0]) {
 								if (!KDIDHasFlag(prisoner.id, "cuddleTime")) {
 									// Despawn
 									KDFreeNPC(prisoner);
@@ -211,13 +275,16 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 									}
 								}
 							} else {
-								KDSetIDFlag(entity.id, "loungeInteract", 30);
-								KDSetIDFlag(entity.id, "wander", 7);
+								KDSetIDFlag(entity.id, "loungeInteract", 50);
+								KDSetIDFlag(entity.id, "wander", 17);
 							}
 							entity.gx = entity.x;
 							entity.gy = entity.y;
 						} else {
 							let pp = KinkyDungeonGetNearbyPoint(prisoner.x, prisoner.y, true, undefined, true);
+							if (!pp) pp = KinkyDungeonGetNearbyPoint(prisoner.x, prisoner.y, true, undefined, undefined);
+							if (!pp) pp = KinkyDungeonGetNearbyPoint(entity.x, entity.y, true, undefined, undefined);
+
 							if (pp) {
 								entity.gx = pp.x;
 								entity.gy = pp.y;
@@ -225,7 +292,15 @@ let KDCollectionWanderTypes: Record<string, CollectionWanderType> = {
 						}
 					}
 				} else if (eligibleIDs.length > 0 && KDRandom() < 0.5) {
-					let furn = KinkyDungeonNearestJailPoint(entity.x, entity.y, ["furniture"], undefined, undefined, true);
+					let furn = KinkyDungeonNearestJailPoint(
+						entity.x - 3 + Math.floor(KDRandom()*3),
+						entity.y - 3 + Math.floor(KDRandom()*3),
+						["furniture"],
+						undefined, undefined, true,
+						(x, y, pp) => {
+							return KDistChebyshev(x - point.x, y - point.y) <= 4.5;
+						}
+					);
 
 					if (furn) {
 						KDSetIDFlag(entity.id, "overrideMove", 18);

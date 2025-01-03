@@ -222,6 +222,7 @@
             <key type="filename">../Models/ArmorPlate/BootRightSpread.png</key>
             <key type="filename">../Models/ArmorPlate/Breastplate.png</key>
             <key type="filename">../Models/ArmorPlate/BreastplateHogtie.png</key>
+            <key type="filename">../Models/ArmorPlate/FootBootLeftHogtie.png</key>
             <key type="filename">../Models/ArmorPlate/GauntletLeftCrossed.png</key>
             <key type="filename">../Models/ArmorPlate/GauntletLeftFree.png</key>
             <key type="filename">../Models/ArmorPlate/GauntletLeftFront.png</key>
@@ -353,6 +354,18 @@
             <key type="filename">../Models/Body/TorsoClosedChastity.png</key>
             <key type="filename">../Models/Body/TorsoSpread.png</key>
             <key type="filename">../Models/Body/TorsoSpreadChastity.png</key>
+            <key type="filename">../Models/Bra/Bra.png</key>
+            <key type="filename">../Models/Bra/BraRim.png</key>
+            <key type="filename">../Models/Bra/BraUnder.png</key>
+            <key type="filename">../Models/Bra/BraUnderRim.png</key>
+            <key type="filename">../Models/Bra/Cherry.png</key>
+            <key type="filename">../Models/Bra/InnerLines.png</key>
+            <key type="filename">../Models/Bra/InvertedRose.png</key>
+            <key type="filename">../Models/Bra/Rose.png</key>
+            <key type="filename">../Models/Bra/Straps.png</key>
+            <key type="filename">../Models/Bra/StrapsTied.png</key>
+            <key type="filename">../Models/Bra/StrapsUp.png</key>
+            <key type="filename">../Models/Bra/Stripes.png</key>
             <key type="filename">../Models/Bubble/Arms.png</key>
             <key type="filename">../Models/Bubble/BallSuit.png</key>
             <key type="filename">../Models/Bubble/BallSuitSeam.png</key>
@@ -522,6 +535,10 @@
             <key type="filename">../Models/Chastity/CyberDisplay.png</key>
             <key type="filename">../Models/Chastity/CyberLining.png</key>
             <key type="filename">../Models/Chastity/CyberLock.png</key>
+            <key type="filename">../Models/Chastity/CyberPanties.png</key>
+            <key type="filename">../Models/Chastity/CyberPantiesClosed.png</key>
+            <key type="filename">../Models/Chastity/CyberPantiesLining.png</key>
+            <key type="filename">../Models/Chastity/CyberPantiesLiningClosed.png</key>
             <key type="filename">../Models/Chastity/CyberPlug.png</key>
             <key type="filename">../Models/Chastity/Proto.png</key>
             <key type="filename">../Models/Chastity/ProtoDisplay.png</key>
@@ -1309,6 +1326,7 @@
             <key type="filename">../Models/Dress/BlouseNeck.png</key>
             <key type="filename">../Models/Dress/BlouseNeckBoxtie.png</key>
             <key type="filename">../Models/Dress/BlouseNeckUp.png</key>
+            <key type="filename">../Models/Dress/BlouseShoulderRightUp.png</key>
             <key type="filename">../Models/Dress/BlouseSkirt.png</key>
             <key type="filename">../Models/Dress/BlouseSkirtKneel.png</key>
             <key type="filename">../Models/Dress/BlouseSkirtLone.png</key>
@@ -1448,6 +1466,9 @@
             <key type="filename">../Models/Furniture/Barrel.png</key>
             <key type="filename">../Models/Furniture/Bed.png</key>
             <key type="filename">../Models/Furniture/BedHogtie.png</key>
+            <key type="filename">../Models/Furniture/BedStraps.png</key>
+            <key type="filename">../Models/Furniture/BedStrapsHogtie.png</key>
+            <key type="filename">../Models/Furniture/BedStrapsHogtieBoxtie.png</key>
             <key type="filename">../Models/Furniture/CageBack.png</key>
             <key type="filename">../Models/Furniture/CageFront.png</key>
             <key type="filename">../Models/Furniture/DisplayFront.png</key>
@@ -1487,14 +1508,36 @@
             <key type="filename">../Models/FutureHarness/StrapsMid.png</key>
             <key type="filename">../Models/GagLatex/NeckCorset.png</key>
             <key type="filename">../Models/GagLatex/NeckCorsetRim.png</key>
+            <key type="filename">../Models/GagLeather/CrystalGagNecklaceBall.png</key>
+            <key type="filename">../Models/GagLeather/GagNecklace.png</key>
+            <key type="filename">../Models/GagLeather/GagNecklaceBall.png</key>
+            <key type="filename">../Models/Gothic/Buttons.png</key>
+            <key type="filename">../Models/Gothic/HemLower.png</key>
+            <key type="filename">../Models/Gothic/HemLowerBackCrotchStrap.png</key>
+            <key type="filename">../Models/Gothic/HemLowerCrotchStrap.png</key>
+            <key type="filename">../Models/Gothic/HemLowerKneel.png</key>
+            <key type="filename">../Models/Gothic/HemLowerKneelCrotchStrap.png</key>
+            <key type="filename">../Models/Gothic/HemUpper.png</key>
+            <key type="filename">../Models/Gothic/HemUpperCrotchStrap.png</key>
+            <key type="filename">../Models/Gothic/HemUpperKneel.png</key>
+            <key type="filename">../Models/Gothic/HemUpperKneelCrotchStrap..png</key>
+            <key type="filename">../Models/Gothic/LaceLower.png</key>
+            <key type="filename">../Models/Gothic/LaceLowerCrotchStrap.png</key>
+            <key type="filename">../Models/Gothic/LaceLowerKneel.png</key>
+            <key type="filename">../Models/Gothic/LaceLowerKneelCrotchStrap..png</key>
+            <key type="filename">../Models/Gothic/LaceUpper.png</key>
+            <key type="filename">../Models/Gothic/LaceUpperCrotchStrap.png</key>
+            <key type="filename">../Models/Gothic/LaceUpperKneel.png</key>
+            <key type="filename">../Models/Gothic/LaceUpperKneelCrotchStrap..png</key>
+            <key type="filename">../Models/Gothic/Lines.png</key>
+            <key type="filename">../Models/Gothic/LinesCrotchStrap.png</key>
+            <key type="filename">../Models/Gothic/LinesKneel.png</key>
+            <key type="filename">../Models/Gothic/LinesKneelCrotchStrap..png</key>
             <key type="filename">../Models/Gothic/Skirt.png</key>
-            <key type="filename">../Models/Gothic/SkirtClosed.png</key>
-            <key type="filename">../Models/Gothic/SkirtClosedCrotchStrap.png</key>
             <key type="filename">../Models/Gothic/SkirtCrotchStrap.png</key>
             <key type="filename">../Models/Gothic/SkirtKneel.png</key>
             <key type="filename">../Models/Gothic/SkirtKneelCrotchStrap.png</key>
-            <key type="filename">../Models/Gothic/SkirtOverKneel.png</key>
-            <key type="filename">../Models/Gothic/SkirtOverKneelCrotchStrap.png</key>
+            <key type="filename">../Models/Gothic/WaistbandClips.png</key>
             <key type="filename">../Models/Hair/Ahoge.png</key>
             <key type="filename">../Models/Hair/BackShortCurly.png</key>
             <key type="filename">../Models/Hair/BackShortCurlyUnderlight.png</key>
@@ -1749,6 +1792,8 @@
             <key type="filename">../Models/LatexPetsuit/LegsKneel.png</key>
             <key type="filename">../Models/LatexPetsuit/LegsKneelClosed.png</key>
             <key type="filename">../Models/Leash/Leash.png</key>
+            <key type="filename">../Models/Leash/LeashCollar.png</key>
+            <key type="filename">../Models/Leash/LeashCollarHardware.png</key>
             <key type="filename">../Models/Leash/LeashCrossed.png</key>
             <key type="filename">../Models/Leash/LeashFree.png</key>
             <key type="filename">../Models/Leash/LeashFront.png</key>
@@ -1963,6 +2008,310 @@
             <key type="filename">../Models/Maid/StripeSockRightKneel.png</key>
             <key type="filename">../Models/Maid/StripeSockRightKneelClosed.png</key>
             <key type="filename">../Models/Maid/StripeSockRightSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/Apron.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronBelt.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronBeltHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronBeltKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChest.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestBelts.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestBeltsUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestRufflesBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestRufflesCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestRufflesFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestRufflesFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestRufflesUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestRufflesWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronChestRufflesYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronCross.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronCrossHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronCrossKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronMiniBow.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronMiniBowHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronMiniBowKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronPattern.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronPatternHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronPatternKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronStripe.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronStripeHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ApronStripeKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftStripeBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftStripeCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftStripeFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftStripeFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftStripeUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftStripeWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftStripeYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightStripeBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightStripeCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightStripeFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightStripeFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightStripeUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightStripeWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightStripeYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ArmRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/Belts.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BeltsHardware.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLeftClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLeftKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLeftKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLeftSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegLeftClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegLeftKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegLeftKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegLeftSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegRightClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegRightHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegRightKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegRightKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootLegRightSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootRightClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootRightKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootRightSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootShoeLeftClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootShoeLeftKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootShoeLeftKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootShoeLeftSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootShoeRightClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/BootShoeRightSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ChestArmor.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/Corset.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/CorsetOrig.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/Dress.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressChestBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressChestFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressChestUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressChestWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressChestYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirt.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirtHem.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirtHemHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirtHemKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirtHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirtKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirtStripe.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirtStripeHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/DressSkirtStripeKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/FootBootLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/FootSockLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/FootSockRightKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ForeArmLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ForeArmLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ForeArmRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ForeArmRightFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletLeftBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletLeftFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletLeftUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletLeftWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletRightFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletRightFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletRightUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GauntletRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GloveLeftBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GloveLeftFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GloveLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GloveLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GloveRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GloveRightFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GloveRightFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/GloveRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/Headband.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/HeadbandFrill.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/HeadbandRibbon.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/HeadbandRibbonBack.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PantyhoseClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PantyhoseHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PantyhoseKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PantyhoseKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PantyhoseSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeft.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeftHardware.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeftHardwareUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeftHardwareYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeftStraps.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeftStrapsUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeftStrapsYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeftUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronRight.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronRightStraps.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronRightStrapsUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronRightStrapsYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronRightUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/PauldronRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/Pouches.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/ShoulderRightUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SideArmor.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveLeftBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveLeftFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveLeftStripeFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveLeftUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveLeftWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveRightBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveRightFree.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveRightFront.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveRightUp.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveRightWristtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockLeftClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockLeftKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockLeftKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockLeftSpread.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockRightClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockRightHogtie.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockRightKneel.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockRightKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightHeavy/SockRightSpread.png</key>
+            <key type="filename">../Models/MaidKnightLight/Apron.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronBack.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronChest.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronChestBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronChestCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronChestFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronChestUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronChestYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronKneel.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronKneelHogtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmLeftBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmLeftFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmLeftUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmLeftWristtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmRightBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmRightFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmRightFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmRightUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmRightWristtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/ArmRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/BootLeftClosed.png</key>
+            <key type="filename">../Models/MaidKnightLight/BootLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/BootLeftKneel.png</key>
+            <key type="filename">../Models/MaidKnightLight/BootLeftKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightLight/BootLeftSpread.png</key>
+            <key type="filename">../Models/MaidKnightLight/BootRightClosed.png</key>
+            <key type="filename">../Models/MaidKnightLight/BootRightKneel.png</key>
+            <key type="filename">../Models/MaidKnightLight/BootRightSpread.png</key>
+            <key type="filename">../Models/MaidKnightLight/Dress.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressChestBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressChestFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressChestUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressChestWristtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressChestYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressDeco.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressDecoBack.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressKneel.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressSkirt.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressSkirtHogtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/DressSkirtKneel.png</key>
+            <key type="filename">../Models/MaidKnightLight/Flower.png</key>
+            <key type="filename">../Models/MaidKnightLight/FlowerLeaves.png</key>
+            <key type="filename">../Models/MaidKnightLight/FootBootLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/FootSockLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/FootSockRightKneel.png</key>
+            <key type="filename">../Models/MaidKnightLight/ForeArmLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/ForeArmLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/ForeArmRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/ForeArmRightFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GloveLeftBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/GloveLeftFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/GloveLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GloveLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/GloveRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/GloveRightFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/GloveRightFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GloveRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2LeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2LeftFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2LeftFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2LeftUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2LeftWristtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2LeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2RightBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2RightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2RightFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2RightFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2RightUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuff2RightYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffLeftFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffLeftUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffLeftWristtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffRightBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffRightFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffRightFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffRightUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardCuffRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardLeftFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardLeftUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardLeftWristtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardRightBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardRightCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardRightFree.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardRightFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardRightUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/GuardRightYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/Headband.png</key>
+            <key type="filename">../Models/MaidKnightLight/HeadbandFrill.png</key>
+            <key type="filename">../Models/MaidKnightLight/HeadbandRibbon.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronLeft.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronLeftBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronLeftCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronLeftFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronLeftUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronLeftWristtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronLeftYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronStrap.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronStrapBoxtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronStrapCrossed.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronStrapFront.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronStrapUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronStrapWristtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/PauldronStrapYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/ShoulderRightUp.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockLeftClosed.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockLeftHogtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockLeftKneel.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockLeftKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockLeftSpread.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockRightClosed.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockRightHogtie.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockRightKneel.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockRightKneelClosed.png</key>
+            <key type="filename">../Models/MaidKnightLight/SockRightSpread.png</key>
             <key type="filename">../Models/Mittens/BandLeftFree.png</key>
             <key type="filename">../Models/Mittens/BandLeftFront.png</key>
             <key type="filename">../Models/Mittens/BandLeftYoked.png</key>
@@ -2056,6 +2405,7 @@
             <key type="filename">../Models/Ninja/SkirtOverKneel.png</key>
             <key type="filename">../Models/Ninja/SkirtOverKneelCrotchStrap.png</key>
             <key type="filename">../Models/Ninja/SockLeftClosed.png</key>
+            <key type="filename">../Models/Ninja/SockLeftHogtie.png</key>
             <key type="filename">../Models/Ninja/SockLeftKneel.png</key>
             <key type="filename">../Models/Ninja/SockLeftKneelClosed.png</key>
             <key type="filename">../Models/Ninja/SockLeftSpread.png</key>
@@ -2112,6 +2462,30 @@
             <key type="filename">../Models/OperaGloves/GloveRightUp.png</key>
             <key type="filename">../Models/OperaGloves/GloveRightWristtie.png</key>
             <key type="filename">../Models/OperaGloves/GloveRightYoked.png</key>
+            <key type="filename">../Models/Panties/Base.png</key>
+            <key type="filename">../Models/Panties/BaseClosed.png</key>
+            <key type="filename">../Models/Panties/BaseKneel.png</key>
+            <key type="filename">../Models/Panties/Bow.png</key>
+            <key type="filename">../Models/Panties/Cherry.png</key>
+            <key type="filename">../Models/Panties/CherryClosed.png</key>
+            <key type="filename">../Models/Panties/CherryKneel.png</key>
+            <key type="filename">../Models/Panties/InvertedRose.png</key>
+            <key type="filename">../Models/Panties/InvertedRoseClosed.png</key>
+            <key type="filename">../Models/Panties/InvertedRoseKneel.png</key>
+            <key type="filename">../Models/Panties/Lace.png</key>
+            <key type="filename">../Models/Panties/LacesKneel.png</key>
+            <key type="filename">../Models/Panties/Lines.png</key>
+            <key type="filename">../Models/Panties/LinesClosed.png</key>
+            <key type="filename">../Models/Panties/LinesKneel.png</key>
+            <key type="filename">../Models/Panties/Stripes.png</key>
+            <key type="filename">../Models/Panties/StripesClosed.png</key>
+            <key type="filename">../Models/Panties/StripesKneel.png</key>
+            <key type="filename">../Models/PantiesHigh/Base.png</key>
+            <key type="filename">../Models/PantiesHigh/BaseClosed.png</key>
+            <key type="filename">../Models/PantiesHigh/Lines.png</key>
+            <key type="filename">../Models/PantiesHigh/LinesClosed.png</key>
+            <key type="filename">../Models/PantiesHigh/Stripes.png</key>
+            <key type="filename">../Models/PantiesHigh/StripesClosed.png</key>
             <key type="filename">../Models/Petsuit/Arms.png</key>
             <key type="filename">../Models/Petsuit/ArmsBelts.png</key>
             <key type="filename">../Models/Petsuit/LeftLegsBeltsKneel.png</key>
@@ -2205,6 +2579,39 @@
             <key type="filename">../Models/Ribbon/TopThigh3Closed.png</key>
             <key type="filename">../Models/Ribbon/TopThigh3KneelClosed.png</key>
             <key type="filename">../Models/Ribbon/TopToeClosed.png</key>
+            <key type="filename">../Models/RobeOfChastity/BaseClosed.png</key>
+            <key type="filename">../Models/RobeOfChastity/BaseKneel.png</key>
+            <key type="filename">../Models/RobeOfChastity/BaseSpread.png</key>
+            <key type="filename">../Models/RobeOfChastity/Cape.png</key>
+            <key type="filename">../Models/RobeOfChastity/CapeKneel.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestBase.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestBaseTied.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestFabric.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestFabricTied.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestFrill.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestGold.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestGoldBase.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestGoldBaseTied.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestGoldTied.png</key>
+            <key type="filename">../Models/RobeOfChastity/ChestPlate.png</key>
+            <key type="filename">../Models/RobeOfChastity/FabricClosed.png</key>
+            <key type="filename">../Models/RobeOfChastity/FabricKneel.png</key>
+            <key type="filename">../Models/RobeOfChastity/FabricSpread.png</key>
+            <key type="filename">../Models/RobeOfChastity/FrillClosed.png</key>
+            <key type="filename">../Models/RobeOfChastity/FrillKneel.png</key>
+            <key type="filename">../Models/RobeOfChastity/FrillSpread.png</key>
+            <key type="filename">../Models/RobeOfChastity/GoldBaseClosed.png</key>
+            <key type="filename">../Models/RobeOfChastity/GoldBaseKneel.png</key>
+            <key type="filename">../Models/RobeOfChastity/GoldBaseSpread.png</key>
+            <key type="filename">../Models/RobeOfChastity/GoldClosed.png</key>
+            <key type="filename">../Models/RobeOfChastity/GoldKneel.png</key>
+            <key type="filename">../Models/RobeOfChastity/GoldSpread.png</key>
+            <key type="filename">../Models/RobeOfChastity/PauldronsFree.png</key>
+            <key type="filename">../Models/RobeOfChastity/PauldronsTied.png</key>
+            <key type="filename">../Models/RobeOfChastity/PauldronsYoked.png</key>
+            <key type="filename">../Models/RobeOfChastity/PlateClosed.png</key>
+            <key type="filename">../Models/RobeOfChastity/PlateKneel.png</key>
+            <key type="filename">../Models/RobeOfChastity/PlateSpread.png</key>
             <key type="filename">../Models/Robes/Bra.png</key>
             <key type="filename">../Models/Robes/Chest.png</key>
             <key type="filename">../Models/Robes/PantsClosed.png</key>
@@ -2428,6 +2835,7 @@
             <key type="filename">../Models/Sailor/ShirtChestTied.png</key>
             <key type="filename">../Models/Sailor/ShirtChestUp.png</key>
             <key type="filename">../Models/Sailor/ShirtChestYoked.png</key>
+            <key type="filename">../Models/Sailor/ShirtKneel.png</key>
             <key type="filename">../Models/Sailor/SleeveLeft.png</key>
             <key type="filename">../Models/Sailor/SleeveLeftTied.png</key>
             <key type="filename">../Models/Sailor/SleeveLeftUp.png</key>
@@ -2579,6 +2987,10 @@
             <key type="filename">../Models/SmoothHeels/RightHogtie.png</key>
             <key type="filename">../Models/SmoothHeels/RightKneel.png</key>
             <key type="filename">../Models/SmoothHeels/RightSpread.png</key>
+            <key type="filename">../Models/Spats/SpatsClosed.png</key>
+            <key type="filename">../Models/Spats/SpatsKneel.png</key>
+            <key type="filename">../Models/Spats/SpatsKneelClosed.png</key>
+            <key type="filename">../Models/Spats/SpatsSpread.png</key>
             <key type="filename">../Models/SteelChastity/Belt.png</key>
             <key type="filename">../Models/SteelChastity/BeltPadlock.png</key>
             <key type="filename">../Models/SteelChastity/BeltPadlockPin.png</key>
@@ -2928,6 +3340,7 @@
             <key type="filename">../Models/Warrior/Bustier.png</key>
             <key type="filename">../Models/Warrior/BustierChest.png</key>
             <key type="filename">../Models/Warrior/Collar.png</key>
+            <key type="filename">../Models/Warrior/FootShoeLeftHogtie.png</key>
             <key type="filename">../Models/Warrior/ForeGloveLeftFront.png</key>
             <key type="filename">../Models/Warrior/ForeGloveRightFront.png</key>
             <key type="filename">../Models/Warrior/GloveLeftFree.png</key>
@@ -3245,22 +3658,30 @@
             <key type="filename">../Models/FaceDask/Eyes2Angry.png</key>
             <key type="filename">../Models/FaceDask/Eyes2Closed.png</key>
             <key type="filename">../Models/FaceDask/Eyes2Dazed.png</key>
+            <key type="filename">../Models/FaceDask/Eyes2Heart.png</key>
             <key type="filename">../Models/FaceDask/Eyes2Neutral.png</key>
+            <key type="filename">../Models/FaceDask/Eyes2Sly.png</key>
             <key type="filename">../Models/FaceDask/Eyes2Surprised.png</key>
             <key type="filename">../Models/FaceDask/EyesAngry.png</key>
             <key type="filename">../Models/FaceDask/EyesClosed.png</key>
             <key type="filename">../Models/FaceDask/EyesDazed.png</key>
+            <key type="filename">../Models/FaceDask/EyesHeart.png</key>
             <key type="filename">../Models/FaceDask/EyesNeutral.png</key>
+            <key type="filename">../Models/FaceDask/EyesSly.png</key>
             <key type="filename">../Models/FaceDask/EyesSurprised.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyes2Angry.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyes2Closed.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyes2Dazed.png</key>
+            <key type="filename">../Models/FaceDask/WhitesEyes2Heart.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyes2Neutral.png</key>
+            <key type="filename">../Models/FaceDask/WhitesEyes2Sly.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyes2Surprised.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyesAngry.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyesClosed.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyesDazed.png</key>
+            <key type="filename">../Models/FaceDask/WhitesEyesHeart.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyesNeutral.png</key>
+            <key type="filename">../Models/FaceDask/WhitesEyesSly.png</key>
             <key type="filename">../Models/FaceDask/WhitesEyesSurprised.png</key>
             <key type="filename">../Models/FaceKjus/BlushExtreme.png</key>
             <key type="filename">../Models/FaceKoi/BlushExtreme.png</key>
@@ -3282,24 +3703,28 @@
             <key type="filename">../Models/FaceKoi/Eyes2Dazed.png</key>
             <key type="filename">../Models/FaceKoi/Eyes2Heart.png</key>
             <key type="filename">../Models/FaceKoi/Eyes2Neutral.png</key>
+            <key type="filename">../Models/FaceKoi/Eyes2Sly.png</key>
             <key type="filename">../Models/FaceKoi/Eyes2Surprised.png</key>
             <key type="filename">../Models/FaceKoi/EyesAngry.png</key>
             <key type="filename">../Models/FaceKoi/EyesClosed.png</key>
             <key type="filename">../Models/FaceKoi/EyesDazed.png</key>
             <key type="filename">../Models/FaceKoi/EyesHeart.png</key>
             <key type="filename">../Models/FaceKoi/EyesNeutral.png</key>
+            <key type="filename">../Models/FaceKoi/EyesSly.png</key>
             <key type="filename">../Models/FaceKoi/EyesSurprised.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyes2Angry.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyes2Closed.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyes2Dazed.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyes2Heart.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyes2Neutral.png</key>
+            <key type="filename">../Models/FaceKoi/HumanEyes2Sly.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyes2Surprised.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyesAngry.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyesClosed.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyesDazed.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyesHeart.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyesNeutral.png</key>
+            <key type="filename">../Models/FaceKoi/HumanEyesSly.png</key>
             <key type="filename">../Models/FaceKoi/HumanEyesSurprised.png</key>
             <key type="filename">../Models/FaceKoi/MouthDazed.png</key>
             <key type="filename">../Models/FaceKoi/MouthDistracted.png</key>
@@ -3314,36 +3739,42 @@
             <key type="filename">../Models/FaceKoi/WhitesEyes2Dazed.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyes2Heart.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyes2Neutral.png</key>
+            <key type="filename">../Models/FaceKoi/WhitesEyes2Sly.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyes2Surprised.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyesAngry.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyesClosed.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyesDazed.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyesHeart.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyesNeutral.png</key>
+            <key type="filename">../Models/FaceKoi/WhitesEyesSly.png</key>
             <key type="filename">../Models/FaceKoi/WhitesEyesSurprised.png</key>
             <key type="filename">../Models/FaceKoiBlank/Eyes2Angry.png</key>
             <key type="filename">../Models/FaceKoiBlank/Eyes2Closed.png</key>
             <key type="filename">../Models/FaceKoiBlank/Eyes2Dazed.png</key>
             <key type="filename">../Models/FaceKoiBlank/Eyes2Heart.png</key>
             <key type="filename">../Models/FaceKoiBlank/Eyes2Neutral.png</key>
+            <key type="filename">../Models/FaceKoiBlank/Eyes2Sly.png</key>
             <key type="filename">../Models/FaceKoiBlank/Eyes2Surprised.png</key>
             <key type="filename">../Models/FaceKoiBlank/EyesAngry.png</key>
             <key type="filename">../Models/FaceKoiBlank/EyesClosed.png</key>
             <key type="filename">../Models/FaceKoiBlank/EyesDazed.png</key>
             <key type="filename">../Models/FaceKoiBlank/EyesHeart.png</key>
             <key type="filename">../Models/FaceKoiBlank/EyesNeutral.png</key>
+            <key type="filename">../Models/FaceKoiBlank/EyesSly.png</key>
             <key type="filename">../Models/FaceKoiBlank/EyesSurprised.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyes2Angry.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyes2Closed.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyes2Dazed.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyes2Heart.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyes2Neutral.png</key>
+            <key type="filename">../Models/FaceKoiBlank/WhitesEyes2Sly.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyes2Surprised.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyesAngry.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyesClosed.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyesDazed.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyesHeart.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyesNeutral.png</key>
+            <key type="filename">../Models/FaceKoiBlank/WhitesEyesSly.png</key>
             <key type="filename">../Models/FaceKoiBlank/WhitesEyesSurprised.png</key>
             <key type="filename">../Models/GagCloth/Cleave.png</key>
             <key type="filename">../Models/GagCloth/CleaveThick.png</key>
@@ -3366,10 +3797,13 @@
             <key type="filename">../Models/GagLeather/BallHarnessLarge.png</key>
             <key type="filename">../Models/GagLeather/BallSideStrap.png</key>
             <key type="filename">../Models/GagLeather/BallStrap.png</key>
+            <key type="filename">../Models/GagLeather/BallTeeth_Teeth.png</key>
+            <key type="filename">../Models/GagLeather/BallTeeth_TeethDeep.png</key>
             <key type="filename">../Models/GagLeather/Ball_Teeth.png</key>
             <key type="filename">../Models/GagLeather/Ball_TeethDeep.png</key>
             <key type="filename">../Models/GagLeather/BigBall.png</key>
             <key type="filename">../Models/GagLeather/BigBallStrap.png</key>
+            <key type="filename">../Models/GagLeather/CrystalBall.png</key>
             <key type="filename">../Models/GagLeather/FabricMuzzle.png</key>
             <key type="filename">../Models/GagLeather/GhostBall.png</key>
             <key type="filename">../Models/GagLeather/GhostBallStrap.png</key>
@@ -3392,6 +3826,8 @@
             <key type="filename">../Models/GagMetal/BallHarnessSegmentedLarge.png</key>
             <key type="filename">../Models/GagMetal/BallSideStrap.png</key>
             <key type="filename">../Models/GagMetal/BallStrap.png</key>
+            <key type="filename">../Models/GagMetal/BallTeeth_Teeth.png</key>
+            <key type="filename">../Models/GagMetal/BallTeeth_TeethDeep.png</key>
             <key type="filename">../Models/GagMetal/Ball_Teeth.png</key>
             <key type="filename">../Models/GagMetal/Ball_TeethDeep.png</key>
             <key type="filename">../Models/GagMetal/BigBall.png</key>
@@ -3404,6 +3840,8 @@
             <key type="filename">../Models/GagMetal/HarnessRim.png</key>
             <key type="filename">../Models/GagMetal/OTN.png</key>
             <key type="filename">../Models/GagMetal/OTNRivets.png</key>
+            <key type="filename">../Models/GagMetal/OTNStrap.png</key>
+            <key type="filename">../Models/GagMetal/OTNStrapRivets.png</key>
             <key type="filename">../Models/GagMetal/Rim.png</key>
             <key type="filename">../Models/GagMetal/SciFiMuzzle.png</key>
             <key type="filename">../Models/GagMetal/SciFiMuzzle2.png</key>
@@ -3735,6 +4173,177 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../Models/EyesDai1/Brows2Angry.png</key>
+            <key type="filename">../Models/EyesDai1/RidgeAngry.png</key>
+            <key type="filename">../Models/EyesDai1/RidgeSad.png</key>
+            <key type="filename">../Models/EyesDai2/Brows2Angry.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>351,177,703,355</rect>
+                <key>scale9Paddings</key>
+                <rect>351,177,703,355</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/Brows2Annoyed.png</key>
+            <key type="filename">../Models/EyesDai2/Brows2Annoyed.png</key>
+            <key type="filename">../Models/FaceKjus/Brows2Annoyed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>359,202,717,405</rect>
+                <key>scale9Paddings</key>
+                <rect>359,202,717,405</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/Brows2Neutral.png</key>
+            <key type="filename">../Models/EyesDai2/Brows2Neutral.png</key>
+            <key type="filename">../Models/FaceKjus/Brows2Neutral.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>362,212,725,423</rect>
+                <key>scale9Paddings</key>
+                <rect>362,212,725,423</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/Brows2Sad.png</key>
+            <key type="filename">../Models/EyesDai2/Brows2Sad.png</key>
+            <key type="filename">../Models/FaceKjus/Brows2Sad.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>363,266,726,531</rect>
+                <key>scale9Paddings</key>
+                <rect>363,266,726,531</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/Brows2Surprised.png</key>
+            <key type="filename">../Models/EyesDai2/Brows2Surprised.png</key>
+            <key type="filename">../Models/FaceKjus/Brows2Surprised.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>407,251,813,502</rect>
+                <key>scale9Paddings</key>
+                <rect>407,251,813,502</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/BrowsAngry.png</key>
+            <key type="filename">../Models/EyesDai2/BrowsAngry.png</key>
+            <key type="filename">../Models/FaceKjus/BrowsAngry.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>347,203,693,407</rect>
+                <key>scale9Paddings</key>
+                <rect>347,203,693,407</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/BrowsAnnoyed.png</key>
+            <key type="filename">../Models/EyesDai2/BrowsAnnoyed.png</key>
+            <key type="filename">../Models/FaceKjus/BrowsAnnoyed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>382,213,765,427</rect>
+                <key>scale9Paddings</key>
+                <rect>382,213,765,427</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/BrowsNeutral.png</key>
+            <key type="filename">../Models/EyesDai2/BrowsNeutral.png</key>
+            <key type="filename">../Models/FaceKjus/BrowsNeutral.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>372,230,743,461</rect>
+                <key>scale9Paddings</key>
+                <rect>372,230,743,461</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/BrowsSad.png</key>
+            <key type="filename">../Models/EyesDai2/BrowsSad.png</key>
+            <key type="filename">../Models/FaceKjus/BrowsSad.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>403,258,805,515</rect>
+                <key>scale9Paddings</key>
+                <rect>403,258,805,515</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesDai1/BrowsSurprised.png</key>
+            <key type="filename">../Models/EyesDai2/BrowsSurprised.png</key>
+            <key type="filename">../Models/FaceKjus/BrowsSurprised.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>369,205,738,409</rect>
+                <key>scale9Paddings</key>
+                <rect>369,205,738,409</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Models/EyesK2/Eyes2Angry.png</key>
             <key type="filename">../Models/EyesK2/Eyes2Closed.png</key>
             <key type="filename">../Models/EyesK2/Eyes2Dazed.png</key>
@@ -3809,6 +4418,106 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../Models/EyesK2/Eyes2Heart.png</key>
+            <key type="filename">../Models/EyesK2/WhitesEyes2Heart.png</key>
+            <key type="filename">../Models/EyesK3/Eyes2Heart.png</key>
+            <key type="filename">../Models/EyesK3/WhitesEyes2Heart.png</key>
+            <key type="filename">../Models/EyesK4/Eyes2Heart.png</key>
+            <key type="filename">../Models/EyesK4/WhitesEyes2Heart.png</key>
+            <key type="filename">../Models/FaceKjus/Eyes2Angry.png</key>
+            <key type="filename">../Models/FaceKjus/Eyes2Dazed.png</key>
+            <key type="filename">../Models/FaceKjus/Eyes2Heart.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyes2Angry.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyes2Dazed.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyes2Heart.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>376,207,753,413</rect>
+                <key>scale9Paddings</key>
+                <rect>376,207,753,413</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesK2/Eyes2Sly.png</key>
+            <key type="filename">../Models/EyesK2/WhitesEyes2Sly.png</key>
+            <key type="filename">../Models/EyesK3/Eyes2Sly.png</key>
+            <key type="filename">../Models/EyesK3/WhitesEyes2Sly.png</key>
+            <key type="filename">../Models/EyesK4/Eyes2Sly.png</key>
+            <key type="filename">../Models/EyesK4/WhitesEyes2Sly.png</key>
+            <key type="filename">../Models/FaceKjus/Eyes2Closed.png</key>
+            <key type="filename">../Models/FaceKjus/Eyes2Sly.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyes2Closed.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyes2Sly.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>379,213,759,425</rect>
+                <key>scale9Paddings</key>
+                <rect>379,213,759,425</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesK2/EyesHeart.png</key>
+            <key type="filename">../Models/EyesK2/WhitesEyesHeart.png</key>
+            <key type="filename">../Models/EyesK3/EyesHeart.png</key>
+            <key type="filename">../Models/EyesK3/WhitesEyesHeart.png</key>
+            <key type="filename">../Models/EyesK4/EyesHeart.png</key>
+            <key type="filename">../Models/EyesK4/WhitesEyesHeart.png</key>
+            <key type="filename">../Models/FaceKjus/EyesAngry.png</key>
+            <key type="filename">../Models/FaceKjus/EyesDazed.png</key>
+            <key type="filename">../Models/FaceKjus/EyesHeart.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyesAngry.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyesDazed.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyesHeart.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>362,213,725,425</rect>
+                <key>scale9Paddings</key>
+                <rect>362,213,725,425</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/EyesK2/EyesSly.png</key>
+            <key type="filename">../Models/EyesK2/WhitesEyesSly.png</key>
+            <key type="filename">../Models/EyesK3/EyesSly.png</key>
+            <key type="filename">../Models/EyesK3/WhitesEyesSly.png</key>
+            <key type="filename">../Models/EyesK4/EyesSly.png</key>
+            <key type="filename">../Models/EyesK4/WhitesEyesSly.png</key>
+            <key type="filename">../Models/FaceKjus/EyesClosed.png</key>
+            <key type="filename">../Models/FaceKjus/EyesSly.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyesClosed.png</key>
+            <key type="filename">../Models/FaceKjus/WhitesEyesSly.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>426,262,851,524</rect>
+                <key>scale9Paddings</key>
+                <rect>426,262,851,524</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Models/FaceDask/Brows2Angry.png</key>
             <key type="filename">../Models/FaceDask/Brows2Annoyed.png</key>
             <key type="filename">../Models/FaceDask/Brows2Neutral.png</key>
@@ -3878,175 +4587,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../Models/FaceKjus/Brows2Annoyed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>359,202,717,405</rect>
-                <key>scale9Paddings</key>
-                <rect>359,202,717,405</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/Brows2Neutral.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>362,212,725,423</rect>
-                <key>scale9Paddings</key>
-                <rect>362,212,725,423</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/Brows2Sad.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>363,266,726,531</rect>
-                <key>scale9Paddings</key>
-                <rect>363,266,726,531</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/Brows2Surprised.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>407,251,813,502</rect>
-                <key>scale9Paddings</key>
-                <rect>407,251,813,502</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/BrowsAngry.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>347,203,693,407</rect>
-                <key>scale9Paddings</key>
-                <rect>347,203,693,407</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/BrowsAnnoyed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>382,213,765,427</rect>
-                <key>scale9Paddings</key>
-                <rect>382,213,765,427</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/BrowsNeutral.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>372,230,743,461</rect>
-                <key>scale9Paddings</key>
-                <rect>372,230,743,461</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/BrowsSad.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>403,258,805,515</rect>
-                <key>scale9Paddings</key>
-                <rect>403,258,805,515</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/BrowsSurprised.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>369,205,738,409</rect>
-                <key>scale9Paddings</key>
-                <rect>369,205,738,409</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/Eyes2Angry.png</key>
-            <key type="filename">../Models/FaceKjus/Eyes2Dazed.png</key>
-            <key type="filename">../Models/FaceKjus/WhitesEyes2Angry.png</key>
-            <key type="filename">../Models/FaceKjus/WhitesEyes2Dazed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>376,207,753,413</rect>
-                <key>scale9Paddings</key>
-                <rect>376,207,753,413</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/Eyes2Closed.png</key>
-            <key type="filename">../Models/FaceKjus/WhitesEyes2Closed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>379,213,759,425</rect>
-                <key>scale9Paddings</key>
-                <rect>379,213,759,425</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">../Models/FaceKjus/Eyes2Neutral.png</key>
             <key type="filename">../Models/FaceKjus/WhitesEyes2Neutral.png</key>
             <struct type="IndividualSpriteSettings">
@@ -4078,40 +4618,6 @@
                 <rect>396,250,791,501</rect>
                 <key>scale9Paddings</key>
                 <rect>396,250,791,501</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/EyesAngry.png</key>
-            <key type="filename">../Models/FaceKjus/EyesDazed.png</key>
-            <key type="filename">../Models/FaceKjus/WhitesEyesAngry.png</key>
-            <key type="filename">../Models/FaceKjus/WhitesEyesDazed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>362,213,725,425</rect>
-                <key>scale9Paddings</key>
-                <rect>362,213,725,425</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Models/FaceKjus/EyesClosed.png</key>
-            <key type="filename">../Models/FaceKjus/WhitesEyesClosed.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>426,262,851,524</rect>
-                <key>scale9Paddings</key>
-                <rect>426,262,851,524</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -4300,6 +4806,21 @@
                 <rect>376,210,751,419</rect>
                 <key>scale9Paddings</key>
                 <rect>376,210,751,419</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Models/MaidKnightHeavy/SleeveRightStripeFree.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,6,11,11</rect>
+                <key>scale9Paddings</key>
+                <rect>6,6,11,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

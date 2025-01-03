@@ -1,14 +1,16 @@
 let KDCollectionReleaseSelection: Record<string, boolean> = {};
 
+// @ts-ignore: squelch error: block-scoped variable used before declaration.
 KDCollectionTabDraw.Release = (value, buttonSpacing, III, x, y) => {
 	let tooltip = false;
 	if (DrawButtonKDEx("KDReleaseRelease", (b) => {
 
 		KDSendInput("releaseNPC", {
 			selection: KDCollectionReleaseSelection,
+			player: KDPlayer().id,
 		});
 
-		if (KDToggles.Sound)
+		if (KDSoundEnabled())
 			AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/" + "Dollify" + ".ogg");
 
 		// DamageWeak
@@ -40,9 +42,10 @@ KDCollectionTabDraw.Release = (value, buttonSpacing, III, x, y) => {
 		if (ransomValue > 0)
 			KDSendInput("ransomNPC", {
 				selection: KDCollectionReleaseSelection,
+				player: KDPlayer().id,
 			});
 
-		if (KDToggles.Sound)
+		if (KDSoundEnabled())
 			AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/" + "Coin" + ".ogg");
 
 		// DamageWeak
@@ -64,7 +67,7 @@ KDCollectionTabDraw.Release = (value, buttonSpacing, III, x, y) => {
 
 		KDCollectionReleaseSelection = {};
 
-		if (KDToggles.Sound)
+		if (KDSoundEnabled())
 			AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/" + "Damage" + ".ogg");
 
 		return true;
@@ -87,7 +90,7 @@ KDCollectionTabDraw.Release = (value, buttonSpacing, III, x, y) => {
 				KDCollectionReleaseSelection[v.id] = true;
 		}
 
-		if (KDToggles.Sound)
+		if (KDSoundEnabled())
 			AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/" + "Danger" + ".ogg");
 
 		return true;
@@ -104,7 +107,7 @@ KDCollectionTabDraw.Release = (value, buttonSpacing, III, x, y) => {
 
 	if (DrawButtonKDEx("KDReleaseMarkUnmark", (b) => {
 
-		if (KDToggles.Sound)
+		if (KDSoundEnabled())
 			AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/"
 			+ (!KDCollectionReleaseSelection[value.id] ? "DangerWeak" : "DamageWeak") + ".ogg");
 
@@ -138,6 +141,7 @@ KDCollectionTabDraw.Release = (value, buttonSpacing, III, x, y) => {
 	return III;
 };
 
+// @ts-ignore: squelch error: block-scoped variable used before declaration.
 KDCollectionTabScreen.Release = (x, xOffset) => {
 	KDDrawCollectionInventory(x + xOffset, 150, (value, x, y) => {
 		if (KDCollectionReleaseSelection[value.id])
@@ -155,11 +159,16 @@ KDCollectionTabScreen.Release = (x, xOffset) => {
 
 function KDCanRelease(id: number) {
 	let v = KDGameData.Collection[id + ""];
-	return v && !v.status && !v.escaped; // Prisoners only
+	return v && !v.status && !v.Facility && (!v.escaped || !KinkyDungeonFindID(v.id)); // Prisoners only, not in same room
+}
+function KDCanRemoveGuest(id: number) {
+	let v = KDGameData.Collection[id + ""];
+	return v && v.status == "Guest" && !v.Facility; // Prisoners only, not in same room
 }
 function KDCanRansom(id: number) {
 	let v = KDGameData.Collection[id + ""];
-	return v && !v.status && !v.escaped && !KDGetGlobalEntity(id) && !KDNPCUnavailable(id, v.status) && v.Faction && !KinkyDungeonHiddenFactions.has(v.Faction); // Prisoners only
+	return v && !v.status && !v.escaped && !KinkyDungeonFindID(id) && !KDNPCUnavailable(id, v.status)
+		&& v.Faction && !KinkyDungeonHiddenFactions.has(v.Faction) && !v.Facility; // Prisoners only
 }
 function KDRansomValue(id: number) {
 	let v = KDGameData.Collection[id + ""];
