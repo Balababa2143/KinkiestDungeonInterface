@@ -28,7 +28,7 @@ function KDProcessInput(type: string, data: any): string {
 			if (data.sleep == 10 && (KDGameData.PrisonerState == 'jail' || KDGameData.PrisonerState == 'parole') && KinkyDungeonPlayerInCell()) {
 				KDKickEnemies(KinkyDungeonNearestJailPoint(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y), false, MiniGameKinkyDungeonLevel, true);
 			}
-			if (data.sleep && KinkyDungeonStatWill < KinkyDungeonStatWillMax * KDGetSleepWillFraction()) KinkyDungeonChangeWill(KinkyDungeonStatWillMax/KDMaxStatStart * KDSleepRegenWill, false);
+			if (data.sleep && KinkyDungeonStatWill < KinkyDungeonStatWillMax * KDGetSleepWillFraction()) KDChangeWill("player","wait", "tick", KinkyDungeonStatWillMax/KDMaxStatStart * KDSleepRegenWill, false);
 			KinkyDungeonAdvanceTime(data.delta, data.NoUpdate, data.NoMsgTick);
 			break;
 		case "tryCastSpell": {
@@ -89,7 +89,7 @@ function KDProcessInput(type: string, data: any): string {
 
 			if (KinkyDungeonSpellChoicesToggle[data.i] && spell.costOnToggle) {
 				if (KinkyDungeonHasMana(KinkyDungeonGetManaCost(spell))) {
-					KinkyDungeonChangeMana(-KinkyDungeonGetManaCost(spell));
+					KDChangeMana(spell.name,"spell", "cast", -KinkyDungeonGetManaCost(spell));
 				} else KinkyDungeonSpellChoicesToggle[data.i] = false;
 			}
 
@@ -304,9 +304,11 @@ function KDProcessInput(type: string, data: any): string {
 				if (KinkyDungeonPickAttempt()) {
 					KinkyDungeonTargetTile.OGLock = KinkyDungeonTargetTile.Lock;
 					KinkyDungeonTargetTile.Lock = undefined;
+					KinkyDungeonTargetTile.LockSeen = undefined;
 					if (KinkyDungeonTargetTile.Type == "Lock") delete KinkyDungeonTargetTile.Type;
 					KinkyDungeonTargetTile = null;
 					KinkyDungeonTargetTileLocation = "";
+					KDModalArea = false;
 				}
 				KinkyDungeonAdvanceTime(1, true);
 				KinkyDungeonMultiplayerUpdate(KinkyDungeonNextDataSendTimeDelay);
@@ -321,9 +323,11 @@ function KDProcessInput(type: string, data: any): string {
 				if (KinkyDungeonTargetTile?.Lock) {
 					KinkyDungeonTargetTile.OGLock = KinkyDungeonTargetTile.Lock;
 					KinkyDungeonTargetTile.Lock = undefined;
+					KinkyDungeonTargetTile.LockSeen = undefined;
 					if (KinkyDungeonTargetTile.Type == "Lock") delete KinkyDungeonTargetTile.Type;
 					KinkyDungeonTargetTile = null;
 					KinkyDungeonTargetTileLocation = "";
+					KDModalArea = false;
 					KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonSwipeDoorUse"), "lightgreen", 2);
 					KinkyDungeonAdvanceTime(1, true);
 					KinkyDungeonMultiplayerUpdate(KinkyDungeonNextDataSendTimeDelay);
@@ -349,9 +353,11 @@ function KDProcessInput(type: string, data: any): string {
 					if (KinkyDungeonTargetTile?.Lock) {
 						KinkyDungeonTargetTile.OGLock = KinkyDungeonTargetTile.Lock;
 						KinkyDungeonTargetTile.Lock = undefined;
+						KinkyDungeonTargetTile.LockSeen = undefined;
 						if (KinkyDungeonTargetTile.Type == "Lock") delete KinkyDungeonTargetTile.Type;
 						KinkyDungeonTargetTile = null;
 						KinkyDungeonTargetTileLocation = "";
+						KDModalArea = false;
 						KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonScanDoorUse"), "lightgreen", 2);
 						KinkyDungeonAdvanceTime(1, true);
 						KinkyDungeonMultiplayerUpdate(KinkyDungeonNextDataSendTimeDelay);
@@ -376,9 +382,11 @@ function KDProcessInput(type: string, data: any): string {
 					if (KinkyDungeonTargetTile?.Lock) {
 						KinkyDungeonTargetTile.OGLock = KinkyDungeonTargetTile.Lock;
 						KinkyDungeonTargetTile.Lock = undefined;
+						KinkyDungeonTargetTile.LockSeen = undefined;
 						if (KinkyDungeonTargetTile.Type == "Lock") delete KinkyDungeonTargetTile.Type;
 						KinkyDungeonTargetTile = null;
 						KinkyDungeonTargetTileLocation = "";
+						KDModalArea = false;
 						KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonHackDoorUse"), "lightgreen", 2);
 						KinkyDungeonAdvanceTime(1, true);
 						KinkyDungeonMultiplayerUpdate(KinkyDungeonNextDataSendTimeDelay);
@@ -403,9 +411,11 @@ function KDProcessInput(type: string, data: any): string {
 				if (KinkyDungeonUnlockAttempt(KinkyDungeonTargetTile.Lock)) {
 					KinkyDungeonTargetTile.OGLock = KinkyDungeonTargetTile.Lock;
 					KinkyDungeonTargetTile.Lock = undefined;
+					KinkyDungeonTargetTile.LockSeen = undefined;
 					if (KinkyDungeonTargetTile.Type == "Lock") delete KinkyDungeonTargetTile.Type;
 					KinkyDungeonTargetTile = null;
 					KinkyDungeonTargetTileLocation = "";
+					KDModalArea = false;
 				}
 				KinkyDungeonAdvanceTime(1, true);
 				KinkyDungeonMultiplayerUpdate(KinkyDungeonNextDataSendTimeDelay);
@@ -428,16 +438,18 @@ function KDProcessInput(type: string, data: any): string {
 				if (KDRandom() > miscast) {
 					KinkyDungeonTargetTile.OGLock = KinkyDungeonTargetTile.Lock;
 					KinkyDungeonTargetTile.Lock = undefined;
+					KinkyDungeonTargetTile.LockSeen = undefined;
 					if (KinkyDungeonTargetTile.Type == "Lock") delete KinkyDungeonTargetTile.Type;
 					KDUpdateDoorNavMap();
 					KinkyDungeonTargetTile = null;
 					KinkyDungeonTargetTileLocation = "";
+					KDModalArea = false;
 					if (gagTotal) {
 						KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonUnlockDoorPurpleUseGagged"), "#aa44ff", 1);
 					} else {
 						KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonUnlockDoorPurpleUse"), "#aa44ff", 1);
 					}
-					KinkyDungeonChangeMana(-KinkyDungeonGetManaCost(spell));
+					KDChangeMana(spell.name,"spell", "cast", -KinkyDungeonGetManaCost(spell));
 				} else {
 					KinkyDungeonSendActionMessage(10, TextGet("KinkyDungeonUnlockDoorPurpleUseGaggedFail"), "#ff5277", 1);
 				}
@@ -456,7 +468,14 @@ function KDProcessInput(type: string, data: any): string {
 		}
 		case "interact": {
 			KDDelayedActionPrune(["Action", "World"]);
-			KDInteract(data.x, data.y);
+			let tick = KinkyDungeonCurrentTick;
+			let fail = !KDInteract(data.x, data.y);
+			if (KinkyDungeonCurrentTick > tick || fail) {
+				if (KDTurnToFace(data.x, data.y)
+					&& (KinkyDungeonStatsChoice.get("DirectionSlow") || KinkyDungeonStatsChoice.get("DirectionSlow2"))) {
+					KinkyDungeonAdvanceTime(1);
+				}
+			}
 			break;
 		}
 		case "shrineBuy":
@@ -585,15 +604,17 @@ function KDProcessInput(type: string, data: any): string {
 				KinkyDungeonChangeRep(data.type, -slimed * 2);
 			}
 			else KinkyDungeonSendActionMessage(9, TextGet(KinkyDungeonGagTotal() > 0 ? "KinkyDungeonPoolDrinkFace" : "KinkyDungeonPoolDrink"), "#AAFFFF", 2);
-			KinkyDungeonChangeMana(KinkyDungeonStatManaMax * 0.5, false, 0, false, true);
+
+			let x =  data.targetTile.split(',')[0];
+			let y =  data.targetTile.split(',')[1];
+
+			KDChangeMana(x + ',' + y,"map", "interact", KinkyDungeonStatManaMax * 0.5, false, 0, false, true);
 			KDSendStatus('goddess', data.type, 'shrineDrink');
 			KinkyDungeonAggroAction('shrine', {});
 			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
 
 			KinkyDungeonAdvanceTime(1, true);
 
-			let x =  data.targetTile.split(',')[0];
-			let y =  data.targetTile.split(',')[1];
 
 			if (KinkyDungeonGoddessRep[data.type] <= -45) {
 				//Cursed
@@ -632,9 +653,44 @@ function KDProcessInput(type: string, data: any): string {
 			KinkyDungeonSendEvent("afterShrineBottle", {x: data.x, y: data.y, tile: data.tile});
 			break;
 		}
+		case "renamenpc":
+			{
+				let origname = KDGameData.Collection[data.id]?.origname;
+				if (KDGameData.Collection[data.id]
+					&& KDGameData.Collection[data.id].name != data.newName) {
+					if (!origname) origname = KDGameData.Collection[data.id].name;
+					KDGameData.Collection[data.id].name = data.newName;
+				}
+				if (KDPersistentNPCs[data.id]
+					&& KDPersistentNPCs[data.id].Name != data.newName) {
+					if (!origname) origname = KDPersistentNPCs[data.id].Name;
+					KDPersistentNPCs[data.id].Name = data.newName;
+				}
+				if (KDPersistentNPCs[data.id]?.entity
+					&& KDPersistentNPCs[data.id].entity.CustomName != data.newName) {
+					if (!origname) origname = KDPersistentNPCs[data.id].entity.CustomName;
+					KDPersistentNPCs[data.id].entity.CustomName = data.newName;
+				}
+				if (KDPersistentNPCs[data.id]?.trueEntity
+					&& KDPersistentNPCs[data.id].trueEntity.CustomName != data.newName) {
+					if (!origname) origname = KDPersistentNPCs[data.id].trueEntity.CustomName;
+					KDPersistentNPCs[data.id].trueEntity.CustomName = data.newName;
+				}
+
+				if (origname) {
+					if (KDGameData.Collection[data.id]) {
+						KDGameData.Collection[data.id].origname = origname;
+					}
+					//if (!KDGameData.NamesGenerated) KDGameData.NamesGenerated = {};
+					//delete KDGameData.NamesGenerated[origname];
+					//KDGameData.NamesGenerated[data.newName] = data.id;
+				}
+			}
+			break;
 		case "defeat":
 			KDDelayedActionPrune(["Action", "World"]);
-			KinkyDungeonDefeat();
+			KinkyDungeonDefeat(!(KinkyDungeonAltFloor(KDGameData.RoomType)?.isPrison)
+				&& KinkyDungeonFlags.has("LeashToPrison"), KinkyDungeonLeashingEnemy());
 			KinkyDungeonChangeRep("Ghost", 4);
 			break;
 		case "lose":
@@ -823,7 +879,7 @@ function KDProcessInput(type: string, data: any): string {
 		case "aid":
 			KDDelayedActionPrune(["Action", "World"]);
 			KinkyDungeonChangeRep(data.rep, -KinkyDungeonAidManaCost(data.rep, data.value));
-			KinkyDungeonChangeMana(KinkyDungeonAidManaAmount(data.rep, data.value));
+			KDChangeMana("player", "aid", "pray", KinkyDungeonAidManaAmount(data.rep, data.value));
 			KinkyDungeonSendTextMessage(10, TextGet("KinkyDungeonAidManaMe"), "purple", 2);
 			KDSendStatus('goddess', data.rep, 'helpMana');
 			break;
@@ -874,7 +930,7 @@ function KDProcessInput(type: string, data: any): string {
 			KinkyDungeonSpellChoicesToggle[data.I] = !KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]].defaultOff;
 			if (KinkyDungeonSpellChoicesToggle[data.I] && KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]].costOnToggle) {
 				if (KinkyDungeonHasMana(KinkyDungeonGetManaCost(KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]]))) {
-					KinkyDungeonChangeMana(-KinkyDungeonGetManaCost(KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]]));
+					KDChangeMana(KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]].name, "spell", "cast", -KinkyDungeonGetManaCost(KinkyDungeonSpells[KinkyDungeonSpellChoices[data.I]]));
 				} else KinkyDungeonSpellChoicesToggle[data.I] = false;
 			}
 			if (KinkyDungeonStatsChoice.has("Disorganized")) {
@@ -1127,7 +1183,7 @@ function KDProcessInput(type: string, data: any): string {
 						// Perform the deed
 						let Willmulti = Math.max(KinkyDungeonStatWillMax / KDMaxStatStart);
 						let amount = tile.Amount ? tile.Amount : 1.0;
-						KinkyDungeonChangeWill(amount * Willmulti);
+						KDChangeWill(tile.Food, "food", "consumable", amount * Willmulti);
 
 
 						// Send the message and advance time
@@ -1347,7 +1403,7 @@ function KDProcessInputs(ReturnResult?: boolean): string {
 	return "";
 }
 
-function KDInteract(x: number, y: number, dist?: number) {
+function KDInteract(x: number, y: number, dist?: number): boolean {
 	if (dist == undefined) dist = KDistChebyshev(x - KDPlayer().x, y - KDPlayer().y);
 	KinkyDungeonSendEvent("beforeInteract", {x:x, y: y});
 	if (dist < 1.5 && !KinkyDungeonEntityAt(x, y, false, undefined, undefined, false))
@@ -1378,14 +1434,17 @@ function KDInteract(x: number, y: number, dist?: number) {
 			|| ((!KinkyDungeonAggressive(Enemy) || KDAllied(Enemy))
 			&& !(Enemy.playWithPlayer && KDCanDom(Enemy))))) {
 			let d = Enemy.Enemy.specialdialogue ? Enemy.Enemy.specialdialogue : "GenericAlly";
-			if (Enemy.specialdialogue) d = Enemy.specialdialogue; // Special dialogue override
+			if ((!Enemy.specialdialogue && !Enemy.prisondialogue) && KDIsImprisoned(Enemy)) d = "PrisonerJailBug";
+			else if (Enemy.prisondialogue && KDIsImprisoned(Enemy)) d = Enemy.prisondialogue; // Special dialogue override
+			else if (Enemy.specialdialogue) d = Enemy.specialdialogue; // Special dialogue override
 			if (d || ((!Enemy.lifetime || Enemy.lifetime > 9000) && !Enemy.Enemy.tags.notalk)) { // KDAllied(Enemy)
 
 				KDStartDialog(d, Enemy.Enemy.name, true, Enemy.personality, Enemy);
 				KinkyDungeonSendEvent("afterInteract", {x:x, y: y, type: "talk", entity: Enemy});
-				return;
+				return true;
 			}
 		}
 	}
 	KinkyDungeonSendEvent("afterInteractFail", {x:x, y: y});
+	return false;
 }

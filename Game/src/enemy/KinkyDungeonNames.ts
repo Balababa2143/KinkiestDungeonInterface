@@ -1676,6 +1676,8 @@ let KDNameList = {
 	TheWardenRogue: ["Luna"],
 	TheWardenDoll: ["Doll #51"],
 	Dollmaker: ["Catherine Willows"],
+	MaidKnightHeavy: ["Saryth"],
+	MaidKnightLight: ["Alisza"],
 	chinese: [
 		"Ai",
 		"Aimei",

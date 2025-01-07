@@ -130,7 +130,10 @@ function KDDrawDialogue(delta: number): void {
 								}
 								return true;
 							}, KinkyDungeonDialogueTimer < CommonTime(), 700, 450 + II * 60, 600, 50,
-							(notGrey || KDDialogueData.CurrentDialogueIndex != II) ? tt : TextGet(entries[i][1].greyoutTooltip), (notGrey && KinkyDungeonDialogueTimer < CommonTime()) ? "#ffffff" : "#888888", undefined,
+							(notGrey || KDDialogueData.CurrentDialogueIndex != II) ? tt : TextGet(
+								entries[i][1].greyoutCustomTooltip
+								? entries[i][1].greyoutCustomTooltip(gagged, KDPlayer())
+								: entries[i][1].greyoutTooltip), (notGrey && KinkyDungeonDialogueTimer < CommonTime()) ? "#ffffff" : "#888888", undefined,
 							undefined, undefined, undefined,
 							KDDialogueData.CurrentDialogueIndex == II ? KDTextGray3 : undefined, undefined, undefined, {
 								zIndex: 122,
@@ -497,6 +500,13 @@ function DialogueCreateEnemy(x: number, y: number, Name: string, persistentid?: 
 	return KDAddEntity(e, persistentid != undefined, undefined, noLoadout);
 }
 
+function KDRunCreationScript(entity: entity, coord: WorldCoord) {
+	if (entity?.Enemy?.creationScript && !entity.created) {
+		let script = KDCreationScripts[entity.Enemy.creationScript];
+		if (script && script(entity, coord)) entity.created = true;
+	}
+}
+
 
 function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: string[], excludeTags: string[], weight: number): KinkyDialogue {
 	/**
@@ -509,6 +519,10 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 				KDGameData.CurrentDialogMsgValue.BINDAMNT = KDGetPlayerUntieBindAmt(enemy);
 				KDGameData.CurrentDialogMsgData.BINDAMNT = `${Math.round(KDGameData.CurrentDialogMsgValue.BINDAMNT*10)}`;
 			}
+			let delta = KinkyDungeonFlags.get("recentlyUntied") ? 3 : 1;
+			KDGameData.CurrentDialogMsgData.UNTIETURNS = TextGet(delta != 1 ? "KDXTurns" : "KDXTurn").replace("AMNT",
+				"" + delta
+			);
 			return false;
 		},
 		options: {},
@@ -704,6 +718,14 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 	};
 
 	dialog.options.Untie = {playertext: name + "Untie", response: "Default",
+		/*greyoutFunction: (_gagged, _player) => {
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				return enemy.hp > 0.52;
+			}
+			return false;
+		},
+		greyoutTooltip: "KDMustHaveHP",*/
 		prerequisiteFunction: (_gagged, _player) => {
 			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
 			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
@@ -724,6 +746,19 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 
 				KDGameData.CurrentDialogMsgValue.BINDAMNT = KDGetPlayerUntieBindAmt(enemy);
 				KDGameData.CurrentDialogMsgData.BINDAMNT = `${Math.round(KDGameData.CurrentDialogMsgValue.BINDAMNT*10)}`;
+
+				let delta = KinkyDungeonFlags.get("recentlyUntied") ? 3 : 1;
+				KDGameData.CurrentDialogMsgData.UNTIETURNS = TextGet(delta != 1 ? "KDXTurns" : "KDXTurn").replace("AMNT",
+					"" + delta
+				);
+
+				KinkyDungeonSetFlag("recentlyUntied", 40);
+
+				KDGameData.SlowMoveTurns = Math.max(KDGameData.SlowMoveTurns || 0, delta);
+				if (KinkyDungeonInDanger()) {
+					KDGameData.CurrentDialog = "";
+					KDGameData.CurrentDialogStage = "";
+				}
 			}
 			return false;
 		},
@@ -753,6 +788,32 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 		leadsToStage: "", dontTouchText: true,
 	};
 
+	dialog.options.JoinParty = {playertext: name + "JoinParty", response: "Default",
+		prerequisiteFunction: (_gagged, _player) => {
+			if (KDGameData.Party?.length >= KDGameData.MaxParty) return false;
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				return KDAllied(enemy)
+					&& !KDIsInParty(enemy)
+					&& !KDEnemyHasFlag(enemy, "shop")
+					&& !enemy.Enemy.tags?.peaceful
+					&& !enemy.maxlifetime
+					&& KDCapturable(enemy)
+					&& !enemy.Enemy.allied;
+				// No shopkeepers, noncombatants, or summons...
+			}
+			return false;
+		},
+		clickFunction: (_gagged, _player) => {
+			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
+			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
+				KinkyDungeonSetEnemyFlag(enemy, "NoFollow", 0);
+				KDAddToParty(enemy);
+			}
+			return false;
+		},
+		leadsToStage: "", dontTouchText: true,
+	};
 
 	dialog.options.Flirt = {playertext: name + "Flirt", response: "Default",
 		clickFunction: (_gagged, _player) => {
@@ -1340,32 +1401,7 @@ function KDAllyDialogue(name: string, requireTags: string[], requireSingleTag: s
 			},
 		}
 	};
-	dialog.options.JoinParty = {playertext: name + "JoinParty", response: "Default",
-		prerequisiteFunction: (_gagged, _player) => {
-			if (KDGameData.Party?.length >= KDGameData.MaxParty) return false;
-			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
-			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
-				return KDAllied(enemy)
-					&& !KDIsInParty(enemy)
-					&& !KDEnemyHasFlag(enemy, "shop")
-					&& !enemy.Enemy.tags?.peaceful
-					&& !enemy.maxlifetime
-					&& KDCapturable(enemy)
-					&& !enemy.Enemy.allied;
-				// No shopkeepers, noncombatants, or summons...
-			}
-			return false;
-		},
-		clickFunction: (_gagged, _player) => {
-			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
-			if (enemy && enemy.Enemy.name == KDGameData.CurrentDialogMsgSpeaker) {
-				KinkyDungeonSetEnemyFlag(enemy, "NoFollow", 0);
-				KDAddToParty(enemy);
-			}
-			return false;
-		},
-		leadsToStage: "", dontTouchText: true,
-	};
+
 	dialog.options.RemoveParty = {playertext: name + "RemoveParty", response: "Default",
 		prerequisiteFunction: (_gagged, _player) => {
 			let enemy = KinkyDungeonFindID(KDGameData.CurrentDialogMsgID);
@@ -1404,15 +1440,18 @@ function KDPrisonerRescue(name: string, faction: string, enemytypes: string[]): 
 			KinkyDungeonInterruptSleep();
 			let door = KDGetJailDoor(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y);
 			if (door) {
-				if (door.tile) {
+				if (door.tile?.Lock) {
 					door.tile.OGLock = door.tile.Lock;
 					door.tile.Lock = undefined;
+					door.tile.LockSeen = undefined;
 					KDUpdateDoorNavMap();
 				}
 				KinkyDungeonMapSet(door.x, door.y, 'd');
 				let e = DialogueCreateEnemy(door.x, door.y, enemytypes[0]);
 				e.allied = 9999;
 				e.faction = "Player";
+
+				KDRunCreationScript(e, KDGetCurrentLocation());
 				KDGameData.CurrentDialogMsgSpeaker = e.Enemy.name;
 
 				let reinforcementCount = Math.floor(1 + KDRandom() * (KDGameData.PriorJailbreaks ? (Math.min(5, KDGameData.PriorJailbreaks) + 1) : 1));
@@ -2570,9 +2609,11 @@ function KDRunChefChance(player: entity) {
 				KinkyDungeonSetFlag("SpawnedChef", -1, 1);
 				let e = DialogueCreateEnemy(point.x, point.y, "Chef");
 				if (e) {
+
 					KinkyDungeonSendTextMessage(10, TextGet("KDSpawnChef"), "#ff5277", 1);
 					e.aware = true;
 					e.faction = "Ambush";
+					KDRunCreationScript(e, KDGetCurrentLocation());
 				}
 			}
 		}
@@ -2621,6 +2662,7 @@ function DialogueAddCursedEnchantedHexed(
 	enchantlevelmax: number = 10,
 	returnOnly: boolean = false,
 	inventory: boolean = false,
+	Lock?: string,
 ): item {
 
 	let unlockcurse = null;
@@ -2666,6 +2708,7 @@ function DialogueAddCursedEnchantedHexed(
 			template: restraint.name,
 			events: events,
 		};
+		if (!!(unlockcurse ? undefined : Lock)) variant.lock = Lock;
 		if (hexVariant) {
 			events.push(...KDEventHexModular[hexVariant].events({variant: variant}));
 		}
@@ -2690,7 +2733,7 @@ function DialogueAddCursedEnchantedHexed(
 					undefined, 1);
 
 			} else {
-				KDEquipInventoryVariant(variant, KDEventEnchantmentModular[enchantVariant]?.prefix, 0, true, undefined, true, false,
+				KDEquipInventoryVariant(variant, KDEventEnchantmentModular[enchantVariant]?.prefix, 0, true, unlockcurse ? undefined : Lock, true, false,
 					(enemy ? KDGetFaction(enemy) : undefined) || (unlockcurse ? "Curse" : undefined), true, unlockcurse, enemy, false, undefined, undefined, KDEventEnchantmentModular[enchantVariant]?.suffix);
 
 			}
@@ -2705,6 +2748,12 @@ function KDGetPlayerUntieBindAmt(enemy: entity): number {
 	let baseAmnt = Math.max(10, (enemy.boundLevel || 0) * 0.1);
 	if (!enemy.boundLevel || baseAmnt > enemy.boundLevel) baseAmnt = enemy.boundLevel;
 	let minimumBondage = KDGetExpectedBondageAmountTotal(enemy.id, enemy, false, true);
+	if (enemy.specialBoundLevel)
+		for (let sbt of Object.entries(enemy.specialBoundLevel)) {
+			if (KDSpecialBondage[sbt[0]]?.helpImmune) {
+				minimumBondage += sbt[1];
+			}
+	}
 	baseAmnt -= minimumBondage;
 	return Math.max(baseAmnt, 0);
 }

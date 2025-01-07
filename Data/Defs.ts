@@ -48,6 +48,7 @@ let LAYERS_BASE = [
 	"Eyes",
 	"Mouth",
 	"Blush",
+	"Fear",
 	"Head",
 
 
@@ -464,6 +465,45 @@ let LAYERS_BASE = [
 	"FurnitureBackLinked",
 	"FurnitureBack",
 	"BG",
+];
+
+
+interface metaLayerBound {
+	id: string,
+	start: string,
+	end: string,
+}
+/** start is inclusive, end is exclusive */
+let metaLayerBoundaries: metaLayerBound[] = [
+	{id: "FurnitureFront", start: "FurnitureFront", end: "CollarAcc"},
+	{id: "HatEars", start: "AnimalEarsFront", end: "AnimalEarsFront"},
+	{id: "Hat", start: "HatDeco", end: "InflatableHead"},
+	{id: "Forehead", start: "Brows", end: "HairFront"},
+	{id: "HairFront", start: "HairFront", end: "Hood"},
+	{id: "Head", start: "Hood", end: "InflatableArms"},
+	{id: "Inflatable", start: "InflatableArms", end: "FiddleFront"},
+	{id: "ArmsFront", start: "FiddleFront", end: "Yoke"},
+	{id: "Shoulders", start: "Yoke", end: "WrappingChest"},
+	{id: "UpperTorso", start: "WrappingChest", end: "Straps"},
+	{id: "Chest", start: "Straps", end: "WrappingTorsoUpper"},
+	{id: "ClothMid", start: "WrappingTorsoUpper", end: "WrapCrossArms"},
+	{id: "ArmsCross", start: "WrapCrossArms", end: "BeltBondage"},
+	{id: "ClothLower", start: "BeltBondage", end: "SkirtDeco"},
+	{id: "Skirt", start: "SkirtDeco", end: "WrappingLegsOver"},
+	{id: "Pants", start: "WrappingLegsOver", end: "ShoeLeftOver"},
+	{id: "PantLeft", start: "ShoeLeftOver", end: "Option2_ChastityBeltLower"},
+	{id: "BikiniZone", start: "Option2_ChastityBeltLower", end: "SkirtOverLowerDeco"},
+	{id: "SkirtLower", start: "SkirtOverLowerDeco", end: "WrappingLegsRightOver"},
+	{id: "PantRight", start: "WrappingLegsRightOver", end: "HarnessUnder"},
+	{id: "ArmLeft", start: "BindWristLeft", end: "ShoeRightOver"},
+	{id: "Shoes", start: "ShoeRightOver", end: "CorsetUnder"},
+	{id: "Pelvis", start: "CorsetUnder", end: "FootRight"},
+	{id: "Torso", start: "ShoulderLeft", end: "AnkleLeftHogtie"},
+	{id: "FeetBack", start: "AnkleLeftHogtie", end: "WrapArmRight"},
+	{id: "ArmRight", start: "WrapArmRight", end: "BindChainLinksUnder"},
+	{id: "ClothesBack", start: "SkirtBack", end: "FurnitureBackLinked"},
+	{id: "Furniture", start: "FurnitureBackLinked", end: "BG"},
+	{id: "BG", start: "BG", end: "BG"},
 ];
 
 /** Handy way of referencing multiple layers */
@@ -1875,6 +1915,9 @@ let LayerProperties = {
 		Parent: "Head",
 	},
 	Blush: {
+		Parent: "Head",
+	},
+	Fear: {
 		Parent: "Head",
 	},
 	Brows: {

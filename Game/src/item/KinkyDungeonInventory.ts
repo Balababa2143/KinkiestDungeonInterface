@@ -299,7 +299,7 @@ let KDSpecialFilters: Record<string, Record<string, (item: item, handle: boolean
 	weapon: {
 		Mundane: (item, handle) => {
 			if (handle) KDFilterFilters[Weapon].Magic = false;
-			return !KDWeapon(item)?.magic && KinkyDungeonWeaponVariants[item.inventoryVariant || item.name] != undefined;
+			return !KDWeapon(item)?.magic && !KinkyDungeonWeaponVariants[item.inventoryVariant || item.name];
 		},
 		Magic: (item, handle) => {
 			if (handle) KDFilterFilters[Weapon].Mundane = false;
@@ -500,7 +500,8 @@ function KinkyDungeonInventoryAddOutfit(Name: string) {
 
 function KDInvAddWeapon(container: KDContainer | null, Name: string) {
 	if (container) {
-		container.items[Name] = {name:Name, type:Weapon, events: Object.assign([], KinkyDungeonWeapons[Name].events), id: KinkyDungeonGetItemID()};
+		container.items[Name] = {name:Name, type:Weapon, events: Object.assign([],
+			KinkyDungeonWeapons[Name].events), id: KinkyDungeonGetItemID()};
 	} else {
 		if (!KinkyDungeonInventoryGetWeapon(Name) && KinkyDungeonWeapons[Name])
 			KinkyDungeonInventoryAdd({name:Name, type:Weapon, events: Object.assign([], KinkyDungeonWeapons[Name].events), id: KinkyDungeonGetItemID()});
@@ -1086,8 +1087,10 @@ function KinkyDungeonDrawInventorySelected (
 	}
 	if (!item) return false;
 	let name = item.name;
+	let unidentified = KinkyDungeonStatsChoice.get("UnidentifiedWear") && KDIsUnidentified(item.item);
+
 	let prefix = "KinkyDungeonInventoryItem";
-	let nameText = KDGetItemName(item.item);
+	let nameText = KDGetItemName(item.item)
 	if (item.item.type == Restraint || item.item.type == LooseRestraint) {
 		prefix = "Restraint";
 	}
@@ -1096,8 +1099,8 @@ function KinkyDungeonDrawInventorySelected (
 	DrawTextFitKD(nameText, xOffset + canvasOffsetX_ui + 640*KinkyDungeonBookScale/3.35, canvasOffsetY_ui + 483*KinkyDungeonBookScale/5, 300, KDBookText, KDTextTan, undefined, undefined, 129);
 	//let wrapAmount = KDBigLanguages.includes(TranslationLanguage) ? 9 : 22;
 	let mult = KDGetFontMult();
-	let textSplit = KinkyDungeonWordWrap(TextGet(prefix + name + "Desc"), 12*mult, 26*mult).split('\n');
-	let textSplit2 = KinkyDungeonWordWrap(TextGet(prefix + name + "Desc2"), 12*mult, 28*mult).split('\n');
+	let textSplit = KinkyDungeonWordWrap((unidentified && prefix == "Restraint") ? TextGet(`${prefix}${KDRestraint(item.item).name}Desc`) : TextGet(prefix + name + "Desc"), 12*mult, 26*mult).split('\n');
+	let textSplit2 = KinkyDungeonWordWrap((unidentified && prefix == "Restraint") ? TextGet(`${prefix}${KDRestraint(item.item).name}Desc2`) : TextGet(prefix + name + "Desc2"), 12*mult, 28*mult).split('\n');
 
 	let data = {
 		extraLines: [],
@@ -1205,6 +1208,10 @@ function KinkyDungeonDrawInventorySelected (
 
 				//DrawTextKD(TextGet("KDMagicWeapon"), xOffset + canvasOffsetX_ui + 640*KinkyDungeonBookScale/3.35, canvasOffsetY_ui + 483*KinkyDungeonBookScale/5 + 24, "#000000", "#8888ff", 18, undefined, 129);
 			}
+
+			if (weapon?.stamPenType) {
+				tags.push("stamPenType_" + weapon.stamPenType);
+			}
 			if (weapon.tags) {
 				for (let t of weapon.tags) {
 					if (KDWeaponTags[t]) {
@@ -1305,10 +1312,11 @@ function KinkyDungeonDrawInventorySelected (
 	for (let N = 0; N < textSplit2.length; N++) {
 		DrawTextFitKD(textSplit2[N],
 			xOffset + canvasOffsetX_ui + 640*KinkyDungeonBookScale*(1-1.0/3.35), canvasOffsetY_ui + 483*KinkyDungeonBookScale/5 + i * 32, 640*KinkyDungeonBookScale/2.5, KDBookText, KDTextTan, 24, undefined, 130); i++;}
-	for (let N = 0; N < data.extraLines.length; N++) {
-		DrawTextFitKD(data.extraLines[N],
-			xOffset + canvasOffsetX_ui + 640*KinkyDungeonBookScale*(1-1.0/3.35), canvasOffsetY_ui + 483*KinkyDungeonBookScale/5 + i * 32, 640*KinkyDungeonBookScale/2.5, data.extraLineColor[N], data.extraLineColorBG[N], 24, undefined, 130); i++;}
-
+	if ((unidentified && item.item.type == Restraint) || (!unidentified)) {
+		for (let N = 0; N < data.extraLines.length; N++) {
+			DrawTextFitKD(data.extraLines[N],
+				xOffset + canvasOffsetX_ui + 640*KinkyDungeonBookScale*(1-1.0/3.35), canvasOffsetY_ui + 483*KinkyDungeonBookScale/5 + i * 32, 640*KinkyDungeonBookScale/2.5, data.extraLineColor[N], data.extraLineColorBG[N], 24, undefined, 130); i++;}
+	}
 	i = 0;
 
 	return true;
@@ -2807,6 +2815,7 @@ function KDPruneInventoryVariants(worn: boolean = true, loose: boolean = true, l
 	let entrieswep = Object.entries(KinkyDungeonWeaponVariants);
 	let entriescon = Object.entries(KinkyDungeonConsumableVariants);
 	let found = {};
+	let identified = KDGameData.IdentifiedObj || {};
 	if (worn) {
 		let list = KinkyDungeonAllRestraintDynamic();
 		for (let inv of list) {
@@ -2964,18 +2973,23 @@ function KDPruneInventoryVariants(worn: boolean = true, loose: boolean = true, l
 	for (let type of entries) {
 		if (!found[type[0]]) {
 			KDRemoveInventoryVariant(type[0]);
+			delete identified[type[0]];
 		}
 	}
 	for (let type of entrieswep) {
 		if (!found[type[0]]) {
 			KDRemoveWeaponVariant(type[0]);
+			delete identified[type[0]];
 		}
 	}
 	for (let type of entriescon) {
 		if (!found[type[0]]) {
 			KDRemoveConsumableVariant(type[0]);
+			delete identified[type[0]];
 		}
 	}
+
+	KDGameData.IdentifiedObj = identified;
 }
 
 /**
@@ -3307,6 +3321,7 @@ function KDDrawHotbarBottom(selected: KDFilteredInventoryItem, spells: boolean, 
 	}, true, hotBarX + 713, HotbarStart, 72, 72, `${KDSpellPage + 1}`, "#ffffff",
 	KinkyDungeonRootDirectory + "UI/Cycle.png", undefined, undefined, true, undefined, 28, undefined, {
 		hotkey: KDHotkeyToText(KinkyDungeonKeySpellPage[0]),
+		hotkeyPress: KinkyDungeonKeySpellPage[0],
 		scaleImage: true,
 		centered: true,
 		centerText: true,
@@ -3439,7 +3454,8 @@ function KDDrawHotbarBottom(selected: KDFilteredInventoryItem, spells: boolean, 
 
 			if (MouseIn(buttonDim.x, buttonDim.y, buttonDim.w, buttonDim.h)) {
 				DrawTextFitKD(TextGet("KinkyDungeonSpell"+ spell.name),
-					600, buttonDim.y - 140, 300, "#ffffff", "#333333", undefined, "center");
+				buttonDim.x, buttonDim.y - 140, 300, "#ffffff", "#333333", undefined, "center",
+				200);
 			}
 			// Render number
 			//DrawTextFitKD((i+1) + "", buttonDim.x + 10, buttonDim.y + 13, 25, "#ffffff", KDTextGray0, 18, undefined, 101);
@@ -3490,7 +3506,8 @@ function KDDrawHotbarBottom(selected: KDFilteredInventoryItem, spells: boolean, 
 				if (MouseIn(buttonDim.x, buttonDim.y, buttonDim.w, buttonDim.h)) {
 					DrawTextFitKD(TextGet((arm ? "Restraint" : ("KinkyDungeonInventoryItem")) + name),
 						buttonDim.x, buttonDim.y - 140, 300,
-						"#ffffff", "#333333", undefined, "center");
+						"#ffffff", "#333333", undefined, "center",
+						200);
 				}
 				// Render number
 				//DrawTextFitKD((i+1) + "", buttonDim.x + 10, buttonDim.y + 13, 25, "#ffffff", KDTextGray0, 18, undefined, 101);
@@ -3540,7 +3557,7 @@ function KDDrawHotbarBottom(selected: KDFilteredInventoryItem, spells: boolean, 
 				});
 		}
 		let icon = 0;
-		let maxSmallIcons = allowOverflow ? 7 : 3;
+		let maxSmallIcons = allowOverflow ? KinkyDungeonSpellChoiceRenderRows : 3;
 		// Draw icons for the other pages, if applicable
 		for (let page = 1; page < maxSmallIcons && page <= Math.floor((KinkyDungeonSpellChoiceCount - 1) / KinkyDungeonSpellChoiceCountPerPage); page += 1) {
 			let pg = KDSpellPage + page;
@@ -3719,3 +3736,13 @@ function KinkyDungeonAttemptQuickRestraint(Name: string): boolean {
 
 	return true;
 }
+
+
+function KDIsUnidentified(item: item) {
+	return (item.inventoryVariant || KinkyDungeonRestraintVariants[item.name]
+		|| KinkyDungeonWeaponVariants[item.name]
+		|| KinkyDungeonConsumableVariants[item.name]
+	)
+		&& (!KDGameData.IdentifiedObj || !KDGameData.IdentifiedObj[item.inventoryVariant || item.name]);
+}
+

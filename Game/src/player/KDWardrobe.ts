@@ -122,9 +122,22 @@ let KDWardrobe_PoseBrows = BROWPOSES;
 let KDWardrobe_PoseBrows2 = BROW2POSES;
 let KDWardrobe_PoseMouth = MOUTHPOSES;
 let KDWardrobe_PoseBlush = ["BlushNeutral", ...BLUSHPOSES];
+let KDWardrobe_PoseFear = FEARPOSES;
 
-let KDNPCPoses = new Map();
-let NPCDesiredPoses = new Map();
+interface NPCPoseStruct {
+	CurrentPoseArms?: string,
+	CurrentPoseLegs?: string,
+	CurrentPoseEyes?: string,
+	CurrentPoseBrows?: string,
+	CurrentPoseBlush?: string,
+	CurrentPoseMouth?: string,
+	CurrentPoseEyes2?: string,
+	CurrentPoseBrows2?: string,
+	CurrentPoseFear?: string,
+}
+
+let KDNPCPoses: Map<Character, NPCPoseStruct> = new Map();
+let NPCDesiredPoses: Map<Character, KDExpressionPoseType> = new Map();
 
 /*
 KDNPCPoses.set(KinkyDungeonPlayer, {
@@ -157,6 +170,7 @@ function KDInitCurrentPose(blank?: boolean, C?: Character) {
 	KDNPCPoses.get(C).CurrentPoseBrows2 = blank ? "" : KDWardrobe_PoseBrows2[0];
 	KDNPCPoses.get(C).CurrentPoseMouth = blank ? "" : KDWardrobe_PoseMouth[0];
 	KDNPCPoses.get(C).CurrentPoseBlush = blank ? "" : KDWardrobe_PoseBlush[0];
+	KDNPCPoses.get(C).CurrentPoseFear = blank ? "" : KDWardrobe_PoseFear[0];
 }
 
 
@@ -802,6 +816,8 @@ function KDUpdateChar(C: Character) {
 		KDNPCPoses.get(C)?.CurrentPoseMouth,
 		KDNPCPoses.get(C)?.CurrentPoseEyes2,
 		KDNPCPoses.get(C)?.CurrentPoseBrows2,
+		undefined,
+		KDNPCPoses.get(C)?.CurrentPoseFear,
 		//KDGetPoseOfType(C, "Eyes"),
 		//KDGetPoseOfType(C, "Brows"),
 		//KDGetPoseOfType(C, "Blush"),
@@ -815,7 +831,18 @@ let KDLayerIndex = 0;
 
 function KDDrawPoseButtons(C: Character, X: number = 960, Y: number = 750, allowRemove: boolean = false, dress: boolean = false, updateDesired: boolean = false) {
 	if (!KDNPCPoses.get(C)) KDNPCPoses.set(C, {});
-	let buttonClick = (arms: string, legs: string, eyes: string, eyes2?: string, brows?: string, brows2?: string, blush?: string, mouth?: string, update: boolean = true) => {
+	let buttonClick = (
+		arms: string,
+		legs: string,
+		eyes: string,
+		eyes2?: string,
+		brows?: string,
+		brows2?: string,
+		blush?: string,
+		mouth?: string,
+		update: boolean = true,
+		fear?: string,
+		) => {
 		return (_bdata: any) => {
 			if (allowRemove && arms == KDNPCPoses.get(C).CurrentPoseArms) KDNPCPoses.get(C).CurrentPoseArms = "";
 			else KDNPCPoses.get(C).CurrentPoseArms = arms || KDNPCPoses.get(C).CurrentPoseArms;
@@ -835,15 +862,20 @@ function KDDrawPoseButtons(C: Character, X: number = 960, Y: number = 750, allow
 			else KDNPCPoses.get(C).CurrentPoseBlush = blush || KDNPCPoses.get(C).CurrentPoseBlush;
 			if (allowRemove && mouth == KDNPCPoses.get(C).CurrentPoseMouth) KDNPCPoses.get(C).CurrentPoseMouth = "";
 			else KDNPCPoses.get(C).CurrentPoseMouth = mouth || KDNPCPoses.get(C).CurrentPoseMouth;
+			if (allowRemove && fear == KDNPCPoses.get(C).CurrentPoseFear) KDNPCPoses.get(C).CurrentPoseFear = "";
+			else KDNPCPoses.get(C).CurrentPoseFear = fear || KDNPCPoses.get(C).CurrentPoseFear;
 
 			if (updateDesired) {
 				NPCDesiredPoses.set(C, {
 					Arms: KDNPCPoses.get(C).CurrentPoseArms,
 					Legs: KDNPCPoses.get(C).CurrentPoseLegs,
 					Eyes: KDNPCPoses.get(C).CurrentPoseEyes,
+					Eyes2: KDNPCPoses.get(C).CurrentPoseEyes2,
 					Brows: KDNPCPoses.get(C).CurrentPoseBrows,
+					Brows2: KDNPCPoses.get(C).CurrentPoseBrows2,
 					Blush: KDNPCPoses.get(C).CurrentPoseBlush,
 					Mouth: KDNPCPoses.get(C).CurrentPoseMouth,
+					Fear: KDNPCPoses.get(C).CurrentPoseFear,
 				});
 			}
 
@@ -919,6 +951,19 @@ function KDDrawPoseButtons(C: Character, X: number = 960, Y: number = 750, allow
 			"",
 			"#ffffff", KinkyDungeonRootDirectory + "Poses/"+KDWardrobe_PoseMouth[i] + ".png",
 			undefined, undefined, KDNPCPoses.get(C).CurrentPoseMouth != KDWardrobe_PoseMouth[i], KDButtonColor);
+	}
+	for (let i = 0; i < KDWardrobe_PoseFear.length; i++) {
+		DrawButtonKDEx("PoseFear" + i,
+			buttonClick("", "", "", "", "", "", "", "", undefined, KDWardrobe_PoseFear[i]),
+			true,
+			X + 400 + (6 + i)*buttonSpacing,
+			Y + 60,
+			buttonWidth, buttonWidth,
+			"",
+			"#ffffff", KinkyDungeonRootDirectory + "Poses/"+KDWardrobe_PoseFear[i] + ".png",
+			undefined, undefined,
+			KDNPCPoses.get(C).CurrentPoseFear != KDWardrobe_PoseFear[i],
+			KDButtonColor);
 	}
 }
 
@@ -1347,9 +1392,9 @@ function KDDrawWardrobe(_screen: string, Character: Character) {
 				KDOriginalValue = KDOutfitOriginalStore[KDCurrentOutfit] || "";
 				KinkyDungeonSetDress("None", "None", C, true);
 				KDRefreshCharacter.set(C, true);
-				KinkyDungeonDressPlayer(C, true);
+				KinkyDungeonDressPlayer(C, true, false, undefined, undefined, undefined, undefined, undefined, true);
 				let newOut = DecompressB64(NewOutfit);
-				CharacterAppearanceRestore(C, newOut, C != KinkyDungeonPlayer, true);
+				CharacterAppearanceRestore(C, newOut, C != KinkyDungeonPlayer, false);
 				let newParsed = JSON.parse(newOut);
 				if (newParsed?.metadata) {
 					C.Palette = newParsed.metadata.palette;
@@ -1357,7 +1402,9 @@ function KDDrawWardrobe(_screen: string, Character: Character) {
 				CharacterRefresh(C);
 				KDInitProtectedGroups(C);
 				KDRefreshCharacter.set(C, true);
-				KinkyDungeonDressPlayer(C, true);
+				KinkyDungeonDressPlayer(C, true, undefined, undefined, undefined,
+					undefined, undefined, true
+				);
 			} else if (C == KinkyDungeonPlayer) {
 				KDGetDressList().Default = KinkyDungeonDefaultDefaultDress;
 				CharacterAppearanceRestore(KinkyDungeonPlayer,
@@ -1437,7 +1484,7 @@ function KDDrawWardrobe(_screen: string, Character: Character) {
 				KinkyDungeonSetDress("Bikini", "Bikini", C, true);
 			} else
 				KinkyDungeonSetDress("None", "None", C, true);
-			KinkyDungeonDressPlayer(C, true);
+			KinkyDungeonDressPlayer(C, true, false, undefined, undefined, undefined, undefined, undefined, true);
 			if (C == KinkyDungeonPlayer) {
 				KDInitProtectedGroups(C);
 				KinkyDungeonConfigAppearance = true;
@@ -1742,7 +1789,8 @@ function KDSaveCodeOutfit(C: Character, clothesOnly: boolean = false): void {
 	}
 
 	KDRefreshCharacter.set(C, true);
-	KinkyDungeonDressPlayer(C, true);
+	KinkyDungeonDressPlayer(C, true, undefined, undefined, undefined, undefined, undefined, true);
+
 
 	//KinkyDungeonNewDress = true;
 }
@@ -1891,15 +1939,15 @@ function KDLoadOutfitDirect(files: File[], Char: Character) {
 						if (decompressed) {
 							let origAppearance = Char.Appearance;
 							try {
-								CharacterAppearanceRestore(Char, decompressed, false, true);
+								CharacterAppearanceRestore(Char, decompressed, Char == KDSpeakerNPC, Char != KDSpeakerNPC);
 								let newParsed = JSON.parse(decompressed);
-								if (newParsed) {
+								if (newParsed && newParsed.metadata) {
 									Char.Palette = newParsed.metadata.palette;
 								}
 								CharacterRefresh(Char);
 								KDOldValue = str;
 								KDInitProtectedGroups(Char);
-								KinkyDungeonDressPlayer(Char, true);
+								KinkyDungeonDressPlayer(Char, true, undefined, undefined, undefined, undefined, undefined, true);
 
 								if (Char.Appearance.length == 0)
 									throw new DOMException();

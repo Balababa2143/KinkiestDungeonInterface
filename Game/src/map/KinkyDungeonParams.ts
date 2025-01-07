@@ -265,7 +265,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			//{Name: "SpawnEnemies", Enemy: "Bandit", strict: true, Level: 0, Power: 1, Weight: 10},
 		],
 
-		factionList: ["Bandit", "Apprentice", "Bountyhunter", "Elemental", "Dragon", "Maidforce"],
+		factionList: ["Bandit", "Witch"],
 
 		"min_width" : 5,
 		"max_width" : 8,
@@ -288,8 +288,9 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 	},
 	"cat":{// DungeonName1,-Catacombs-
 		successorNegative: {
-			tmb: 0.7,
-			cry: 0.3,
+			tmb: 0.5,
+			cry: 0.1,
+			cav: 0.4,
 		},
 		successorPositive: {
 			lib: 1.0,
@@ -380,7 +381,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 5,
 		"max_height" : 7,
 
-		factionList: ["AncientRobot", "Bandit", "Apprentice", "Bountyhunter", "Bast", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Bandit", "Apprentice", "Bountyhunter", "Dragon"],
 
 		enemyTags: ["skeleton", "metal", "rope", "leather", "explosiveBarrel"],
 		"defeat_outfit": "Dungeon",
@@ -398,7 +399,8 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 	},
 	"jng":{//DungeonName2,-Underground Jungle-
 		successorNegative: {
-			cry: 0.8,
+			cry: 0.3,
+			cav: 0.5,
 			jng: 0.2,
 		},
 		successorPositive: {
@@ -409,7 +411,8 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		},
 		successorSame: {
 			jng: 0.7,
-			cry: 0.3,
+			cry: 0.2,
+			cav: 0.1,
 		},
 		color: "#4d8f5e",
 		"background" : "DeepForest",
@@ -505,7 +508,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			for (let x = 0; x < KDMapData.GridWidth-1; x++)
 				for (let y = 0; y < KDMapData.GridHeight-1; y++) {
 					if (cavernized[x + ',' + y] && !KDMapData.TilesSkin[x + ',' + y]) {
-						KDMapData.TilesSkin[x + ',' + y] = {skin: "cry", force: true};
+						KDMapData.TilesSkin[x + ',' + y] = {skin: "cav", force: true};
 					} else if (naturalized[x + ',' + y] && !KDMapData.TilesSkin[x + ',' + y]) {
 						KDMapData.TilesSkin[x + ',' + y] = {skin: "jngWild", force: true};
 					}
@@ -557,7 +560,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 5,
 		"max_height" : 7,
 
-		factionList: ["AncientRobot", "Nevermere", "Bandit", "Bountyhunter", "Elf", "Bast", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Bandit", "Elf", "Bast", "Elemental", "Dragon", "Alchemist"],
 
 		enemyTags: ["plant", "jungle", "slime", "earth", "explosiveBarrel"],
 		"defeat_outfit": "LatexPrisoner",
@@ -678,7 +681,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 5,
 		"max_height" : 6,
 
-		factionList: ["Apprentice", "Bandit", "Bountyhunter", "Elemental", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Apprentice", "Elemental", "Witch", "AncientRobot"],
 
 		enemyTags: ["skeleton", "temple", "ghost", "soul", "magical"],
 
@@ -754,7 +757,8 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 							&& (KDRandom() < 0.15 + 0.45 * Math.min(1, KinkyDungeonDifficulty/30)
 								|| KDNearbyTiles(X, Y, 1.5).some((tile) => {return tile.tile == 'C';}))) {
 							KinkyDungeonMapSet(X, Y, '3');
-							DialogueCreateEnemy(X, Y, "MummyCursed");
+							let en = DialogueCreateEnemy(X, Y, "MummyCursed");
+							KDRunCreationScript(en, KDGetCurrentLocation());
 						}
 					}
 				}
@@ -803,7 +807,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 5,
 		"max_height" : 8,
 
-		factionList: ["Bast", "Bandit", "AncientRobot", "Elemental", "Dragon"],
+		factionList: ["Bast", "Bandit", "Elemental"],
 
 		enemyTags: ["mummy", "ghost"],
 		"defeat_outfit": "Bast",
@@ -912,7 +916,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"max_height" : 7,
 		deadend: 0.1,
 
-		factionList: ["Elf", "Bandit", "Apprentice", "Elemental", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Elf", "Dressmaker", "Apprentice", "Elemental", "Witch", "Maidforce", "Alchemist"],
 
 		enemyTags: ["book", "witch", "dressmaker", "magical"],
 		"defeat_outfit": "Prisoner",
@@ -929,13 +933,14 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 	},
 	"cry":{//DungeonName13,-Crystal Cave-
 		successorNegative: {
-			jng: 0.6,
+			jng: 0.5,
 			tmp: 0.1,
+			cav: 0.1,
 			cst: 0.3,
 		},
 		successorPositive: {
 			tmp: 0.4,
-			cat: 0.4,
+			cav: 0.3,
 			cst: 0.2,
 		},
 		successorSame: {
@@ -1024,7 +1029,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"min_height" : 4,
 		"max_height" : 8,
 
-		factionList: ["Nevermere", "Elf", "Bandit", "Apprentice", "Bountyhunter", "Elemental", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Nevermere", "Elf", "Bandit", "Bountyhunter", "Elemental", "Dragon"],
 
 		enemyTags: ["mushroom", "slimeBonus", "crystalline", "earth", "slime", "shadow", "explosiveBarrel"],
 		"defeat_outfit": "Prisoner",
@@ -1039,7 +1044,223 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			{Type: "Leather", Weight: 6},
 			{Type: "Will", Weight: 13},]
 	},
+	"cav":{//Caves
+		successorNegative: {
+			jng: 0.3,
+			cry: 0.7,
+		},
+		successorPositive: {
+			jng: 0.4,
+			cav: 0.4,
+			cry: 0.4,
+		},
+		successorSame: {
+			cav: 0.8,
+			cry: 0.2,
+		},
+		color: "#536a60",
+		"background" : "MagicSchoolEscape",
+		"openness" : 6,
+		"density" : 2,
+		"crackchance" : 0.11,
+		"barchance" : 0.03,
+		"brightness" : 5,
+		"chargerchance": 1.0,
+		"litchargerchance": 1.0,
+		"chargercount": 4,
+		"chestcount" : 10,
+		"shrinecount" : 9,
+		"shrinechance" : 0.8,
+		"ghostchance" : 0.5,
+		"doorchance" : 0.05,
+		"nodoorchance" : 0.5,
+		"doorlockchance" : -0.05,
+		"trapchance" : 0.5,
+		"grateChance" : 0.7,
+		"rubblechance" : 0.45,
+		"brickchance" : 0.2,
+		torchchance: 0.3,
+		torchchanceboring: 0.1,
 
+		music: {
+			"AREA7-LOSTTEMPLE-AMBIENT.ogg": 10,
+			"Elemental_Temple.ogg": 4,
+			"AREA6-CRYSTALCAVE.ogg": 3,
+		},
+
+		shadowColor: 0x080311,
+
+
+		"floodchance" : 0.35,
+		"cacheInterval" : 1,
+		// Side routes have more high-value loot
+		"forbiddenChance" : 1.0,
+		"forbiddenGreaterChance" : 0.45,
+
+		tagModifiers: {
+			"open": 4,
+			"jungle": 0.5,
+			"cave": 2.0,
+			"dragon": 1.5,
+			"cavern": 7.0,
+			"urban": 0.5,
+			"door": 0.5,
+			"library": 0.0,
+		},
+
+		"setpieces": [
+			{Type: "Altar", Weight: 6},
+			{Type: "SmallAltar", Weight: 20},
+			{Type: "GuardedChest", Weight: 30},
+			{Type: "LargeGuardedChest", Weight: 20},
+			{Type: "Storage", Weight: 2},
+		],
+
+		"traps": [
+			{Name: "CustomSleepDart", Level: 0, Power: 1, Weight: 20},
+			{Name: "SpecificSpell", Spell: "TrapRopeStrong", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpecificSpell", Spell: "TrapSCloud", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpecificSpell", Spell: "TrapSlimeWeak", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpawnEnemies", Enemy: "Bandit", strict: true, Level: 0, Power: 3, Weight: 10},
+
+			{Name: "SpawnEnemies", Enemy: "Gag", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemMouthFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "Cuffs", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemArmsFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimBlindfold", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemHeadFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimYoke", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemArmsFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimArmbinder", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemArmsFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimHarness", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemTorsoFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimChastity", strict: true, Level: 0, Power: 2, Weight: 10, arousalMode: true, filterTag: "ItemPelvisFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimStraitjacket", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemArmsFull", filterBackup: "Mushy"},
+		],
+
+		"min_width" : 4,
+		"max_width" : 6,
+		"min_height" : 4,
+		"max_height" : 8,
+
+		factionList: ["Bandit", "Elemental", "Dragon"],
+
+		enemyTags: ["mushroom", "dragon", "earth", "dragonqueen", "dragongirl", "explosiveBarrel"],
+		"defeat_outfit": "Prisoner",
+		"shrines": [
+			{Type: "Latex", Weight: 6},
+			{Type: "Commerce", Weight: 0},
+			{Type: "Elements", Weight: 10},
+			{Type: "Conjure", Weight: 3},
+			{Type: "Illusion", Weight: 3},
+			{Type: "Metal", Weight: 3},
+			{Type: "Rope", Weight: 5},
+			{Type: "Leather", Weight: 15},
+			{Type: "Will", Weight: 13},]
+	},
+	"DragonLair":{//DragonLair (used for music only atm)
+		successorNegative: {
+			jng: 0.3,
+			cry: 0.7,
+		},
+		successorPositive: {
+			jng: 0.4,
+			cav: 0.4,
+			cry: 0.4,
+		},
+		successorSame: {
+			cav: 0.8,
+			cry: 0.2,
+		},
+		color: "#536a60",
+		"background" : "MagicSchoolEscape",
+		"openness" : 6,
+		"density" : 2,
+		"crackchance" : 0.11,
+		"barchance" : 0.03,
+		"brightness" : 5,
+		"chargerchance": 1.0,
+		"litchargerchance": 1.0,
+		"chargercount": 4,
+		"chestcount" : 10,
+		"shrinecount" : 9,
+		"shrinechance" : 0.8,
+		"ghostchance" : 0.5,
+		"doorchance" : 0.05,
+		"nodoorchance" : 0.5,
+		"doorlockchance" : -0.05,
+		"trapchance" : 0.5,
+		"grateChance" : 0.7,
+		"rubblechance" : 0.45,
+		"brickchance" : 0.2,
+		torchchance: 0.3,
+		torchchanceboring: 0.1,
+
+		music: {
+			"Dragon Lair.ogg": 15,
+			"AREA7-LOSTTEMPLE-AMBIENT.ogg": 10,
+		},
+
+		shadowColor: 0x080311,
+
+
+		"floodchance" : 0.35,
+		"cacheInterval" : 1,
+		// Side routes have more high-value loot
+		"forbiddenChance" : 1.0,
+		"forbiddenGreaterChance" : 0.45,
+
+		tagModifiers: {
+			"open": 4,
+			"jungle": 0.5,
+			"cave": 2.0,
+			"dragon": 1.5,
+			"cavern": 7.0,
+			"urban": 0.5,
+			"door": 0.5,
+			"library": 0.0,
+		},
+
+		"setpieces": [
+			{Type: "Altar", Weight: 6},
+			{Type: "SmallAltar", Weight: 20},
+			{Type: "GuardedChest", Weight: 30},
+			{Type: "LargeGuardedChest", Weight: 20},
+			{Type: "Storage", Weight: 2},
+		],
+
+		"traps": [
+			{Name: "CustomSleepDart", Level: 0, Power: 1, Weight: 20},
+			{Name: "SpecificSpell", Spell: "TrapRopeStrong", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpecificSpell", Spell: "TrapSCloud", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpecificSpell", Spell: "TrapSlimeWeak", Level: 0, Power: 3, Weight: 30},
+			{Name: "SpawnEnemies", Enemy: "Bandit", strict: true, Level: 0, Power: 3, Weight: 10},
+
+			{Name: "SpawnEnemies", Enemy: "Gag", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemMouthFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "Cuffs", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemArmsFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimBlindfold", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemHeadFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimYoke", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemArmsFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimArmbinder", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemArmsFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimHarness", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemTorsoFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimChastity", strict: true, Level: 0, Power: 2, Weight: 10, arousalMode: true, filterTag: "ItemPelvisFull", filterBackup: "Mushy"},
+			{Name: "SpawnEnemies", Enemy: "AnimStraitjacket", strict: true, Level: 0, Power: 2, Weight: 10, filterTag: "ItemArmsFull", filterBackup: "Mushy"},
+		],
+
+		"min_width" : 4,
+		"max_width" : 6,
+		"min_height" : 4,
+		"max_height" : 8,
+
+		factionList: ["Bandit", "Elemental", "Dragon"],
+
+		enemyTags: ["mushroom", "dragon", "earth", "dragonqueen", "dragongirl", "explosiveBarrel"],
+		"defeat_outfit": "Prisoner",
+		"shrines": [
+			{Type: "Latex", Weight: 6},
+			{Type: "Commerce", Weight: 0},
+			{Type: "Elements", Weight: 10},
+			{Type: "Conjure", Weight: 3},
+			{Type: "Illusion", Weight: 3},
+			{Type: "Metal", Weight: 3},
+			{Type: "Rope", Weight: 5},
+			{Type: "Leather", Weight: 15},
+			{Type: "Will", Weight: 13},]
+	},
 	"ore":{//DungeonName8,-Orrery-
 		successorNegative: {
 			jng: 0.6,
@@ -1091,7 +1312,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			"AREA8-ORRERY.ogg": 30,
 		},
 
-		factionList: ["Apprentice", "Elf", "Bandit", "Dressmaker", "Bountyhunter", "Elemental", "Dragon", "Maidforce", "Alchemist"],
+		factionList: ["Witch", "Elemental", "AncientRobot"],
 
 		tagModifiers: {
 			"jungle": 0,
@@ -1467,7 +1688,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			//KDAddPipes(0.2, 0.35, 0.7, 0.2);
 		},
 
-		factionList: ["AncientRobot", "Alchemist"],
+		factionList: ["AncientRobot"],
 
 		enemyTags: ["robot", "guardian", "tech", "metal", "electric", "earth", "explosiveBarrel"],
 		"defeat_outfit": "DollSuit",
@@ -1486,7 +1707,8 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 	},
 	"bel":{//DungeonName8,-Orrery-
 		successorNegative: {
-			cry: 1.0,
+			cav: 0.6,
+			cry: 0.4,
 		},
 		successorPositive: {
 			bel: 0.5,
@@ -1589,7 +1811,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 			KDAddPipes(0.2, 0.35, 0.7, 0.2);
 		},
 
-		factionList: ["Nevermere", "AncientRobot", "Bandit", "Dressmaker", "Bountyhunter", "Maidforce", "Alchemist"],
+		factionList: ["Nevermere", "AncientRobot", "Maidforce", "Alchemist"],
 
 		enemyTags: ["dollsmith", "dollrare", "oldrobot", "oldrobotturret", "tech", "metal", "electric", "fire", "explosiveBarrel"],
 		"defeat_outfit": "DollSuit",
@@ -1839,12 +2061,14 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		},
 		ceilinghookchance: 0,
 		successorNegative: {
-			cry: 0.5,
-			jng: 0.5,
+			cry: 0.3,
+			cav: 0.3,
+			jng: 0.2,
 		},
 		successorPositive: {
 			cst: 0.6,
-			cry: 0.2,
+			cry: 0.1,
+			cav: 0.1,
 			jng: 0.2,
 		},
 		successorSame: {
@@ -1920,7 +2144,7 @@ const KinkyDungeonMapParams: Record<mapKey, floorParams> = {
 		"max_height" : 7,
 		deadend: .15,
 
-		factionList: ["Elf", "Bast", "Dragon"],
+		factionList: ["Elf", "Bast", "Alchemist", "Apprentice"],
 
 		enemyTags: ["nature", "elf", "bast", "bubble", "water", "aqua"],
 		"defeat_outfit": "Prisoner",

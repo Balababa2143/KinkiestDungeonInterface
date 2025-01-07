@@ -88,12 +88,25 @@ let KDFocusControlButtons = {
 		SuppressDuringCombat: true,
 		StepDuringCombat: false,
 	},
+	"AutoWait": {
+		Slow: false,
+		Normal: true,
+		Fast: false,
+		VeryFast: false,
+	},
 };
 let KDFocusControlButtonsExclude = {
 	AutoPathStepDuringCombat: ["AutoPathSuppressDuringCombat"],
 	AutoPathSuppressDuringCombat: ["AutoPathStepDuringCombat"],
+	AutoWaitSlow: ["AutoWaitNormal", "AutoWaitFast", "AutoWaitVeryFast"],
+	AutoWaitFast: ["AutoWaitNormal", "AutoWaitSlow", "AutoWaitVeryFast"],
+	AutoWaitVeryFast: ["AutoWaitNormal", "AutoWaitFast", "AutoWaitSlow"],
+	AutoWaitNormal: ["AutoWaitSlow", "AutoWaitFast", "AutoWaitVeryFast"],
 };
 
+let KDFocusHoverEnter = 0;
+let KDFocusHoverDelay = 500;
+let KDFocusHoverLast = "";
 
 let KDBuffSprites = {
 	"Camo": true,
@@ -135,6 +148,7 @@ let KDBuffSprites = {
 	"AvatarAir": true,
 
 	"DistractionCast": true,
+	"ManaBurst": true,
 
 	"BoundByFate": true,
 	"Taunted": true,
@@ -217,6 +231,7 @@ let KDModalArea_width = 800;
 let KDModalArea_height = 100;
 let KDModalArea = false;
 let KDConfirmDeleteSave = false;
+let KDConfirmUpload = false;
 
 
 function KDHandleGame() {
@@ -252,14 +267,29 @@ function KDHandleGame() {
 
 
 
+function KDGetDungeonName(coord: WorldCoord) {
+	let mapData = KDGetMapData(coord);
+	if (mapData) {
+
+		let altType = KDGetAltType(coord.mapY, mapData.MapMod, mapData.RoomType);
+		let dungeonName = altType?.Title ? altType.Title :
+			(KinkyDungeonMapIndex[mapData.Checkpoint] || mapData.Checkpoint);
+		return KDPersonalAlt[coord.room] ?
+			KDGetLairName(coord.room)
+			: TextGet("DungeonName" + dungeonName)
+	}
+
+	return TextGet("KDUnknown");
+}
+
 function KinkyDungeonDrawInterface(_showControls: boolean) {
 	if (KDToggles.TurnCounter)
 		DrawTextKD(TextGet("TurnCounter") + KinkyDungeonCurrentTick, 1995, 995, "#ffffff", "#333333", 12, "right");
 
-	let altType = KDGetAltType(MiniGameKinkyDungeonLevel);
-	let dungeonName = altType?.Title ? altType.Title : (KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint);
+	let dungeonName = KDGetDungeonName(KDGetCurrentLocation());
 	DrawTextFitKD(
-		TextGet("CurrentLevel").replace("FLOORNUMBER", "" + MiniGameKinkyDungeonLevel).replace("DUNGEONNAME", TextGet("DungeonName" + dungeonName))
+		TextGet("CurrentLevel").replace("FLOORNUMBER", "" + MiniGameKinkyDungeonLevel).replace("DUNGEONNAME",
+			dungeonName)
 		+ (KinkyDungeonNewGame ? TextGet("KDNGPlus").replace("XXX", "" + KinkyDungeonNewGame) : ""),
 		1870, 15, 250, "#ffffff", "#333333", 18, "center");
 
@@ -377,6 +407,7 @@ function KDDrawSpellChoices() {
 		}, true, hotBarX + 713, HotbarStart, 72, 72, `${KDSpellPage + 1}`, "#ffffff",
 		KinkyDungeonRootDirectory + "UI/Cycle.png", undefined, undefined, true, undefined, 28, undefined, {
 			hotkey: KDHotkeyToText(KinkyDungeonKeySpellPage[0]),
+			hotkeyPress: KinkyDungeonKeySpellPage[0],
 			scaleImage: true,
 			centered: true,
 			centerText: true,
@@ -779,7 +810,7 @@ function KDDrawStatusBars(x: number, y: number, width: number = 125) {
 			suff = "";
 	}
 	let distRate = KDGetDistractionRate(0);
-	let attackCost = Math.min(-0.5, KDAttackCost());
+	let attackCost = Math.min(-0.5, KDAttackCost().attackCost);
 
 
 	let barWidthOffset2ndSet = 0;
@@ -900,7 +931,16 @@ function KDDrawStatusBars(x: number, y: number, width: number = 125) {
 		TextGet("StatWill")
 			.replace("MAX", KinkyDungeonStatWillMax*10 + "").replace("CURRENT", Math.floor(KinkyDungeonStatWill*10) + ""),
 		x + width * barWidthOffset2ndSet, y - 5 + heightPerBar * barHeightOffset2ndSet - 1.5*heightPerBar, 200, "#ffffff", "#000000", 16, "left", undefined, undefined, 4);
-
+	if (KDEntityBuffedStat(KDPlayer(), "RallyWill", true)) {
+		KDDraw(kdcanvas, kdpixisprites, "rallywill+", KinkyDungeonRootDirectory + "UI/RallyWill.png",
+			x - heightPerBar*0.52 + (flip < 0
+				? width * (1 - (KinkyDungeonStatWill + KDEntityBuffedStat(KDPlayer(), "RallyWill", true))/KinkyDungeonStatWillMax)
+				: width * (KinkyDungeonStatWill + KDEntityBuffedStat(KDPlayer(), "RallyWill", true))/KinkyDungeonStatWillMax),
+			y + heightPerBar * barHeightOffset2ndSet - heightPerBar*2,
+			undefined, undefined, undefined, {
+				zIndex: 57,
+			});
+	}
 
 	DrawButtonKDEx("usePotionWill", (_b) => {
 		//if (KinkyDungeonCanTalk(true) || KinkyDungeonPotionCollar())
@@ -1299,7 +1339,10 @@ function KinkyDungeonDrawActionBar(_x: number, _y: number) {
 	KinkyDungeonRootDirectory + (KinkyDungeonToggleAutoPass ? "UI/Pass.png" : "UI/NoPass.png"),
 	undefined, undefined, !KinkyDungeonToggleAutoPass, KDTextGray05, undefined, false, {alpha: 1.0,
 		hotkey: KDHotkeyToText(KinkyDungeonKeyToggle[1]),
-	})) str = "KDPass";
+	})) {
+		KDTrySetFocusControl("AutoPass");
+		str = "KDPass";
+	}
 
 	if (DrawButtonKDEx("toggleFastMove", (_bdata) => {
 		if (!KinkyDungeonFastMoveSuppress)
@@ -1312,7 +1355,10 @@ function KinkyDungeonDrawActionBar(_x: number, _y: number) {
 	"", "", KinkyDungeonRootDirectory + (KinkyDungeonFastMove ? "FastMove" : "FastMoveOff") + ".png",
 	undefined, undefined, !KinkyDungeonFastMove, KDTextGray05, undefined, false, {alpha: 1.0,
 		hotkey: KDHotkeyToText(KinkyDungeonKeyToggle[4]),
-	})) str = "KDAutoPath";
+	})) {
+		KDTrySetFocusControl("AutoPath")
+		str = "KDAutoPath";
+	}
 
 	// Auto Struggle Button
 	if (DrawButtonKDEx("AutoStruggle", (_bdata) => {
@@ -1416,11 +1462,13 @@ function KinkyDungeonDrawActionBar(_x: number, _y: number) {
 			KinkyDungeonAutoWait = false;
 			KinkyDungeonTempWait = false;
 			KinkyDungeonAutoWaitSuppress = false;
+			KDSetFocusControl("");
 		} else {
 			KinkyDungeonAutoWait = true;
 			KinkyDungeonTempWait = true;
 			KinkyDungeonAutoWaitSuppress = true;
 			KinkyDungeonSleepTime = CommonTime() + 100;
+			KDSetFocusControl("AutoWait");
 		}
 		return true;
 	}, true, actionBarXX + actionBarSpacing*actionBarII++, actionBarYY, actionBarWidth, actionbarHeight, "", "",
@@ -1429,7 +1477,11 @@ function KinkyDungeonDrawActionBar(_x: number, _y: number) {
 		alpha: 1.0,
 		hotkey: KDHotkeyToText(KinkyDungeonKeyToggle[6]),
 		hotkeyPress: KinkyDungeonKeyToggle[6],
-	})) str = "KDWait";
+	})) {
+		KDTrySetFocusControl("AutoWait");
+
+		str = "KDWait";
+	}
 
 	// Make Noise button
 	if (DrawButtonKDEx("HelpButton", (_bdata) => {
@@ -1578,6 +1630,7 @@ function KinkyDungeonRangedAttack() {
 
 function KinkyDungeonHandleHUD() {
 	if (KinkyDungeonDrawState == "Game") {
+		KDSetFocusControl("");
 		if (KDHandleGame()) return true;
 	} else if (KinkyDungeonDrawState == "Orb") {
 		// Done, converted to input
@@ -1669,6 +1722,10 @@ function KinkyDungeonHandleHUD() {
 					let en = KinkyDungeonSummonEnemy(KinkyDungeonPlayerEntity.x, KinkyDungeonPlayerEntity.y, enemy.name, 1, 1.5);
 					if (en[0]) {
 						KDProcessCustomPatron(en[0].Enemy, en[0], 0.2, true);
+
+					}
+					for (let e of en) {
+						KDRunCreationScript(e, KDGetCurrentLocation());
 					}
 				}
 				return true;
@@ -1678,6 +1735,7 @@ function KinkyDungeonHandleHUD() {
 				if (enemy) {
 					let e = DialogueCreateEnemy(KinkyDungeonPlayerEntity.x -1, KinkyDungeonPlayerEntity.y, enemy.name);
 					e.allied = 9999;
+					KDRunCreationScript(e, KDGetCurrentLocation());
 				}
 				return true;
 			}else
@@ -1686,12 +1744,14 @@ function KinkyDungeonHandleHUD() {
 				if (enemy) {
 					let e = DialogueCreateEnemy(KinkyDungeonPlayerEntity.x -1, KinkyDungeonPlayerEntity.y, enemy.name);
 					e.ceasefire = 1000;
+
 					let shop = KinkyDungeonGetShopForEnemy(e, true);
 					if (shop) {
 						KinkyDungeonSetEnemyFlag(e, "Shop", -1);
 						KinkyDungeonSetEnemyFlag(e, shop, -1);
 						KDSetShopMoney(e);
 					}
+					KDRunCreationScript(e, KDGetCurrentLocation());
 				}
 				return true;
 			} else
@@ -1731,6 +1791,7 @@ function KinkyDungeonHandleHUD() {
 				}
 				KDMapData.TrapQuota=0;
 				KDMapData.QuestQuota=0;
+				KDGameData.DragonCaptured = true;
 				KinkyDungeonSetFlag("BossUnlocked", -1);
 				KinkyDungeonUpdateLightGrid = true;
 				return true;
@@ -1772,8 +1833,13 @@ function KinkyDungeonHandleHUD() {
 			KinkyDungeonDressPlayer();
 			return true;
 		} else if (KinkyDungeonIsPlayer() && MouseIn(975, 650, 550, 64)) {
-			KinkyDungeonSaveGame();
-			KinkyDungeonState = "Menu";
+			if (KDSaveBusy) {
+				if (KDSoundEnabled())
+					AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/" + "LockLight" + ".ogg");
+			} else {
+				KinkyDungeonSaveGame();
+				KinkyDungeonState = "Menu";
+			}
 			//KinkyDungeonAutoWait = true;
 			//KinkyDungeonTempWait = false;
 			//KinkyDungeonAutoWaitSuppress = true;
@@ -1984,6 +2050,7 @@ let currentDrawnSGLength = 0;
  */
 function KDSetFocusControl(control: string) {
 	KDFocusControls = control;
+	if (!control) KDFocusHoverEnter = 0;
 
 	if (control)
 		KDInitFocusControl(control);
@@ -2030,42 +2097,99 @@ function KDInputFocusControlToggle(key: string, value: boolean) {
 }
 
 
+function KDDrawMMButtons(MinimapX: number, MinimapY: number, zIndex: number) {
+	let spacing = 40;
+	let starty = MinimapY;
+	let ii = 0;
+	DrawButtonKDEx("minimapzoomin", (_bdata) => {
+		KDMinimapExpandedSize = Math.max(KDMinimapW, KDMinimapExpandedSize - KDMinimapExpandedSizeTick);
+		KDRedrawMM = 2;
+		KDUpdateMinimapTarget(true);
+		return true;
+	}, true, MinimapX, starty + ii*spacing, 46, 46, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/ZoomIn.png", undefined, false, true,
+	"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+	DrawButtonKDEx("minimapzoomout", (_bdata) => {
+		KDMinimapExpandedSize = Math.min(KDMinimapWBig, KDMinimapExpandedSize + KDMinimapExpandedSizeTick);
+		KDRedrawMM = 2;
+		KDUpdateMinimapTarget(true);
+		return true;
+	}, true, MinimapX, starty + ii*spacing, 46, 46, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/ZoomOut.png", undefined, false, true,
+	"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+	DrawButtonKDEx("minimapexpand", (_bdata) => {
+		KDMinimapExpandedZoom = Math.min(KDMinimapScaleBig, KDMinimapExpandedZoom + KDMinimapExpandedZoomTick);
+		KDRedrawMM = 2;
+		KDUpdateMinimapTarget(true);
+		return true;
+	}, true, MinimapX, starty + ii*spacing, 46, 46, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/Expand.png", undefined, false, true,
+	"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+	DrawButtonKDEx("minimapshrink", (_bdata) => {
+		KDMinimapExpandedZoom = Math.max(KDMinimapExpandedZoomTick, KDMinimapExpandedZoom - KDMinimapExpandedZoomTick);
+		KDRedrawMM = 2;
+		KDUpdateMinimapTarget(true);
+		return true;
+	}, true, MinimapX, starty + ii*spacing, 46, 46, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/Shrink.png", undefined, false, true,
+	"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+
+
+
+
+}
+
+function KDDrawRightMMButtons(MinimapX: number, MinimapY: number, zIndex: number, MinimapWidth: number) {
+	let spacing = 40;
+	let starty = MinimapY;
+	let ii = 0;
+	MinimapX += MinimapWidth - 65;
+
+
+	DrawButtonKDEx("minimapLabels", (_bdata) => {
+		KDToggles.MMLabels = !KDToggles.MMLabels;
+		KDRedrawMM = 2;
+		KDUpdateMinimapTarget(true);
+		return true;
+	}, true, MinimapX, starty + ii*spacing, 46, 46,
+	"", KDButtonColor, KinkyDungeonRootDirectory + "UI/Labels.png",
+	undefined, false, !KDToggles.MMLabels,
+	"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+	DrawButtonKDEx("minimapLabelsChest", (_bdata) => {
+		KDMMLabels_Chest = !KDMMLabels_Chest;
+		KDRedrawMM = 2;
+		KDUpdateMinimapTarget(true);
+		return true;
+	}, true, MinimapX, starty + ii*spacing, 46, 46,
+	"", KDButtonColor, KinkyDungeonRootDirectory + "UI/LabelsChest.png",
+	undefined, false, !(KDMMLabels_Chest && KDToggles.MMLabels),
+	"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+	DrawButtonKDEx("minimapLabelsShrine", (_bdata) => {
+		KDMMLabels_Shrine = !KDMMLabels_Shrine;
+		KDRedrawMM = 2;
+		KDUpdateMinimapTarget(true);
+		return true;
+	}, true, MinimapX, starty + ii*spacing, 46, 46,
+	"", KDButtonColor, KinkyDungeonRootDirectory + "UI/LabelsShrine.png",
+	undefined, false, !(KDMMLabels_Shrine && KDToggles.MMLabels),
+	"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+	DrawButtonKDEx("minimapLabelsOther", (_bdata) => {
+		KDMMLabels_Other = !KDMMLabels_Other;
+		KDRedrawMM = 2;
+		KDUpdateMinimapTarget(true);
+		return true;
+	}, true, MinimapX, starty + ii*spacing, 46, 46,
+	"", KDButtonColor, KinkyDungeonRootDirectory + "UI/LabelsOther.png",
+	undefined, false, !(KDMMLabels_Other && KDToggles.MMLabels),
+	"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+}
+
+let KDMMLabels_Chest = true;
+let KDMMLabels_Shrine = true;
+let KDMMLabels_Other = true;
 
 function KDDrawMinimap(MinimapX: number, MinimapY: number) {
 	if (kdminimap.visible) {
 		let zIndex = (KDExpandMinimap || MouseIn(MinimapX, MinimapY, KDMinimapWidth()+21, KDMinimapHeight()+21)) ? 150 : 90;
 		if (KDExpandMinimap) {
-			let spacing = 40;
-			let starty = MinimapY;
-			let ii = 0;
-			DrawButtonKDEx("minimapzoomin", (_bdata) => {
-				KDMinimapExpandedSize = Math.max(KDMinimapW, KDMinimapExpandedSize - KDMinimapExpandedSizeTick);
-				KDRedrawMM = 2;
-				KDUpdateMinimapTarget(true);
-				return true;
-			}, true, MinimapX, starty + ii*spacing, 46, 46, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/ZoomIn.png", undefined, false, true,
-			"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
-			DrawButtonKDEx("minimapzoomout", (_bdata) => {
-				KDMinimapExpandedSize = Math.min(KDMinimapWBig, KDMinimapExpandedSize + KDMinimapExpandedSizeTick);
-				KDRedrawMM = 2;
-				KDUpdateMinimapTarget(true);
-				return true;
-			}, true, MinimapX, starty + ii*spacing, 46, 46, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/ZoomOut.png", undefined, false, true,
-			"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
-			DrawButtonKDEx("minimapexpand", (_bdata) => {
-				KDMinimapExpandedZoom = Math.min(KDMinimapScaleBig, KDMinimapExpandedZoom + KDMinimapExpandedZoomTick);
-				KDRedrawMM = 2;
-				KDUpdateMinimapTarget(true);
-				return true;
-			}, true, MinimapX, starty + ii*spacing, 46, 46, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/Expand.png", undefined, false, true,
-			"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
-			DrawButtonKDEx("minimapshrink", (_bdata) => {
-				KDMinimapExpandedZoom = Math.max(KDMinimapExpandedZoomTick, KDMinimapExpandedZoom - KDMinimapExpandedZoomTick);
-				KDRedrawMM = 2;
-				KDUpdateMinimapTarget(true);
-				return true;
-			}, true, MinimapX, starty + ii*spacing, 46, 46, "", KDButtonColor, KinkyDungeonRootDirectory + "UI/Shrink.png", undefined, false, true,
-			"#000000", undefined, undefined, {zIndex: zIndex, alpha: 0}); ii++;
+			KDDrawMMButtons(MinimapX, MinimapY, zIndex);
+			KDDrawRightMMButtons(MinimapX, MinimapY, zIndex, KDMinimapWidth()+21);
 		}
 		kdminimap.zIndex = zIndex - 1;
 
@@ -2494,6 +2618,32 @@ function KDProcessBuffIcons(minXX: number, minYY: number, side: boolean = false)
 		statsDraw.quickness = {text: TextGet("KinkyDungeonPlayerQuickness"), icon: "quickness", category: "buffs", color: "#e7cf1a", bgcolor: "#333333", priority: 100};
 		//DrawTextFitKD(TextGet("KinkyDungeonPlayerQuickness"), X1, 900 - i * 35, 200, "#e7cf1a", "#333333"); i++;
 	}
+
+	let aflags = {
+		KDDamageHands: true.valueOf,
+		KDDamageArms: true.valueOf,
+	};
+	let adata = {
+		flags: aflags,
+		buffdmg: 0,
+		Damage: KinkyDungeonPlayerDamage,
+	};
+	KinkyDungeonSendEvent("calcDisplayDamage", adata);
+	let stamDiff = (KDAttackCost(undefined, true).orig != KDAttackCost().attackCost);
+	if ((KDToggleShowAllBuffs
+		|| stamDiff
+		|| (KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "AttackDmg") + adata.buffdmg)
+	) && KinkyDungeonPlayerDamage) {
+		let meleeDamage = (KinkyDungeonPlayerDamage.damage) + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "AttackDmg") + adata.buffdmg;
+		statsDraw.meleeDamage = {
+			text: TextGet("KinkyDungeonPlayerDamage")
+				.replace("DAMAGEDEALT", "" + Math.round(meleeDamage*10))
+				.replace("STMNA", Math.round(-10 * KDAttackCost().attackCost) + "")
+				.replace("DAMAGETYPE", TextGet("KinkyDungeonDamageType" + KinkyDungeonPlayerDamage.type)),
+			count: Math.round(meleeDamage*10) + (stamDiff ? "/" + Math.round(-10 * KDAttackCost().attackCost) : ""),
+			category: "info", color: "#ffffff", bgcolor: "#333333", icon: "infoDamageMelee", priority: 10.1
+		};
+	}
 	if (KDToggleShowAllBuffs) {
 		let armor = KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "Armor");
 		if (armor != 0) {
@@ -2525,27 +2675,6 @@ function KDProcessBuffIcons(minXX: number, minYY: number, side: boolean = false)
 				category: "buffs", color: "#73efe8", bgcolor: "#333333", icon: "damageresist", priority: damageReduction * 3
 			};
 			//DrawTextFitKD(TextGet("KinkyDungeonPlayerReduction") + Math.round(damageReduction*10), X2, 900 - i * 25, 150, "#73efe8", "#333333"); i++; i++;
-		}
-		if (KinkyDungeonPlayerDamage) {
-			let flags = {
-				KDDamageHands: true.valueOf,
-				KDDamageArms: true.valueOf,
-			};
-			let data = {
-				flags: flags,
-				buffdmg: 0,
-				Damage: KinkyDungeonPlayerDamage,
-			};
-			KinkyDungeonSendEvent("calcDisplayDamage", data);
-			let meleeDamage = (KinkyDungeonPlayerDamage.damage) + KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "AttackDmg") + data.buffdmg;
-			statsDraw.meleeDamage = {
-				text: TextGet("KinkyDungeonPlayerDamage")
-					.replace("DAMAGEDEALT", "" + Math.round(meleeDamage*10))
-					.replace("STMNA", Math.round(-10 * KDAttackCost()) + "")
-					.replace("DAMAGETYPE", TextGet("KinkyDungeonDamageType" + KinkyDungeonPlayerDamage.type)),
-				count: "" + Math.round(meleeDamage*10),
-				category: "info", color: "#ffffff", bgcolor: "#333333", icon: "infoDamageMelee", priority: 10.1
-			};
 		}
 
 		let bindAmp = KinkyDungeonGetBuffedStat(KinkyDungeonPlayerBuffs, "BindAmp");
@@ -3269,4 +3398,14 @@ function KDDrawStruggleGroups() {
 function KDTightnessRank(tightness: number): string {
 	let factor = Math.min(10, Math.max(0, Math.floor(tightness/2) * 2));
 	return factor + "";
+}
+
+function KDTrySetFocusControl(control: string) {
+	if (!KDFocusControls) {
+		if (!KDFocusHoverEnter || KDFocusHoverLast != control) {
+			KDFocusHoverEnter = CommonTime();
+		} else if (CommonTime() > KDFocusHoverEnter + KDFocusHoverDelay)
+			KDSetFocusControl(control);
+	}
+	KDFocusHoverLast = KDFocusControls || control;
 }

@@ -77,7 +77,7 @@ AddModel({
 		},
 		{ Name: "Apron", Layer: "Apron", Pri: 15,
 			Poses: ToMap([...LEGPOSES]),
-			MorphPoses: {Kneel: "Kneel", KneelClosed: "Kneel", Hogtie: "Hogtie"},
+			MorphPoses: {Kneel: "Kneel", KneelClosed: "Kneel", SuspendedHogtie: "", Hogtie: "Hogtie"},
 			Invariant: true,
 		},
 		{ Name: "ApronBack", Layer: "BeltBack", Pri: -15,
@@ -459,6 +459,9 @@ AddModel({
 			EraseSprite: "HeelsErase",
 			EraseAmount: 100,
 			EraseLayers: ToMap(["Heels"]),
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "BootRight", Layer: "ShoeRight", Pri: 8,
 			Poses: ToMapSubtract([...LEGPOSES], ["Hogtie", "Kneel", "KneelClosed"]),
@@ -471,6 +474,9 @@ AddModel({
 			EraseAmount: 100,
 			EraseLayers: ToMap(["HeelRight"]),
 			EraseZBonus: 100,
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "BootRightKneel", Layer: "ShoeRightKneel", Pri: 8,
 			Poses: ToMap(["Kneel"]),
@@ -478,6 +484,9 @@ AddModel({
 			InheritColor: "ShoeRight",
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 			HideWhenOverridden: true,
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "FootBootLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 8,
 			Poses: ToMap(["Hogtie"]),
@@ -485,6 +494,9 @@ AddModel({
 			InheritColor: "ShoeLeft",
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 			HideWhenOverridden: true,
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });

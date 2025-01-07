@@ -600,6 +600,10 @@ AddModel({
 			EraseAmount: 100,
 			EraseLayers: ToMap(["Heels"]),
 
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
+
 			InheritColor: "BootLeft",
 		},
 		{ Name: "BootRight", Layer: "ShoeRight", Pri: 131,
@@ -614,6 +618,9 @@ AddModel({
 			EraseLayers: ToMap(["HeelRight"]),
 			EraseZBonus: 100,
 
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 
 			InheritColor: "BootRight",
 		},
@@ -623,6 +630,10 @@ AddModel({
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 			TieToLayer: "BootLeft", NoOverride: true,
 
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
+
 			InheritColor: "ShoeLeft",
 		},
 		{ Name: "BootShoeRight", Layer: "ShoeRight", Pri: 130.9,
@@ -630,6 +641,10 @@ AddModel({
 			TieToLayer: "BootRight", NoOverride: true,
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 
+
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 
 			InheritColor: "ShoeRight",
 		},
@@ -639,6 +654,9 @@ AddModel({
 			InheritColor: "FootRight",
 			HidePrefixPose: ["Encase"],	HidePrefixPoseSuffix: ["Feet"],
 			HideWhenOverridden: true,
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "FootBootLeftHogtie", Layer: "ShoeLeftHogtie", Pri: 131,
 			Poses: ToMap(["Hogtie"]),
@@ -647,16 +665,25 @@ AddModel({
 			HideWhenOverridden: true,
 
 			InheritColor: "FootLeft",
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 
 		{ Name: "BootLegLeft", Layer: "OverShoes", Pri: 131,
 			InheritColor: "KneepadLeft",
 			GlobalDefaultOverride: ToMap(["KneelClosed", "Hogtie"]),
 			Poses: ToMap([...LEGPOSES]),
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "BootLegRight", Layer: "ShoeRight", Pri: 131,
 			InheritColor: "KneepadRight",
 			Poses: ToMap([...LEGPOSES]),
+			HidePoseConditional: [
+				["DynamicArmor", "BootsArmor", "SuppressDynamic"],
+			],
 			GlobalDefaultOverride: ToMap(["KneelClosed", "Hogtie"]),
 		},
 	])

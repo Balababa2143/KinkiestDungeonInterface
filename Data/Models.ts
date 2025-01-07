@@ -23,7 +23,53 @@ function InitLayers(layers: string[]): {[_: string]: number} {
 	}
 	return table;
 }
+/**
+ * returns a meta layer for each non meta layer
+ */
+function InitMetaLayers(bounds: metaLayerBound[]):
+	{forward: Record<string, string[]>, reverse: Record<string, string>, order: Record<string, number>} {
+	let forward: Record<string, string[]> = {};
+	let reverse: Record<string, string> = {};
+	let order: Record<string, number> = {};
+
+	let currentIndex = 0;
+	let layerCount = 0;
+	let currentLayer = LAYERS_BASE[currentIndex];
+	for (let meta of bounds) {
+		let layers: string[] = [];
+		// Skip ahead if needed
+		while (LAYERS_BASE[currentIndex] != meta.start) {
+			if (!reverse[LAYERS_BASE[currentIndex]]) {
+				// Create a singleton if needed
+				order[LAYERS_BASE[currentIndex]] = layerCount;
+				forward[LAYERS_BASE[currentIndex]] = [LAYERS_BASE[currentIndex]];
+				reverse[LAYERS_BASE[currentIndex]] = LAYERS_BASE[currentIndex];
+				layerCount++;
+			}
+			currentIndex++;
+		}
+		// Do the register
+		while (LAYERS_BASE[currentIndex]) {
+			currentLayer = LAYERS_BASE[currentIndex];
+			layers.push(currentLayer);
+			reverse[currentLayer] = meta.id;
+			if (currentLayer == meta.end || LAYERS_BASE[currentIndex + 1] == meta.end) {
+				break;
+			}
+			currentIndex++;
+		}
+		forward[meta.id] = layers;
+		order[meta.id] = layerCount;
+		layerCount++;
+	}
+	return {forward: forward, reverse: reverse, order: order};
+}
+
 let ModelLayers = InitLayers(LAYERS_BASE);
+let metaLayersData = InitMetaLayers(metaLayerBoundaries);
+let metaLayerForward = metaLayersData.forward;
+let metaLayerReverse = metaLayersData.reverse;
+let metaLayerOrder = metaLayersData.order;
 
 
 let ModelDefs: {[_: string]: Model} = {};
@@ -296,6 +342,7 @@ function DisposeEntity(id: number, resort: boolean = true, deleteSpecial = false
 	}
 	KDNPCChar.delete(id);
 	if (deleteSpecial || !KDPersistentNPCs[id + ""] || !KDPersistentNPCs[id + ""].special) {
+		KDPurgeParty(id);
 		if (KDPersistentNPCs[id + ""]?.Name && KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name] == id)
 			delete KDGameData.NamesGenerated[KDPersistentNPCs[id + ""].Name]
 		delete KDPersistentNPCs[id + ""];
@@ -1192,7 +1239,7 @@ function DrawCharacterModels(containerID: string, MC: ModelContainer, X, Y, Zoom
 
 				let img = ModelLayerString(m, l, MC.Poses);
 				let id = `layer_${m.Name}_${l.Name}_${img}_${fh}_${Math.round(ax*10000)}_${Math.round(ay*10000)}_${Math.round(rot*1000)}_${Math.round(sx*1000)}_${Math.round(sy*1000)}`;
-				id = LZString.compressToBase64(id);
+				//id = LZString.compressToBase64(id);
 				if (!modified && !ContainerContainer.SpriteList.has(id)) modified = true;
 				let filters = filter;
 				if (extrafilter) filters = [...(filter || []), ...extrafilter];
@@ -1357,11 +1404,12 @@ function ModelDrawLayer(MC: ModelContainer, Model: Model, Layer: ModelLayer, Pos
 		return (
 			!entry[2]
 			|| !Model.Properties
-			|| (!Model.Properties[KDLayerPropName(Layer, Poses)] && !Model.Properties[Layer.InheritColor || Layer.Name])
-			|| ((Model.Properties[KDLayerPropName(Layer, Poses)]
-					&&!Model.Properties[KDLayerPropName(Layer, Poses)][entry[2]])
-				&& (Model.Properties[Layer.InheritColor || Layer.Name]
-					&& !Model.Properties[Layer.InheritColor || Layer.Name][entry[2]])
+			|| (!Model.Properties[KDLayerPropName(Layer, Poses)]
+				&& !Model.Properties[Layer.InheritColor || Layer.Name])
+			|| ((!Model.Properties[KDLayerPropName(Layer, Poses)]
+					|| !Model.Properties[KDLayerPropName(Layer, Poses)][entry[2]])
+				&& (!Model.Properties[Layer.InheritColor || Layer.Name]
+					|| !Model.Properties[Layer.InheritColor || Layer.Name][entry[2]])
 				)
 				)
 			&& (
@@ -1690,7 +1738,7 @@ function KDGetColorableLayers(Model: Model, Properties: boolean): string[] {
 	return ret;
 }
 
-function KDGeneratePoseArray(ArmsPose: string | undefined = undefined, LegsPose: string | undefined = undefined, EyesPose: string | undefined = undefined, BrowsPose: string | undefined = undefined, BlushPose: string | undefined = undefined, MouthPose: string | undefined = undefined, Eyes2Pose: string | undefined = undefined, Brows2Pose: string | undefined = undefined, ExtraPose: string | undefined = undefined): {[_: string]: boolean} {
+function KDGeneratePoseArray(ArmsPose: string | undefined = undefined, LegsPose: string | undefined = undefined, EyesPose: string | undefined = undefined, BrowsPose: string | undefined = undefined, BlushPose: string | undefined = undefined, MouthPose: string | undefined = undefined, Eyes2Pose: string | undefined = undefined, Brows2Pose: string | undefined = undefined, ExtraPose: string | undefined = undefined, FearPose: string | undefined = undefined): {[_: string]: boolean} {
 	let poses: {[_: string]: boolean} = {};
 	poses[ArmsPose || "Free"] = true;
 	poses[LegsPose || "Spread"] = true;
@@ -1698,6 +1746,7 @@ function KDGeneratePoseArray(ArmsPose: string | undefined = undefined, LegsPose:
 	poses[BrowsPose || "BrowsNeutral"] = true;
 	poses[BlushPose || "BlushNone"] = true;
 	poses[MouthPose || "MouthNeutral"] = true;
+	poses[FearPose || "NoFearPose"] = true;
 	poses[(Eyes2Pose || EYE2POSES[EYEPOSES.indexOf(EyesPose)] || "Eyes2Neutral")] = true;
 	poses[(Brows2Pose || BROW2POSES[BROWPOSES.indexOf(BrowsPose)] || "Brows2Neutral")] = true;
 	if (ExtraPose) {
@@ -1709,18 +1758,20 @@ function KDGeneratePoseArray(ArmsPose: string | undefined = undefined, LegsPose:
 }
 
 
+let PoseCheckArray = {
+	Arms: ARMPOSES,
+	Legs: LEGPOSES,
+	Eyes: EYEPOSES,
+	Eyes2: EYE2POSES,
+	Brows: BROWPOSES,
+	Brows2: BROW2POSES,
+	Blush: BLUSHPOSES,
+	Mouth: MOUTHPOSES,
+	Fear: FEARPOSES,
+}
+
 function KDGetPoseOfType(C: Character, Type: string): string {
-	let checkArray = [];
-	switch (Type) {
-		case "Arms": checkArray = ARMPOSES; break;
-		case "Legs": checkArray = LEGPOSES; break;
-		case "Eyes": checkArray = EYEPOSES; break;
-		case "Eyes2": checkArray = EYE2POSES; break;
-		case "Brows": checkArray = BROWPOSES; break;
-		case "Brows2": checkArray = BROW2POSES; break;
-		case "Blush": checkArray = BLUSHPOSES; break;
-		case "Mouth": checkArray = MOUTHPOSES; break;
-	}
+	let checkArray = PoseCheckArray[Type] || [];
 	if (KDCurrentModels.get(C)?.Poses)
 		for (let p of checkArray) {
 			if (KDCurrentModels.get(C).Poses[p]) {

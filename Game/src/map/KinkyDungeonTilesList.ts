@@ -354,7 +354,13 @@ let KDTileUpdateFunctions: Record<string, (delta: number) => boolean> = {
 		return true;
 	},
 	"]": (delta) => { // Happy Gas!
-		KinkyDungeonChangeDistraction(1 * delta * KinkyDungeonMultiplicativeStat(KDEntityBuffedStat(KinkyDungeonPlayerEntity, "happygasDamageResist") * 2), false, 0.1);
+		/*KDDealEnvironmentalDamage(KDPlayer().x, KDPlayer().x, 0.5, {
+			type: "happygas",
+			damage: 0.0,
+			time: 0,
+			bind: 0,
+			distract: 2.5,
+		});*/
 		KinkyDungeonSendTextMessage(5, TextGet("KinkyDungeonHappyGas"), "pink", 1);
 		return true;
 	},
@@ -741,6 +747,73 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 		return false;
 	},
 
+	"SealSigil": (_delta, _entity, tile) => {
+		if (_entity?.player) {
+			tile.duration = 0;
+			KDEventData.shockwaves.push({
+				x: tile.x,
+				y: tile.y,// - .167,
+				radius: 1,
+				sprite: "Particles/SealSigil.png",
+			});
+
+			if (MiniGameKinkyDungeonLevel == KDGameData.HighestLevelCurrent) {
+				KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/Magic.ogg");
+				KinkyDungeonSendActionMessage(3, TextGet("KDSealSigilContact"),
+				"#88AAFF", 2);
+				KDGameData.SigilsErased = (KDGameData.SigilsErased || 0) + 1;
+			}
+
+
+
+
+		}
+		return false;
+	},
+	"DistractionMoteContact": (_delta, _entity, tile) => {
+		if (_entity?.player) {
+			tile.duration = 0;
+			KDEventData.shockwaves.push({
+				x: tile.x,
+				y: tile.y,// - .167,
+				radius: 1,
+				sprite: "Particles/PinkGlow.png",
+			});
+			KinkyDungeonApplyBuffToEntity(_entity, {
+				id: "DistractionCast", type: "MiscastChance", power: -1, duration: KDEssenceMoteDuration(),
+				aura: "#ff8888", aurasprite: "Heart", buffsprite: true,
+				events: [{type: "EssenceMote", trigger: "tick", mult: -1/KDEssenceMoteDuration()}],
+			});
+			KDAddEssenceMoteDP();
+			KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/PowerMagic.ogg");
+			KinkyDungeonSendActionMessage(3, TextGet("KDEssenceMoteContact"),
+			"#88AAFF", 2);
+
+		}
+		return false;
+	},
+	"DistractionMote": (_delta, _entity, tile) => {
+		if (_entity?.player) {
+			tile.duration = 0;
+			KDEventData.shockwaves.push({
+				x: tile.x,
+				y: tile.y,// - .167,
+				radius: 1,
+				sprite: "Particles/PinkGlow.png",
+			});
+			KinkyDungeonApplyBuffToEntity(_entity, {
+				id: "DistractionCast", type: "MiscastChance", power: -1, duration: KDEssenceMoteDuration(),
+				aura: "#ff8888", aurasprite: "Heart", buffsprite: true,
+				events: [{type: "EssenceMote", trigger: "tick", mult: -1/KDEssenceMoteDuration()}],
+			});
+			KDAddEssenceMoteDP();
+			KinkyDungeonPlaySound(KinkyDungeonRootDirectory + "Audio/PowerMagic.ogg");
+			KinkyDungeonSendActionMessage(3, TextGet("KDEssenceMoteContact"),
+			"#88AAFF", 2);
+
+		}
+		return false;
+	},
 
 	"MotionLamp": (_delta, _entity, tile) => {
 		KDCreateEffectTile(tile.x, tile.y, {
@@ -756,7 +829,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 	"ManaEmpty": (_delta, entity, tile) => {
 		if (entity.player) {
 			if (KinkyDungeonStatMana + KinkyDungeonStatManaPool >= 5) {
-				KinkyDungeonChangeMana(-5, false, 0, true, true);
+				KDChangeMana(tile.x + "," + tile.y, "trap", "trap", -5, false, 0, true, true);
 				tile.duration = 0;
 				KDCreateEffectTile(tile.x, tile.y, {
 					name: "ManaPartial",
@@ -773,7 +846,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 	"ManaPartial": (_delta, entity, tile) => {
 		if (entity.player) {
 			if (KinkyDungeonStatMana + KinkyDungeonStatManaPool >= 5) {
-				KinkyDungeonChangeMana(-5, false, 0, true, true);
+				KDChangeMana(tile.x + "," + tile.y, "trap", "trap", -5, false, 0, true, true);
 				tile.duration = 0;
 				KDCreateEffectTile(tile.x, tile.y, {
 					name: "ManaFull",
@@ -891,7 +964,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 						cancelDamage: entity.boundLevel > entity.Enemy.maxhp + KDLatexBind,
 						enemy: entity,
 						dmg: 0,
-						bind: KDLatexBind*KDGetEnvironmentalDmg(),
+						bind: KDLatexBind*KDGetEnvironmentalDmg()* (entity == KinkyDungeonLeashingEnemy() ? 0.1 : 1),
 						type: "glue",
 					};
 					KinkyDungeonSendEvent("tickLatex", latexData);
@@ -899,7 +972,7 @@ let KDEffectTileFunctions: Record<string, (delta: number, entity: entity, tile: 
 						KinkyDungeonDamageEnemy(entity, {
 							type: "glue",
 							damage: 0,
-							bind: KDLatexBind*KDGetEnvironmentalDmg(),
+							bind: KDLatexBind*KDGetEnvironmentalDmg()* (entity == KinkyDungeonLeashingEnemy() ? 0.1 : 1),
 							flags: ["DoT"]
 						}, false, true, undefined, undefined, undefined, "Rage");
 						if (entity.boundLevel >= entity.Enemy.maxhp) {
@@ -1690,7 +1763,8 @@ let KDStairsAltAction = {
 
 function KDAttemptDoor(moveX: number, moveY: number) {
 	KinkyDungeonAdvanceTime(1, true);
-	let open = !KinkyDungeonStatsChoice.get("Doorknobs") || !KinkyDungeonIsHandsBound(true, true, 0.45);
+	let open = !KinkyDungeonStatsChoice.get("Doorknobs")
+		|| !KinkyDungeonIsHandsBound(true, true, 0.45);
 	if (!open) {
 		if (KinkyDungeonCanUseFeet(false)) {
 			KinkyDungeonSendActionMessage(10, TextGet("KDDoorknobFeet"), "#88ff88", 2);

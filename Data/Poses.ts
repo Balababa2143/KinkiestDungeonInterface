@@ -36,6 +36,7 @@ let BROWPOSES = BROWTYPES.map((pose) => {return "Brows" + pose;});
 let BROW2POSES = BROWTYPES.map((pose) => {return "Brows2" + pose;});
 let MOUTHPOSES = ["MouthNeutral", "MouthDazed", "MouthDistracted", "MouthEmbarrassed", "MouthFrown", "MouthSmile", "MouthSurprised", "MouthPout"];
 let BLUSHPOSES = ["BlushLow", "BlushMedium", "BlushHigh", "BlushExtreme"];
+let FEARPOSES = ["NoFearPose", "FearPose"];
 /** Standard GlobalDefaultOverrides, this should be for any pose that's meant to use mostly normal assets */
 let STANDARD_DEFAULTS = ["Hogtie"];
 
@@ -595,7 +596,8 @@ function KDRefreshPoseOptions(Character: Character) {
 		KDCurrentModels.get(Character).TempPoses.NippleToysOption = true;
 		KDCurrentModels.get(Character).Poses.NippleToysOption = true;
 	}
-	if (KDToggles.DynamicArmor && KinkyDungeonState == "Game") {
+	if (Character == KinkyDungeonPlayer && KDToggles.DynamicArmor
+		&& (KinkyDungeonState == "Game" || KinkyDungeonState == "GenMap" || KinkyDungeonState == "JourneyMap")) {
 		KDCurrentModels.get(Character).TempPoses.DynamicArmor = true;
 		KDCurrentModels.get(Character).Poses.DynamicArmor = true;
 	}
@@ -628,7 +630,8 @@ function KDRefreshPoseOptionsMC(MC: ModelContainer) {
 	if (KDToggles.NippleToysOption) {
 		MC.Poses.NippleToysOption = true;
 	}
-	if (KDToggles.DynamicArmor && KinkyDungeonState == "Game") {
+	if (MC.Character == KinkyDungeonPlayer && KDToggles.DynamicArmor
+		&& (KinkyDungeonState == "Game" || KinkyDungeonState == "GenMap" || KinkyDungeonState == "JourneyMap")) {
 		MC.Poses.DynamicArmor = true;
 	}
 	if (KDToggles.ChastityBraOption) {

@@ -18,14 +18,17 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 			if (KDSelfishLeash(enemy)) return 0;
 			if (KDEnemyHasFlag(enemy, "noHarshPlay")) return 0;
 			if (KDEnemyHasFlag(enemy, "dontChase")) return 0;
-			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"]);
-			return nearestfurniture && KDistChebyshev(enemy.x - nearestfurniture.x, enemy.y - nearestfurniture.y) < 14 ? ((hostile ? 120 : 40) * (KDGameData.PrisonerState == 'parole' ? 0 : 1)) : 0;
+			let mult = hostile ? 3 : 1;
+
+			if (KinkyDungeonFlags.get("LeashToPrison")) mult = hostile ? 0 : 0.1;
+			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"], undefined, undefined, true);
+			return nearestfurniture && KDistChebyshev(enemy.x - nearestfurniture.x, enemy.y - nearestfurniture.y) < 14 ? (mult * 40 * (KDGameData.PrisonerState == 'parole' ? 0 : 1)) : 0;
 		},
 		trigger: (enemy, aiData) => {
 			KDResetIntent(enemy, aiData);
 			enemy.IntentAction = 'leashFurniture';
 			KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 140);
-			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"]);
+			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"], undefined, undefined, true);
 			enemy.IntentLeashPoint = nearestfurniture;
 			enemy.playWithPlayer = 22;
 			KDSetPlayCD(enemy, 3);
@@ -63,7 +66,8 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 					enemy.gy = player.y;
 					KinkyDungeonSetEnemyFlag(enemy, "overrideMove", 12);
 					KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 2);
-					KDTryToLeash(enemy, player, delta);
+					KDTryToLeash(enemy, player, delta, false,
+						(KDBoundPowerLevel < 0.5 || !KinkyDungeonHasWill(0.1)) && aiData.canAttack);
 				}
 			} else if (tethered && KDIsPlayerTetheredToEntity(KinkyDungeonPlayerEntity, enemy)) {
 				enemy.aware = true;
@@ -142,7 +146,7 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 			enemy.gy = KinkyDungeonPlayerEntity.y;
 			return true;
 		},
-		maintain: (enemy, delta, _aiData) => {
+		maintain: (enemy, delta, aiData) => {
 			let player = KDPlayer();
 			let tethered = KDIsPlayerTethered(KinkyDungeonPlayerEntity);
 			if (KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y) < 1.5 && !tethered && KDPlayerLeashed(KinkyDungeonPlayerEntity)) {
@@ -156,7 +160,8 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 					enemy.gy = KinkyDungeonPlayerEntity.y;
 					KinkyDungeonSetEnemyFlag(enemy, "overrideMove", 12);
 					KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 2);
-					KDTryToLeash(enemy, player, delta);
+					KDTryToLeash(enemy, player, delta, false,
+						(KDBoundPowerLevel < 0.5 || !KinkyDungeonHasWill(0.1)) && aiData.canAttack);
 				}
 			} else if (tethered && KDIsPlayerTetheredToEntity(KinkyDungeonPlayerEntity, enemy)) {
 				enemy.aware = true;
@@ -226,7 +231,8 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 					enemy.gy = KinkyDungeonPlayerEntity.y;
 					KinkyDungeonSetEnemyFlag(enemy, "overrideMove", 12);
 					KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 2);
-					KDTryToLeash(enemy, player, delta);
+					KDTryToLeash(enemy, player, delta, false,
+						(KDBoundPowerLevel < 0.5 || !KinkyDungeonHasWill(0.1)) && aiData.canAttack);
 				}
 			} else if (tethered && KDIsPlayerTetheredToEntity(KinkyDungeonPlayerEntity, enemy)) {
 				enemy.aware = true;
@@ -248,6 +254,84 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 
 
 
+			}
+			if (enemy.playWithPlayer < 10) {
+				enemy.playWithPlayer = 10;
+			}
+			return false;
+		},
+	},
+	"leashCell": {
+		play: true,
+		nonaggressive: true,
+		noMassReset: true,
+		// This will make the enemy want to leash you
+		weight: (_enemy, _aiData, _allied, _hostile, _aggressive) => {
+			return 0;
+		},
+		trigger: (enemy, aiData) => {
+			KDResetIntent(enemy, aiData);
+			enemy.IntentAction = 'leashCell';
+			KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 140);
+			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
+			enemy.IntentLeashPoint = nearestfurniture;
+			enemy.playWithPlayer = 22;
+			KDSetPlayCD(enemy, 3);
+
+			KinkyDungeonSetEnemyFlag(enemy, "playstart", 3);
+			KinkyDungeonSetEnemyFlag(enemy, "motivated", 50);
+
+			KDAddThought(enemy.id, "Jail", 5, enemy.playWithPlayer);
+
+			let suff = (KDGetEnemyPlayLine(enemy) ? KDGetEnemyPlayLine(enemy) : "");
+			KinkyDungeonSendDialogue(enemy, TextGet("KinkyDungeonRemindJailPlay" + suff + "Leash").replace("EnemyName", TextGet("Name" + enemy.Enemy.name)), KDGetColor(enemy), 4, 3);
+		},
+		arrive: (enemy, aiData) => {
+			// When the enemy arrives at the leash point we move the player to it
+			enemy.IntentAction = '';
+			enemy.IntentLeashPoint = null;
+			KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", -1);
+			enemy.playWithPlayer = 0;
+			enemy.playWithPlayerCD = 80;
+			KDGameData.PrisonerState = 'jail';
+			KDResetAllAggro(KinkyDungeonPlayerEntity);
+			KinkyDungeonSetEnemyFlag(enemy, "playstart", 0);
+			KDResetAllIntents(true);
+			KDGameData.KinkyDungeonPrisonExtraGhostRep -= 1;
+			return KDPutInJail(KinkyDungeonPlayerEntity, enemy, null);;
+		},
+		maintain: (enemy, delta, aiData) => {
+			let player = KDPlayer();
+			let tethered = KDIsPlayerTethered(KinkyDungeonPlayerEntity);
+			if (KDistChebyshev(enemy.x - KinkyDungeonPlayerEntity.x, enemy.y - KinkyDungeonPlayerEntity.y) < 1.5 && !tethered && KDPlayerLeashed(KinkyDungeonPlayerEntity)) {
+				KinkyDungeonAttachTetherToEntity(2.5, enemy, player);
+				KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 30);
+				return true;
+			}
+			else if (!tethered) {
+				if (enemy.aware) {
+					enemy.gx = KinkyDungeonPlayerEntity.x;
+					enemy.gy = KinkyDungeonPlayerEntity.y;
+					KinkyDungeonSetEnemyFlag(enemy, "overrideMove", 12);
+					KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 2);
+					KDTryToLeash(enemy, player, delta, false,
+						(KDBoundPowerLevel < 0.5 || !KinkyDungeonHasWill(0.1)) && aiData.canAttack);
+				}
+			} else if (tethered && KDIsPlayerTetheredToEntity(KinkyDungeonPlayerEntity, enemy)) {
+				enemy.aware = true;
+
+				if (!enemy.IntentLeashPoint) {
+					let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
+					enemy.IntentLeashPoint = nj;
+				} else {
+					enemy.gx = enemy.IntentLeashPoint?.x || KDMapData.StartPosition.y;
+					enemy.gy = enemy.IntentLeashPoint?.y || KDMapData.StartPosition.x;
+					KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 12);
+
+					if (KDistChebyshev(enemy.IntentLeashPoint.x - enemy.x, enemy.IntentLeashPoint.y - enemy.y) < 1.5 && !aiData.aggressive) {
+						KDIntentEvents.leashCell.arrive(enemy, aiData);
+					}
+				}
 			}
 			if (enemy.playWithPlayer < 10) {
 				enemy.playWithPlayer = 10;
@@ -348,20 +432,36 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 		overrideIgnore: true,
 		// This is the basic leash to jail mechanic
 		weight: (enemy, _aiData, _allied, hostile, _aggressive) => {
+			//if (KinkyDungeonAltFloor(KDGameData.RoomType)?.isPrison) return 0;
 			return (hostile
 				&& (enemy.Enemy.tags.jailer || enemy.Enemy.tags.jail || enemy.Enemy.tags.leashing)
-				&& (KinkyDungeonFlags.has("Released"))
+				&& ((KinkyDungeonFlags.has("Released"))
+			|| (
+				!KDIsNearbyFurniture(enemy, 14)
+			)
+		)
 				&& !KDEnemyHasFlag(enemy, "dontChase")) ?
-				((KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["dropoff"]) && !KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"])) ? 0 : 100)
+				((KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["dropoff"])
+					&& !KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"])) ? 0 : 100)
 			: 0;
 		},
 		trigger: (enemy, _aiData) => {
 			KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 30);
 			enemy.playWithPlayer = 0;
 			enemy.IntentAction = 'CaptureJail';
+
+
 			let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
-			enemy.IntentLeashPoint = nj ? nj : Object.assign({type: "jail", radius: 1}, KDMapData.StartPosition);
-			if (!nj) KinkyDungeonSetFlag("LeashToPrison", -1, 1);
+			let pos = KDMapData.StartPosition;
+			if (!nj || KinkyDungeonFlags.get("LeashToPrison") || KDSelfishLeash(enemy)) {
+				nj = null;
+				if (KDGenHighSecCondition(!nj, enemy)) {
+					pos = KDGetHighSecLoc(enemy, !KDSelfishLeash(enemy));
+				}
+				KinkyDungeonSetFlag("LeashToPrison", -1, 1);
+			}
+			enemy.IntentLeashPoint = nj ? nj : Object.assign({ type: "jail", radius: 1 }, pos);
+
 		},
 		maintain: (enemy, delta, aiData) => {
 			let player = KDPlayer();
@@ -376,16 +476,22 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 					enemy.gx = KinkyDungeonPlayerEntity.x;
 					enemy.gy = KinkyDungeonPlayerEntity.y;
 					KinkyDungeonSetEnemyFlag(enemy, "noResetIntent", 2);
-					KDTryToLeash(enemy, player, delta);
+					KDTryToLeash(enemy, player, delta, false,
+						(KDBoundPowerLevel < 0.5 || !KinkyDungeonHasWill(0.1)) && aiData.canAttack);
 				}
 			} else if (tethered && KDIsPlayerTetheredToEntity(KinkyDungeonPlayerEntity, enemy)) {
 				enemy.aware = true;
 
 				if (!enemy.IntentLeashPoint) {
 					let nj = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
-					enemy.IntentLeashPoint = nj ? nj : Object.assign({ type: "jail", radius: 1 }, KDMapData.StartPosition);
-					if (!nj)
+					let pos = KDMapData.StartPosition;
+					if (!nj || KinkyDungeonFlags.get("LeashToPrison")) {
+						if (KDGenHighSecCondition(!nj, enemy)) {
+							pos = KDGetHighSecLoc(enemy, !KDSelfishLeash(enemy));
+						}
 						KinkyDungeonSetFlag("LeashToPrison", -1, 1);
+					}
+					enemy.IntentLeashPoint = nj ? nj : Object.assign({ type: "jail", radius: 1 }, pos);
 				}
 
 				enemy.gx = enemy.IntentLeashPoint?.x || KDMapData.StartPosition.y;
@@ -529,8 +635,13 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 			if (!KDHostile(enemy))
 				KinkyDungeonSetEnemyFlag(enemy, "noHarshPlay", 12);
 
-			if (!KinkyDungeonFlags.has("TempLeash") || !(KinkyDungeonPlayerTags.get("Collars") && KinkyDungeonGetRestraintItem("ItemNeckRestraints"))) {
-				if (!(KinkyDungeonPlayerTags.get("Collars") && KinkyDungeonGetRestraintItem("ItemNeckRestraints")) || KDGameData.PrisonerState != 'jail') {
+			if (!KinkyDungeonFlags.has("TempLeash")
+				|| !(KinkyDungeonPlayerTags.get("Collars")
+				&& KinkyDungeonGetRestraintItem("ItemNeckRestraints"))) {
+				if (!(KinkyDungeonPlayerTags.get("Collars")
+					&& KinkyDungeonGetRestraintItem("ItemNeckRestraints"))
+					|| KDGameData.PrisonerState != 'jail'
+					|| KDIsInPartyID(enemy.id)) {
 					enemy.IntentAction = '';
 					enemy.IntentLeashPoint = null;
 					KinkyDungeonSetEnemyFlag(enemy, "wander", 7);
@@ -589,7 +700,7 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 						KinkyDungeonSetEnemyFlag(enemy, "genpath", 0);
 						if (enemy.idle || (KDistChebyshev(enemy.x - enemy.gx, enemy.y - enemy.gy) < 4)) {
 							KDResetGuardSpawnTimer();
-							let furn = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"]);
+							let furn = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"], undefined, undefined, true);
 							let jail =  KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
 							let newPoint = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail", "furniture"]);
 							if (newPoint) {
@@ -663,7 +774,9 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 				// Enemies will still be able to play with you!
 				KinkyDungeonSetFlag("overrideleashprotection", 2);
 
-				if (KinkyDungeonFlags.get("TempLeash") == 10 && KDGameData.PrisonerState == 'jail') {
+				let returnToJail = KDGameData.PrisonerState == 'jail';
+
+				if (KinkyDungeonFlags.get("TempLeash") == 10 && returnToJail) {
 					KinkyDungeonSendDialogue(enemy,
 						TextGet("KinkyDungeonJailer" + KDJailPersonality(enemy) + "LeashEndReturn").replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
 						KDGetColor(enemy), 7, 7);
@@ -816,7 +929,7 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 						KinkyDungeonSetEnemyFlag(enemy, "genpath", 0);
 						if (enemy.idle || (KDistChebyshev(enemy.x - enemy.gx, enemy.y - enemy.gy) < 4)) {
 							KDResetGuardSpawnTimer();
-							let furn = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"]);
+							let furn = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"], undefined, undefined, true);
 							let jail =  KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail"]);
 							let newPoint = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["jail", "furniture"]);
 							if (newPoint) {
@@ -1031,15 +1144,16 @@ let KDIntentEvents: Record<string, EnemyEvent> = {
 			if (KinkyDungeonFlags.get("LeashToPrison")) return 0;
 			if (KDGameData.PrisonerState == 'jail') return 0;
 			if (KDSelfishLeash(enemy)) return 0;
-			if (KinkyDungeonGetRestraintItem("ItemDevices") && KDGameData.PrisonerState != 'chase') return 0;
+			if (KinkyDungeonGetRestraintItem("ItemDevices")
+				&& KinkyDungeonSlowLevel >= 9 && KDGameData.PrisonerState != 'chase') return 0;
 			if (KDEnemyHasFlag(enemy, "dontChase")) return 0;
-			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"]);
-			return nearestfurniture && KDistChebyshev(enemy.x - nearestfurniture.x, enemy.y - nearestfurniture.y) < 14 ? (hostile ? 120 : (aiData.domMe ? 0 : 40)) : 0;
+			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"], undefined, undefined, true);
+			return nearestfurniture && KDistChebyshev(enemy.x - nearestfurniture.x, enemy.y - nearestfurniture.y) <= 14 ? (hostile ? 120 : (aiData.domMe ? 0 : 40)) : 0;
 		},
 		trigger: (enemy, aiData) => {
 			KDResetIntent(enemy, aiData);
 			enemy.IntentAction = 'leashFurnitureAggressive';
-			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"]);
+			let nearestfurniture = KinkyDungeonNearestJailPoint(enemy.x, enemy.y, ["furniture"], undefined, undefined, true);
 			enemy.IntentLeashPoint = nearestfurniture;
 
 			KDAddThought(enemy.id, "Jail", 5, 3);
@@ -1115,21 +1229,12 @@ function KDSettlePlayerInFurniture(enemy: entity, _aiData: KDAIData, tags?: stri
 					KinkyDungeonSetFlag(t, guardDelay + 60);
 				}
 			}
-			let rest = KinkyDungeonGetRestraint(
-				{tags: [furn.restraintTag]}, MiniGameKinkyDungeonLevel,
-				(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint),
-				true,
-				"",
-				true,
-				false,
-				false);
-			if (rest) {
-				KinkyDungeonAddRestraintIfWeaker(rest, 0, true);
-				if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Trap.ogg");
-				KinkyDungeonMakeNoise(10, nearestfurniture.x, nearestfurniture.y);
-			}
-			else return false;
 
+			let res = KDApplyFurnitureRestraint(nearestfurniture.x, nearestfurniture.y, KDPlayer());
+			if (!res) {
+				return false;
+			}
+			KinkyDungeonMakeNoise(10, nearestfurniture.x, nearestfurniture.y);
 		}
 
 		KDResetAllAggro();
@@ -1144,14 +1249,40 @@ function KDSettlePlayerInFurniture(enemy: entity, _aiData: KDAIData, tags?: stri
  * @param enemy
  * @param player
  * @param delta
+ * @param slow uses the spell
  */
-function KDTryToLeash(enemy: entity, player: entity, delta: number) {
+function KDTryToLeash(enemy: entity, player: entity, delta: number, instant?: boolean, atkOnly?: boolean) {
 	if (delta > 0 && KDistChebyshev(enemy.x - player.x, enemy.y - player.y) < 1.5) {
-		let newRestraint = KinkyDungeonGetRestraintByName(KDPlayerLeashable(player) ? "BasicLeash" : "BasicCollar");
-		if (newRestraint) {
+		KDAttachLeashOrCollar(enemy, player, delta, instant, atkOnly);
+	}
+}
+
+
+/**
+ *
+ * @param enemy
+ * @param player
+ * @param delta
+ * @param instant
+ * @param slow uses the spell
+ */
+function KDAttachLeashOrCollar(enemy: entity, player: entity, delta: number = 0, instant?: boolean, atkOnly?: boolean) {
+	let newRestraint = KinkyDungeonGetRestraintByName(KDPlayerLeashable(player) ? "BasicLeash" : "BasicCollar");
+	if (newRestraint) {
+		if (!atkOnly) {
 			// Attach a leash or collar
-			if (!KDEnemyHasFlag(enemy, "applyItem")) {
-				KinkyDungeonSetEnemyFlag(enemy, "applyItem", 1 + delta);
+			if (!instant && (!KDEnemyHasFlag(enemy, "applyItem"))) {
+				KinkyDungeonSetEnemyFlag(enemy, "applyItem", 2 + delta);
+				KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonJailerStartAdding")
+					.replace("RestraintName", TextGet("Restraint" + newRestraint.name))
+					.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
+				"yellow", 2, true);
+			} else if (!instant && !KDEnemyHasFlag(enemy, "applyItem2")) {
+				if (KinkyDungeonLastAction == "Move") {
+					KinkyDungeonSetEnemyFlag(enemy, "applyItem", 0);
+					KinkyDungeonSetEnemyFlag(enemy, "applyItem2", 0);
+				}
+				KinkyDungeonSetEnemyFlag(enemy, "applyItem2", 1 + delta);
 				KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonJailerStartAdding")
 					.replace("RestraintName", TextGet("Restraint" + newRestraint.name))
 					.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
@@ -1160,11 +1291,56 @@ function KDTryToLeash(enemy: entity, player: entity, delta: number) {
 				KinkyDungeonAddRestraintIfWeaker(newRestraint, 0, true);
 				KinkyDungeonSetEnemyFlag(enemy, "applyItem", 0);
 				KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonAddRestraints")
-					.replace("RestraintName", TextGet("Restraint" + newRestraint.name))
+					.replace("NewRestraintName", TextGet("Restraint" + newRestraint.name))
 					.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
 				"yellow", 2, true);
 			}
+		} else {
+			if (!KDEnemyHasFlag(enemy, "applyItemAtk")) {
+				if (KinkyDungeonFlags.get("playerTouched")) {
+					KinkyDungeonAddRestraintIfWeaker(newRestraint, 0, true);
+					KinkyDungeonSetEnemyFlag(enemy, "applyItemAtk", 4);
+					KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonAddRestraints")
+					.replace("NewRestraintName", TextGet("Restraint" + newRestraint.name))
+					.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
+				"yellow", 2, true);
+				} else {
+					KinkyDungeonSendActionMessage(4, TextGet("KinkyDungeonJailerStartAdding")
+					.replace("RestraintName", TextGet("Restraint" + newRestraint.name))
+					.replace("EnemyName", TextGet("Name" + enemy.Enemy.name)),
+						"yellow", 2, true);
+				}
 
+
+			}
 		}
 	}
+}
+
+function KDApplyFurnitureRestraint(x: number, y: number, player: entity) {
+	let tile = KinkyDungeonTilesGet(x + "," + y);
+	if (!tile) return false;
+	let type = tile ? tile.Furniture : undefined;
+	if (!type) return false;
+	let furn = KDFurniture[type];
+	if (!furn) return false;
+
+	if (player == KDPlayer()) {
+		let rest = KinkyDungeonGetRestraint(
+			{tags: [furn.restraintTag]}, MiniGameKinkyDungeonLevel,
+			(KinkyDungeonMapIndex[MiniGameKinkyDungeonCheckpoint] || MiniGameKinkyDungeonCheckpoint),
+			true,
+			"",
+			true,
+			false,
+			false);
+		if (rest) {
+			KinkyDungeonAddRestraintIfWeaker(rest, 0, true);
+			if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/Trap.ogg");
+
+			return true;
+		}
+		else return false;
+	}
+	return false;
 }

@@ -17,7 +17,7 @@ function KDTestMapGen(count: number, Ranges: number[], Checkpoints: string[]): b
 		for (let FloorRange of Ranges)
 			for (let f = FloorRange; f < FloorRange + KDLevelsPerCheckpoint; f++) {
 				console.log(`Testing floor ${f}`);
-				MiniGameKinkyDungeonLevel = f;
+				KDSetWorldSlot(0, f);
 				for (let i = 0; i < count; i++) {
 					if (i % (count/KDLevelsPerCheckpoint) == 0)
 						console.log(`Testing iteration ${i} on floor ${MiniGameKinkyDungeonLevel}`);
@@ -38,7 +38,7 @@ function KDTestFullRunthrough(GameLoops: number, Init: boolean, NGP: boolean): b
 	let EnemySpawnData = {};
 	console.log("Testing full runthrough");
 	if (Init) {
-		MiniGameKinkyDungeonLevel = 1;
+		KDSetWorldSlot(0, 1);
 		MiniGameKinkyDungeonCheckpoint = "grv";
 		KinkyDungeonInitialize(1);
 		KDInitPerks();
@@ -61,7 +61,7 @@ function KDTestFullRunthrough(GameLoops: number, Init: boolean, NGP: boolean): b
 			if (NGP)
 				KinkyDungeonNewGamePlus();
 			else {
-				MiniGameKinkyDungeonLevel = 1;
+				KDSetWorldSlot(0, 1);
 				MiniGameKinkyDungeonCheckpoint = "grv";
 				KinkyDungeonState = "Game";
 			}

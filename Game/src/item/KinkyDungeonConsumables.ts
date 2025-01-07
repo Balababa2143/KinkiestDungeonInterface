@@ -177,7 +177,7 @@ function KinkyDungeonConsumableEffect(Consumable: consumable, type?: string) {
 		KinkyDungeonTargetingSpellItem = Consumable;
 		KinkyDungeonTargetingSpellWeapon = null;
 	} else if (type == "charge") {
-		KinkyDungeonChangeCharge(Consumable.amount);
+		KDChangeCharge(Consumable.name, type, "consumable", Consumable.amount);
 		//KDGameData.AncientEnergyLevel = Math.min(Math.max(0, KDGameData.AncientEnergyLevel + Consumable.amount), 1.0);
 		if (!KinkyDungeonStatsChoice.get("LostTechnology"))
 			KinkyDungeonChangeConsumable(KinkyDungeonConsumables.AncientPowerSourceSpent, 1);
@@ -375,9 +375,28 @@ function KinkyDungeonUseConsumable(Name: string, Quantity: number): boolean {
 	if (!KDConsumable(item.item).noConsumeOnUse)
 		KinkyDungeonChangeConsumable(KDConsumable(item.item), -(KDConsumable(item.item).useQuantity ? KDConsumable(item.item).useQuantity : 1) * Quantity);
 
+	if (KinkyDungeonConsumableVariants[item.item.inventoryVariant || item.item.name]) {
+		if (!KDGameData.IdentifiedObj) KDGameData.IdentifiedObj = {};
+		KDGameData.IdentifiedObj[item.item.inventoryVariant || item.item.name] = 2;
+	}
 	KinkyDungeonSendActionMessage(9, TextGet("KinkyDungeonInventoryItem" + Name + "Use"), "#88FF88", 1);
 	if (KDConsumable(item.item).sfx) {
 		if (KDSoundEnabled()) AudioPlayInstantSoundKD(KinkyDungeonRootDirectory + "Audio/" + KDConsumable(item.item).sfx + ".ogg");
 	}
 	return true;
+}
+
+
+function KDGetCheapestLatexSolvent(tag: string = "latexsolvent"): string {
+	let cheapest = "";
+	let cheapestcost = -1000;
+	for (let c of KinkyDungeonAllConsumable()) {
+		if (KDConsumable(c) && KDConsumable(c)[tag]
+			&& (cheapestcost == -1000 || KDConsumable(c)[tag] < cheapestcost)) {
+				cheapest = c.inventoryVariant || c.name;
+				cheapestcost = KDConsumable(c)[tag]
+		}
+	}
+
+	return cheapest;
 }

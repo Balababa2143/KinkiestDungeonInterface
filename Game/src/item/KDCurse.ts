@@ -22,6 +22,12 @@ let KDCurseUnlockList = {
 		"Mana",
 		"SacrificeMage",
 	],
+	"Dragon": [
+		"ShrineWill",
+		"ShrineIllusion",
+		"ShrineElements",
+		"ShrineConjure",
+	],
 	"Divine": [
 		"ShrineWill",
 		"ShrineIllusion",
@@ -121,6 +127,7 @@ let KDCurses: Record<string, KDCursedDef> = {
 		noShrine: true,
 		activatecurse: true,
 		level: 30,
+		customIcon_hud: "StarCurse",
 		weight: (_item) => {
 			return 1;
 		},
@@ -313,7 +320,7 @@ let KDCurses: Record<string, KDCursedDef> = {
 			return 10;
 		},
 		onApply: (_item, _host) => {
-			KinkyDungeonChangeWill(-1);
+			KDChangeWill("Will", "curse", "curse", -1);
 		},
 		condition: (_item) => {
 			return KinkyDungeonStatWill >= KinkyDungeonStatWillMax*0.99;
@@ -334,7 +341,7 @@ let KDCurses: Record<string, KDCursedDef> = {
 		},
 		remove: (_item, _host, _specialMethod) => {
 			if (!_specialMethod)
-				KinkyDungeonChangeMana(-20, false, 0, true, true);
+				KDChangeMana("Mana", "curse", "uncurse", -20, false, 0, true, true);
 		}
 	},
 	"ShrineWill" : {
@@ -561,7 +568,11 @@ function KinkyDungeonCurseUnlock(group: string, index: number, Curse: string) {
 	}
 
 	if (KDCurses[Curse]) {
-		KDCurses[Curse].remove(restraint, host, false);
+		unlock = KDCurses[Curse].alwaysRemoveOnUnlock || !KDGroupBlocked(group);
+		let res = KDCurses[Curse].remove(restraint, host, false);
+		if (typeof res === "boolean") {
+			unlock = res;
+		}
 	}
 
 	if (unlock) {

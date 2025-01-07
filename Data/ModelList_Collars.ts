@@ -17,7 +17,7 @@ AddModel({
 	Restraint: true,
 	Categories: ["Accessories"],
 	Layers: ToLayerMap([
-		{ Name: "Collar", Layer: "Collar", Pri: 20,
+		{ Name: "Collar", Layer: "Collar", Pri: 10,
 			Invariant: true,
 			HideWhenOverridden: true,
 		},
@@ -33,6 +33,7 @@ AddModel({
 	TopLevel: true,
 	Restraint: true,
 	Categories: ["Restraints"],
+	AddPose: ["Leash"],
 	Layers: ToLayerMap([
 		{ Name: "Leash", Layer: "Leash", Pri: 0,
 			Invariant: true,

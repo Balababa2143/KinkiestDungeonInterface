@@ -31,8 +31,142 @@ TODO:
 TODO remove hogtie when released
 TODO Add Cuddle play type
 
-5.4.7
+- TODO extend modding framework for witnessing components to include:
+- Mana cost of spells
+- decay per faction
 
+Note to Modders: if your mod alters the function KDFreeNPC you will have to reimplement some new functionality added, to avoid bugs!
+
+5.4.30
+- Fixed crash when an enemy should be deleted but the game tries to place them somewhere when they despawn
+- Fixed bug where shrines still remove favorite restraints
+- Reduced the number of unique faction prisons when starting with a bunch of bondage start scenarios
+
+5.4.29
+- Strip search now triggers when thrown in jail on regular floors
+- Many bug fixes
+- Added wandering maid knight & squire
+- added the Sweeper and the Persuader
+- maid knights rescue each other if they defeat you
+- added rename NPC
+- Added santa hat, festive harness fashion restraint
+
+5.4.28
+- Fixed a few bugs
+- Added strip search dialogue
+
+5.4.27
+- Interacting now turns to face if it doesnt interact with anything, or if a turn passed when you interacted
+- Prisoners that spawn in levels now come with restraints!
+- Added rare Latex Doll Stand item
+
+5.4.26
+- Added new map escape objectives: Nevermere servers, Dollsmith/Ancient Robot server drones, Draconic Seals
+- Pickaxe now can be used quickly by clicking on the wall (thanks Enraa)
+- New perk: Unidentified Wear (thanks Enraa!)
+- Did some optimizations to help performance. Please report any issues specifically with buffs not having an effect (on player or enemy).
+
+5.4.25
+- Added 'furniture' zones for the player and dragon prisoners in the dragon lairs
+- Reduced perk point multiplier to 2x
+
+5.4.24
+- Made minimap more readable and added toggleable filters
+- Fix viewing future journey
+- Fixed cursed plugs being removable through belts
+- Fixed high guilt causing negative security gain when chased
+- Fixed too long autosave interval
+- Added compat to help old saves not be broken by new journey organization
+- Fix issues with minimap labels
+
+5.4.23
+- Added minimap labels (option in UI)
+- Minimap moves with inspection
+- Allow viewing journey map in journal
+
+5.4.22
+- Various bugfixes
+- Added modding framework for enemies witnessing spell components and applying prison restraints accordingly
+
+5.4.21
+- Dragon lairs are here
+- When created in map gen, dragons create a lair.
+- Dragons will wander on the map, but go back to check their lairs periodically
+- "Elemental Energy" mapmod replaced with "Dragon Sighting"
+- Perk point costs multiplied by 5 for readability
+- Rebalanced many perk costs in general
+- Removed Unfocused perk, added Focused Strikes and Focused Power
+- Being distracted now decreases accuracy of most weapons
+- Being distracted now raises the stamina cost of staves
+- Fix bug with retro animations hiding most effect tiles
+
+5.4.20
+- Various quality of life changes
+
+5.4.19
+- Fixed prison wandering behavior from guards in highsec
+- New enemy: Witch's Apprentice
+
+5.4.18
+- Changed persistent NPC wandering to support different NPC AI wandering types with different priorities/interests
+- Early elevator halls may have dragon girls instead of dragons
+
+5.4.17
+- More immersive experience being brought to jail
+- Capture option from menu now places in highsec jail if being dragged there
+- Enemies leashing the player to highsec jail should directly leash to highsec instead of always stopping by furniture
+
+5.4.16
+- Bugfixes due to issues in 5.4.15
+- Unstoppable foes can now be moved on conveyors if disabled. Unflinching can if slowed.
+
+5.4.15
+- Enemies helping each other fixed
+- Enemies will now pull each other off of latex pools and other dangerous terrain
+- Enemies will now transfer from cage to cell in highsec jail
+- Fixed jail doors not getting locked properly (or more accurately, lock info being lost forever)
+- HighSecJail now puts you in a cage to set your uniform
+- Fixed bug where enemies wouldnt spawn in high sec jail when the enemies arent aware of you
+
+
+5.4.14
+- Highsec prisons are now persistent
+- Shrines dont remove favorited restraints
+- Crystal shockwaves from heirophant allies should no longer hit the player
+- Fixed issues where party members didnt get properly spawned on the map to rescue
+
+5.4.13
+- Added Essence Necklace
+- Made yokes and fiddles more common in the enchanted restraints loot table
+- Added Mana Burst back as an upgrade
+
+5.4.12
+- Replaced Trainee's Mana Burst with Essence Motes (active spell)
+- Reworked Trainee's Desire Burst to use motes
+- New Trainee spells: Conjure Essence Mote, Shock Collar, Psychic Link
+- Removed Mental Fortitude for now
+
+5.4.11
+- Reworked Mental Fortitude. Added Mental Defiance
+- Changed all "ChangeX" stat change functions to have an src field
+- Added mod compat setting for above, changed names of functions
+
+5.4.10
+- Defeating enemies now restores WP
+- Vengeance now gives 10% of the DP from before
+- Limit surge is now 40 WP instead of 50
+
+
+5.4.9
+- Added wait speed options
+- Made settings for toggles appear after hovering over the buttons for a bit
+- Mental Resistance now always works if you are shielded
+- Removed Second Wind from the perk selection
+- New Trainee upgrade: "Mental Fortitude: While WP >75%, regenerate to full"
+
+
+5.4.7 & 5.4.8
+- Lots of small bugfixes
 
 5.4.6
 - Clear restraints from outfit when loading into wardrobe from title screen
@@ -90,7 +224,7 @@ TODO Add Cuddle play type
 - Fix misleading message when NPCs try to escape even if they made no progress
 - Show sprint cost when sprint icon shows on map
 - Sprint cost now 20 base, 25 heeled, 15 hop, 20 hop (slowed), 25 hop (super slowed). Overall buff while bound, nerf while free
-- Added quick faccility assigning
+- Added quick facility assigning
 
 5.3.45
 - Summit warden now knows how to use generic bondage like rope

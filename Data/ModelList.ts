@@ -722,7 +722,7 @@ AddModel({
 			TieToLayer: "Skirt2",
 			InheritColor: "Belt",
 			HidePoseConditional: [
-				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
 			],
 		},
 		{ Name: "SkirtBeltDeco", Layer: "OverSkirt", Pri: 15.2,
@@ -732,7 +732,7 @@ AddModel({
 			TieToLayer: "Skirt2",
 			InheritColor: "Insignia",
 			HidePoseConditional: [
-				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
 			],
 		},
 		{ Name: "SkirtBeltRivets", Layer: "OverSkirt", Pri: 15.2,
@@ -742,7 +742,7 @@ AddModel({
 			TieToLayer: "Skirt2",
 			InheritColor: "Rivets",
 			HidePoseConditional: [
-				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
 			],
 		},
 		{ Name: "Skirt2", Layer: "OverSkirt", Pri: 15,
@@ -751,7 +751,7 @@ AddModel({
 			Invariant: true,
 			InheritColor: "Skirt",
 			HidePoseConditional: [
-				["DynamicArmor", "TorsoArmor", "SuppressDynamic"],
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
 			],
 		},
 	])
@@ -769,6 +769,9 @@ AddModel({
 			MorphPoses: {Hogtie: "Hogtie", Kneel: "Kneel", KneelClosed: "Kneel"},
 			Invariant: true,
 			InheritColor: "Plate",
+			HidePoseConditional: [
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "SkirtBelt", Layer: "OverSkirt", Pri: 15.1,
 			Poses: ToMap([...LEGPOSES]),
@@ -776,6 +779,9 @@ AddModel({
 			Invariant: true,
 			TieToLayer: "Skirt2",
 			InheritColor: "Belt",
+			HidePoseConditional: [
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "SkirtBeltDeco", Layer: "OverSkirt", Pri: 15.2,
 			Poses: ToMap([...LEGPOSES]),
@@ -783,6 +789,9 @@ AddModel({
 			Invariant: true,
 			TieToLayer: "Skirt2",
 			InheritColor: "Insignia",
+			HidePoseConditional: [
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "SkirtBeltRivets", Layer: "OverSkirt", Pri: 15.2,
 			Poses: ToMap([...LEGPOSES]),
@@ -790,12 +799,18 @@ AddModel({
 			Invariant: true,
 			TieToLayer: "Skirt2",
 			InheritColor: "Rivets",
+			HidePoseConditional: [
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
+			],
 		},
 		{ Name: "Skirt2", Layer: "OverSkirt", Pri: 15,
 			Poses: ToMap([...LEGPOSES]),
 			MorphPoses: {Hogtie: "Hogtie", Kneel: "Kneel", KneelClosed: "Kneel"},
 			Invariant: true,
 			InheritColor: "Skirt",
+			HidePoseConditional: [
+				["DynamicArmor", "PelvisArmor", "SuppressDynamic"],
+			],
 		},
 	])
 });
@@ -1306,6 +1321,40 @@ AddModel({
 	])
 });
 
+
+AddModel({
+	Name: "SantaHat",
+	Folder: "Festive",
+	Parent: "SantaHat",
+	TopLevel: true,
+	Categories: ["Hats"],
+	Layers: ToLayerMap([
+		{ Name: "Hat", Layer: "Hat", Pri: 85,
+			HideWhenOverridden: true,
+			Invariant: true,
+			MorphPoses: {Hogtie: "Hogtie"},
+		},
+		{ Name: "HatBack", Layer: "HatBack", Pri: 85,
+			HideWhenOverridden: true,
+			Invariant: true,
+			Poses: {Hogtie: true},
+		},
+		{ Name: "Fluff", Layer: "Hat", Pri: 84.9,
+			NoOverride: true,
+			Invariant: true,
+			TieToLayer: "Hat",
+			MorphPoses: {Hogtie: "Hogtie"},
+		},
+		{ Name: "Orb", Layer: "Hat", Pri: 84.9,
+			NoOverride: true,
+			Invariant: true,
+			TieToLayer: "Hat",
+			MorphPoses: {Hogtie: "Hogtie"},
+			SwapLayerPose: {Hogtie: "HatBack"},
+		},
+	])
+});
+
 AddModel({
 	Name: "WitchHat",
 	Folder: "Witch",
@@ -1680,6 +1729,83 @@ AddModel({
 	])
 });*/
 
+
+AddModel({
+	Name: "RubyNecklace",
+	Folder: "Necklace",
+	Parent: "RubyNecklace",
+	TopLevel: true,
+	Categories: ["Accessories"],
+	Layers: ToLayerMap([
+		{ Name: "RubyChain", Layer: "Necklace", Pri: 15,
+			Invariant: true,
+			HideWhenOverridden: true,
+			InheritColor: "Chain",
+		},
+		{ Name: "RubyRing", Layer: "Necklace", Pri: 15.2,
+			Invariant: true,
+			NoOverride: true,
+			TieToLayer: "RubyChain",
+			InheritColor: "Ring",
+		},
+		{ Name: "RubyHardware", Layer: "Necklace", Pri: 15.1,
+			Invariant: true,
+			NoOverride: true,
+			TieToLayer: "RubyChain",
+			InheritColor: "Hardware",
+		},
+		{ Name: "RubyGem", Layer: "Necklace", Pri: 15.3,
+			Invariant: true,
+			NoOverride: true,
+			InheritColor: "Gem",
+			TieToLayer: "RubyChain",
+		},
+	])
+});
+AddModel(GetModelRestraintVersion("RubyNecklace", true));
+AddModel({
+	Name: "SigilNecklace",
+	Folder: "Necklace",
+	Parent: "SigilNecklace",
+	TopLevel: true,
+	Categories: ["Accessories"],
+	Layers: ToLayerMap([
+		{ Name: "SigilChain", Layer: "Necklace", Pri: 15,
+			Invariant: true,
+			HideWhenOverridden: true,
+			InheritColor: "Chain",
+		},
+		{ Name: "SigilDisc", Layer: "Necklace", Pri: 15.1,
+			Invariant: true,
+			NoOverride: true,
+			TieToLayer: "SigilChain",
+			InheritColor: "Disc",
+		},
+	])
+});
+AddModel(GetModelRestraintVersion("SigilNecklace", true));
+AddModel({
+	Name: "MetalNecklace",
+	Folder: "Necklace",
+	Parent: "MetalNecklace",
+	TopLevel: true,
+	Categories: ["Accessories"],
+	Layers: ToLayerMap([
+		{ Name: "MetalChain", Layer: "NecklaceCharm", Pri: -5,
+			Invariant: true,
+			HideWhenOverridden: true,
+			InheritColor: "Chain",
+		},
+		{ Name: "MetalDisc", Layer: "NecklaceCharm", Pri: -4.9,
+			Invariant: true,
+			NoOverride: true,
+			TieToLayer: "MetalChain",
+			InheritColor: "Disc",
+		},
+	])
+});
+AddModel(GetModelRestraintVersion("MetalNecklace", true));
+
 AddModel({
 	Name: "DragonNecklace",
 	Folder: "Warrior",
@@ -1691,12 +1817,14 @@ AddModel({
 			Invariant: true,
 			HideWhenOverridden: true,
 		},
-		{ Name: "Necklace", Layer: "NecklaceCharm", Pri: 5,
+		{ Name: "NecklaceCharm", Layer: "Necklace", Pri: 5,
 			Invariant: true,
 			HideWhenOverridden: true,
+			InheritColor: "Charm",
 		},
 	])
 });
+AddModel(GetModelRestraintVersion("DragonNecklace", true));
 AddModel({
 	Name: "DragonArmband",
 	Folder: "Warrior",

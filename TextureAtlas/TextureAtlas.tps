@@ -1451,6 +1451,8 @@
             <key type="filename">../Models/Elf/SkirtCrotchStrap.png</key>
             <key type="filename">../Models/Elf/SkirtKneel.png</key>
             <key type="filename">../Models/Elf/SkirtKneelCrotchStrap.png</key>
+            <key type="filename">../Models/Expressions/Fear.png</key>
+            <key type="filename">../Models/Expressions/Tears_Light.png</key>
             <key type="filename">../Models/EyesKertasu/EyesWhitesAngry.png</key>
             <key type="filename">../Models/EyesKertasu/EyesWhitesBase.png</key>
             <key type="filename">../Models/EyesKertasu/EyesWhitesClosed.png</key>
@@ -1458,6 +1460,44 @@
             <key type="filename">../Models/EyesKertasu/EyesWhitesNeutral.png</key>
             <key type="filename">../Models/EyesKertasu/EyesWhitesSurprised.png</key>
             <key type="filename">../Models/FaceKjus/Brows2Angry.png</key>
+            <key type="filename">../Models/Festive/BinderFluffLeftBoxtie.png</key>
+            <key type="filename">../Models/Festive/BinderFluffLeftWristtie.png</key>
+            <key type="filename">../Models/Festive/BinderLeftBoxtie.png</key>
+            <key type="filename">../Models/Festive/BinderLeftWristtie.png</key>
+            <key type="filename">../Models/Festive/BinderRightBoxtie.png</key>
+            <key type="filename">../Models/Festive/BinderStrapLeftBoxtie.png</key>
+            <key type="filename">../Models/Festive/BinderStrapLeftWristtie.png</key>
+            <key type="filename">../Models/Festive/ButtonsBot.png</key>
+            <key type="filename">../Models/Festive/ButtonsMid.png</key>
+            <key type="filename">../Models/Festive/ButtonsTop.png</key>
+            <key type="filename">../Models/Festive/ButtonsTopTied.png</key>
+            <key type="filename">../Models/Festive/ButtonsTopUp.png</key>
+            <key type="filename">../Models/Festive/ButtonsUnderbust.png</key>
+            <key type="filename">../Models/Festive/ButtonsUnderbustOver.png</key>
+            <key type="filename">../Models/Festive/Fluff.png</key>
+            <key type="filename">../Models/Festive/FluffHogtie.png</key>
+            <key type="filename">../Models/Festive/FuzzBot.png</key>
+            <key type="filename">../Models/Festive/FuzzBotClosed.png</key>
+            <key type="filename">../Models/Festive/FuzzMid.png</key>
+            <key type="filename">../Models/Festive/FuzzTop.png</key>
+            <key type="filename">../Models/Festive/FuzzTopTied.png</key>
+            <key type="filename">../Models/Festive/FuzzTopUp.png</key>
+            <key type="filename">../Models/Festive/FuzzUnderbust.png</key>
+            <key type="filename">../Models/Festive/FuzzUnderbustOver.png</key>
+            <key type="filename">../Models/Festive/HardwareUnderbust.png</key>
+            <key type="filename">../Models/Festive/Hat.png</key>
+            <key type="filename">../Models/Festive/HatBackHogtie.png</key>
+            <key type="filename">../Models/Festive/HatHogtie.png</key>
+            <key type="filename">../Models/Festive/Orb.png</key>
+            <key type="filename">../Models/Festive/OrbHogtie.png</key>
+            <key type="filename">../Models/Festive/StrapBot.png</key>
+            <key type="filename">../Models/Festive/StrapBotClosed.png</key>
+            <key type="filename">../Models/Festive/StrapMid.png</key>
+            <key type="filename">../Models/Festive/StrapOverbust.png</key>
+            <key type="filename">../Models/Festive/StrapTop.png</key>
+            <key type="filename">../Models/Festive/StrapTopTied.png</key>
+            <key type="filename">../Models/Festive/StrapTopUp.png</key>
+            <key type="filename">../Models/Festive/StrapUnderbust.png</key>
             <key type="filename">../Models/Fiddle/BackFiddleBody.png</key>
             <key type="filename">../Models/Fiddle/BackFiddleLines.png</key>
             <key type="filename">../Models/Fiddle/FiddleBody.png</key>
@@ -1483,6 +1523,10 @@
             <key type="filename">../Models/Furniture/OneBarFrontClosedHeels.png</key>
             <key type="filename">../Models/Furniture/OneBarFrontSpread.png</key>
             <key type="filename">../Models/Furniture/OneBarFrontSpreadHeels.png</key>
+            <key type="filename">../Models/Furniture/OneBarTopClosed.png</key>
+            <key type="filename">../Models/Furniture/OneBarTopClosedHeels.png</key>
+            <key type="filename">../Models/Furniture/OneBarTopSpread.png</key>
+            <key type="filename">../Models/Furniture/OneBarTopSpreadHeels.png</key>
             <key type="filename">../Models/Furniture/SarcoBack.png</key>
             <key type="filename">../Models/Furniture/SarcoFront.png</key>
             <key type="filename">../Models/Furniture/SarcoWebs.png</key>
@@ -1505,6 +1549,7 @@
             <key type="filename">../Models/FutureHarness/MetalMid.png</key>
             <key type="filename">../Models/FutureHarness/StrapsChest.png</key>
             <key type="filename">../Models/FutureHarness/StrapsLower.png</key>
+            <key type="filename">../Models/FutureHarness/StrapsLowerSpread.png</key>
             <key type="filename">../Models/FutureHarness/StrapsMid.png</key>
             <key type="filename">../Models/GagLatex/NeckCorset.png</key>
             <key type="filename">../Models/GagLatex/NeckCorsetRim.png</key>
@@ -2195,8 +2240,8 @@
             <key type="filename">../Models/MaidKnightLight/ApronChestFront.png</key>
             <key type="filename">../Models/MaidKnightLight/ApronChestUp.png</key>
             <key type="filename">../Models/MaidKnightLight/ApronChestYoked.png</key>
+            <key type="filename">../Models/MaidKnightLight/ApronHogtie.png</key>
             <key type="filename">../Models/MaidKnightLight/ApronKneel.png</key>
-            <key type="filename">../Models/MaidKnightLight/ApronKneelHogtie.png</key>
             <key type="filename">../Models/MaidKnightLight/ArmLeftBoxtie.png</key>
             <key type="filename">../Models/MaidKnightLight/ArmLeftCrossed.png</key>
             <key type="filename">../Models/MaidKnightLight/ArmLeftFree.png</key>
@@ -2370,6 +2415,14 @@
             <key type="filename">../Models/Mittens/ZipperRightFree.png</key>
             <key type="filename">../Models/Mittens/ZipperRightFront.png</key>
             <key type="filename">../Models/Mittens/ZipperRightYoked.png</key>
+            <key type="filename">../Models/Necklace/MetalChain.png</key>
+            <key type="filename">../Models/Necklace/MetalDisc.png</key>
+            <key type="filename">../Models/Necklace/RubyChain.png</key>
+            <key type="filename">../Models/Necklace/RubyGem.png</key>
+            <key type="filename">../Models/Necklace/RubyHardware.png</key>
+            <key type="filename">../Models/Necklace/RubyRing.png</key>
+            <key type="filename">../Models/Necklace/SigilChain.png</key>
+            <key type="filename">../Models/Necklace/SigilDisc.png</key>
             <key type="filename">../Models/Ninja/Belt.png</key>
             <key type="filename">../Models/Ninja/BeltLines.png</key>
             <key type="filename">../Models/Ninja/Collar.png</key>
@@ -3621,6 +3674,7 @@
             </struct>
             <key type="filename">../Models/Armbinder/BinderRightWristtie.png</key>
             <key type="filename">../Models/Body/Butt2.png</key>
+            <key type="filename">../Models/Festive/BinderRightWristtie.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -3786,6 +3840,7 @@
             <key type="filename">../Models/GagFrilly/FrillyHighlights.png</key>
             <key type="filename">../Models/GagFrilly/FrillyPanel.png</key>
             <key type="filename">../Models/GagFrilly/FrillyStraps.png</key>
+            <key type="filename">../Models/GagFrilly/FrillyStrapsOld.png</key>
             <key type="filename">../Models/GagLatex/Harness.png</key>
             <key type="filename">../Models/GagLatex/LatexPlug.png</key>
             <key type="filename">../Models/GagLatex/MuteLogo.png</key>
@@ -3857,6 +3912,7 @@
             <key type="filename">../Models/Gasmask/Nose.png</key>
             <key type="filename">../Models/Gasmask/Plugs.png</key>
             <key type="filename">../Models/Gasmask/Valves.png</key>
+            <key type="filename">../Models/Kigu/MouthSmile.png</key>
             <key type="filename">../Models/ShadowHands/Eyes.png</key>
             <key type="filename">../Models/ShadowHands/Mouth.png</key>
             <struct type="IndividualSpriteSettings">
